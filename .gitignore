@@ -7,13 +7,6 @@
 [Ll]ogs/
 UserSettings/
 
-# Loại bỏ file Unity metadata
-*.pidb
-*.suo
-*.user
-*.unityproj
-*.swp
-
 # Loại bỏ file Visual Studio
 *.csproj
 *.sln
