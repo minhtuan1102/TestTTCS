@@ -157,7 +157,7 @@ public class Player : MonoBehaviour
             // Move the player in the dash direction
             rb.linearVelocity = moveDirrection * dashSpeed;
 
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"),true);
 
             // Timer for the dash duration
             dashTime += Time.fixedDeltaTime;
@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
             // Stop dashing after the duration
             if (dashTime >= dashDuration)
             {
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"),false);
                 isDashing = false;
                 rb.linearVelocity = Vector2.zero; // Stop player movement after dash
             }
