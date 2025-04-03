@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 2402273245214523875}
   - component: {fileID: 6408273689044637369}
   - component: {fileID: 3425550405289722682}
+  - component: {fileID: 2109179291195371736}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996810818875795873}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.6849246, y: -0.3242886, z: 0.011866402}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
@@ -162,3 +163,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.484375, y: 0.734375}
   m_EdgeRadius: 0
+--- !u!114 &2109179291195371736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996810818875795873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cabbdf0f459db0408b1dd0d15078bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 5
