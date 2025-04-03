@@ -42,6 +42,21 @@ public class Player : MonoBehaviour
 
     private GameObject main_hand;
     public float Hand_Radius = 0.5f;
+    private float rotationSpeed = 10f;
+
+    public float recoilForce = 2f;  // Base recoil force
+    public float recoilRecoverySpeed = 5f; // How fast recoil returns to normal
+    public float dampingFactor = 0.1f; // Smooth damping factor
+    private float recoilOffset = 0f; // Recoil displacement (single float)
+    private float recoilVelocity = 0f; // Smooth recoil movement
+
+    public float maxSwing = 10f; // Maximum swing value
+    public float swingSpeed = 1f; // Speed of swing increasing
+    public float returnSpeed = 1f; // Speed at which the swing value returns to 0
+    private float currentSwing = 0f; // Current swing value
+    private bool isSwinging = false; // Whether swinging is happening
+
+    private float targetSwing = 0f; // The target swing angle (can be set dynamically)
 
     void Start()
     {
@@ -83,6 +98,16 @@ public class Player : MonoBehaviour
             dashTime = 0;
         }
 
+        if (Input.GetMouseButtonDown(0)) // Left mouse button (fire)
+        {
+            Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+            // Example: Normal shot with base recoil
+            TriggerRecoil(1f);
+            TriggerSwing(30f);
+            // Example: Charged shot with **double recoil**
+            // TriggerRecoil(fireDirection, 2f);
+        }
+
         // Normalize diagonal movement
         if (movement.magnitude > 1)
             movement.Normalize();
@@ -110,6 +135,17 @@ public class Player : MonoBehaviour
         // Smooth Camera Follow
         Vector3 targetCamPos = new Vector3(rb.position.x, rb.position.y, -10);
         cam.transform.position = Vector3.Lerp(cam.transform.position, targetCamPos, Time.deltaTime * 3f);
+    }
+
+    // Function to set the target swing angle dynamically
+    public void TriggerSwing(float angle = 0f)
+    {
+        targetSwing = angle; // Change the target swing angle
+    }
+
+    public void TriggerRecoil(float intensity = 1f)
+    {
+        recoilOffset = recoilForce * intensity;
     }
 
     void FixedUpdate()
@@ -150,13 +186,38 @@ public class Player : MonoBehaviour
 
         // Update Rendering
         Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition); // Mouse pos
+        Vector3 localScale = main_hand.transform.localScale;
         if (mousePosition.x > transform.position.x)
+        {
             skin.flipX = false; // Flip skin
+            localScale.y = Mathf.Abs(localScale.y);
+        }
         else
+        {
             skin.flipX = true;
+            localScale.y = -Mathf.Abs(localScale.y);
+        }
+
+        main_hand.transform.localScale = localScale;
 
         // Hand movement
 
-        main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * Hand_Radius;
+        // Smoothly interpolate recoil
+        recoilOffset = Mathf.SmoothDamp(recoilOffset, 0f, ref recoilVelocity, recoilRecoverySpeed * Time.deltaTime);
+        currentSwing = Mathf.MoveTowards(currentSwing, targetSwing, swingSpeed * Time.deltaTime);
+
+        // If we reached the target swing angle, stop swinging and reset to 0
+        if (currentSwing == targetSwing)
+        {
+            targetSwing = 0f;
+        }
+
+        Vector3 direction = mousePosition - main_hand.transform.position;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Hand Update
+        main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + currentSwing)), rotationSpeed * Time.deltaTime);
+        main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset)  * Hand_Radius;
     }
 }
