@@ -1,8 +1,10 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using UnityEngine.XR;
 
 public class Player : MonoBehaviour
 {
@@ -38,11 +40,15 @@ public class Player : MonoBehaviour
 
     private float cellSize = 1f;
 
+    private GameObject main_hand;
+    public float Hand_Radius = 0.5f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
         skin = GetComponent<SpriteRenderer>();
+
+        main_hand = transform.Find("Main").gameObject;
 
         Tilemap tilemap = GetComponent<Tilemap>();
         if (tilemap != null)
@@ -91,12 +97,6 @@ public class Player : MonoBehaviour
             // Icrease vision when idle
             targetVision = range + maxVision;
         }
-
-        Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition); // Mouse pos
-        if (mousePosition.x > transform.position.x)
-            skin.flipX = false; // Flip skin
-        else
-            skin.flipX = true;
 
         // Smooth zoom
         vision = Mathf.Lerp(vision, targetVision * cellSize, Time.deltaTime * zoomSpeed);
@@ -147,5 +147,16 @@ public class Player : MonoBehaviour
             Mathf.Clamp(rb.position.x, minBounds.x, maxBounds.x),
             Mathf.Clamp(rb.position.y, minBounds.y, maxBounds.y)
         );
+
+        // Update Rendering
+        Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition); // Mouse pos
+        if (mousePosition.x > transform.position.x)
+            skin.flipX = false; // Flip skin
+        else
+            skin.flipX = true;
+
+        // Hand movement
+
+        main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * Hand_Radius;
     }
 }
