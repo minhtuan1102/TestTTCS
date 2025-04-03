@@ -58,11 +58,12 @@ public class Player : MonoBehaviour
 
     private float targetSwing = 0f; // The target swing angle (can be set dynamically)
 
+    private Collider2D player_collider;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
-
+        player_collider = GetComponent<BoxCollider2D>();
         main_hand = transform.Find("Main").gameObject;
 
         Tilemap tilemap = GetComponent<Tilemap>();
@@ -156,12 +157,15 @@ public class Player : MonoBehaviour
             // Move the player in the dash direction
             rb.linearVelocity = moveDirrection * dashSpeed;
 
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+
             // Timer for the dash duration
             dashTime += Time.fixedDeltaTime;
 
             // Stop dashing after the duration
             if (dashTime >= dashDuration)
             {
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
                 isDashing = false;
                 rb.linearVelocity = Vector2.zero; // Stop player movement after dash
             }

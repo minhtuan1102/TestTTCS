@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6408273689044637369}
   - component: {fileID: 3425550405289722682}
   - component: {fileID: 2109179291195371736}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -103,8 +103,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 40
+  m_AngularDamping: 40
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
