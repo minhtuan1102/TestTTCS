@@ -111,10 +111,16 @@ public class Player : MonoBehaviour
 
             foreach (Transform child in main_hand.transform)
             {
-                Melee Attack = child.GetComponent<Melee>();
-                if (Attack != null)
+                Melee Attack_Swing = child.GetComponent<Melee>();
+                if (Attack_Swing != null)
                 {
-                    Attack.TriggerAttack();
+                    Attack_Swing.TriggerAttack();
+                }
+
+                FireBullet Attack_Shoot = child.GetComponent<FireBullet>();
+                if (Attack_Shoot != null)
+                {
+                    Attack_Shoot.Shoot();
                 }
             }
 

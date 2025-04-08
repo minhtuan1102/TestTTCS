@@ -28,11 +28,14 @@ public class ItemPickup : MonoBehaviour
                 if (can_Picked_Up) if (other.CompareTag("Player"))  // Kiểm tra xem có phải người chơi không
                     {
                         playerHolder = other.transform;
-                        Debug.Log("Người chơi đã nhặt vật phẩm!");
                         Transform player_Hand = other.transform.Find("Main");
-                        transform.position = player_Hand.position;
-                        transform.SetParent(player_Hand);
-                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        if (player_Hand.transform.childCount == 0)
+                        {
+                            Debug.Log("Người chơi đã nhặt vật phẩm!");
+                            transform.position = player_Hand.position;
+                            transform.SetParent(player_Hand);
+                            transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        }
                     }
             }
         }
