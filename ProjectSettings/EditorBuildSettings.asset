@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Menu.unity
     guid: be442e0205b2b9c498ca0c4094505062
+  - enabled: 1
+    path: Assets/Game.unity
+    guid: b0ccf7dc0fdc16747b8fe74f84998c95
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
