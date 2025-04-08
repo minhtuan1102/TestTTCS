@@ -50,13 +50,14 @@ public class Player : MonoBehaviour
     private float recoilOffset = 0f; // Recoil displacement (single float)
     private float recoilVelocity = 0f; // Smooth recoil movement
 
-    public float maxSwing = 10f; // Maximum swing value
-    public float swingSpeed = 1f; // Speed of swing increasing
-    public float returnSpeed = 1f; // Speed at which the swing value returns to 0
+    public float swingSpeed = 10f; // Speed of swing increasing
+    public float swingOffset = 30f;
+    public float swingRecoil = -90f;
     private float currentSwing = 0f; // Current swing value
     private bool isSwinging = false; // Whether swinging is happening
 
     private float targetSwing = 0f; // The target swing angle (can be set dynamically)
+    private float inverse = 1f;
 
     private Collider2D player_collider;
     void Start()
@@ -104,9 +105,19 @@ public class Player : MonoBehaviour
             Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
             // Example: Normal shot with base recoil
             TriggerRecoil(1f);
-            TriggerSwing(30f);
+            TriggerSwing(swingRecoil);
             // Example: Charged shot with **double recoil**
             // TriggerRecoil(fireDirection, 2f);
+
+            foreach (Transform child in main_hand.transform)
+            {
+                Melee Attack = child.GetComponent<Melee>();
+                if (Attack != null)
+                {
+                    Attack.TriggerAttack();
+                }
+            }
+
         }
 
         // Normalize diagonal movement
@@ -139,12 +150,12 @@ public class Player : MonoBehaviour
     }
 
     // Function to set the target swing angle dynamically
-    public void TriggerSwing(float angle = 0f)
+    public void TriggerSwing(float angle)
     {
         targetSwing = angle; // Change the target swing angle
     }
 
-    public void TriggerRecoil(float intensity = 1f)
+    public void TriggerRecoil(float intensity)
     {
         recoilOffset = recoilForce * intensity;
     }
@@ -194,11 +205,13 @@ public class Player : MonoBehaviour
         if (mousePosition.x > transform.position.x)
         {
             skin.flipX = false; // Flip skin
+            inverse = 1f;
             localScale.y = Mathf.Abs(localScale.y);
         }
         else
         {
             skin.flipX = true;
+            inverse = -1f;
             localScale.y = -Mathf.Abs(localScale.y);
         }
 
@@ -221,7 +234,7 @@ public class Player : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // Hand Update
-        main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + currentSwing)), rotationSpeed * Time.deltaTime);
+        main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
         main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset)  * Hand_Radius;
     }
 }

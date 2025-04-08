@@ -2,6 +2,7 @@
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ItemPickup : MonoBehaviour
 {
@@ -31,23 +32,10 @@ public class ItemPickup : MonoBehaviour
                         Transform player_Hand = other.transform.Find("Main");
                         transform.position = player_Hand.position;
                         transform.SetParent(player_Hand);
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
                     }
             }
-            else
-            {
-                if (other.CompareTag("Enemy"))
-                {
-                    try
-                    {
-                        other.GetComponent<Enemy>().TakeDamage(1f);
-                    }
-                    catch (Exception exception)
-                    {
-                        Debug.Log(exception);
-                    }
-                }
-            }
-        } 
+        }
     }
 
     private void Update()
