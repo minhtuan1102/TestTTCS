@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "D:\\Create with Code\\TestTTCS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\create with code\\testttcs\\assets\\scripts\\invulnerabilityspeedboost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\invulnerabilityspeedboost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\create with code\\testttcs\\assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\create with code\\testttcs\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\attacksystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\attacksystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\invulnerabilityspeedboost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\invulnerabilityspeedboost.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\spine2d knight character animation pack\\scripts\\knightcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,7 +42,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "InvulnerabilitySpeedBoost.cs",
               "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\InvulnerabilitySpeedBoost.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\InvulnerabilitySpeedBoost.cs",
@@ -50,12 +50,11 @@
               "RelativeToolTip": "Assets\\Scripts\\InvulnerabilitySpeedBoost.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T09:06:22.224Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-03T09:06:22.224Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "EnemyAI.cs",
               "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\EnemyAI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAI.cs",
@@ -67,28 +66,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "AttackSystem.cs",
               "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\AttackSystem.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\AttackSystem.cs",
               "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\AttackSystem.cs",
               "RelativeToolTip": "Assets\\Scripts\\AttackSystem.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAIAwwBIAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAwwCcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-02T16:18:34.234Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "HealthSystem.cs",
               "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\HealthSystem.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\HealthSystem.cs",
               "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\HealthSystem.cs",
               "RelativeToolTip": "Assets\\Scripts\\HealthSystem.cs",
-              "ViewState": "AgIAAFoAAAAAAAAAAAAIwG0AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAwwHQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T16:17:58.77Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-02T16:17:58.77Z"
             },
             {
               "$type": "Document",
@@ -104,15 +102,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Player.cs",
               "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\Player.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
               "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AgIAAH0AAAAAAAAAAAAQwJcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAIwJcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T15:09:45.476Z"
+              "WhenOpened": "2025-04-01T15:09:45.476Z",
+              "EditorCaption": ""
             }
           ]
         }

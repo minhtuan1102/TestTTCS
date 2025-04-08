@@ -4,11 +4,11 @@ public class AttackSystem : MonoBehaviour
 {
     public int damage = 10;
     public float attackRange = 1.5f;
-    public LayerMask enemyLayer; // Chỉ đánh kẻ địch
+    public LayerMask enemyLayer;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1)) // Nhấn phím Space để tấn công
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Attack();
         }
@@ -22,14 +22,17 @@ public class AttackSystem : MonoBehaviour
 
         foreach (Collider2D enemy in hitEnemies)
         {
-            if (enemy.gameObject != gameObject) // Đảm bảo không tự đánh chính mình
+            if (enemy.gameObject != gameObject)
             {
-                Debug.Log("Tấn công: " + enemy.gameObject.name);
-                enemy.GetComponent<HealthSystem>().TakeDamage(damage);
+                Debug.Log($"Tấn công: {enemy.gameObject.name} với sát thương {damage}");
+                HealthSystem healthSystem = enemy.GetComponent<HealthSystem>();
+                if (healthSystem != null)
+                {
+                    healthSystem.TakeDamage(damage);
+                }
             }
         }
     }
-
 
     void OnDrawGizmosSelected()
     {

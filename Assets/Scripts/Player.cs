@@ -59,20 +59,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Get Input (WASD or Arrow Keys)
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
 
-        // If the player presses Q and is not already dashing, start the dash
         if (Input.GetKeyDown(KeyCode.Q) && !isDashing)
         {
-            // Set the dash direction to the movement direction
             if (rb.linearVelocity.magnitude > 0)
             {
                 moveDirrection = rb.linearVelocity.normalized;
             }
-
-            // Start dashing
             isDashing = true;
             dashTime = 0;
         }
