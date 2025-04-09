@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time_between: 3
+  itemData: {fileID: 0}
 --- !u!61 &37099996
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -920,6 +921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time_between: 3
+  itemData: {fileID: 0}
 --- !u!61 &636921567
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -15316,6 +15318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time_between: 3
+  itemData: {fileID: 0}
 --- !u!61 &877106789
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17008,7 +17011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770d151b31a877144a213695cab4e5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth: 150
   _destroyOnDeath: 1
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
   _flashDuration: 0.1
