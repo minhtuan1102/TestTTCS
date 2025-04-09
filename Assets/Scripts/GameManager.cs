@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
     public GameObject gameOverUI;
 
     private void Awake()
@@ -11,7 +12,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // giữ qua các scene
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -19,19 +20,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        // Ẩn UI Game Over khi bắt đầu game
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(false);
         }
-        else
-        {
-            Debug.LogWarning("⚠ GameOverUI chưa được gán trong GameManager!");
-        }
     }
-    
+
     public void ShowGameOver()
     {
         if (gameOverUI != null)
@@ -42,16 +48,12 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        // Xóa toàn bộ dữ liệu người chơi
         PlayerPrefs.DeleteAll();
-
-        // Load lại màn chơi đầu tiên
-        SceneManager.LoadScene("Game"); 
+        SceneManager.LoadScene("Game");
     }
 
     public void ReturnToMenu()
     {
-        // Load lại Main Menu
-        SceneManager.LoadScene("Menu"); 
+        SceneManager.LoadScene("Menu");
     }
 }
