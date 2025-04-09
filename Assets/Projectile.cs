@@ -22,5 +22,11 @@ public class Projectile : MonoBehaviour
             other.GetComponent<Enemy>().TakeDamage(itemData.damage);
             Destroy(gameObject);
         }
+
+        // Chạm tường xoá đạn
+        if (other.CompareTag("Barrier"))
+        {
+            Destroy(gameObject);
+        }
     }
 }

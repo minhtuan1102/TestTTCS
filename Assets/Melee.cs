@@ -25,7 +25,7 @@ public class Melee : MonoBehaviour
         enemyLayer = (1 << LayerMask.NameToLayer("Enemy"));
     }
 
-    public void TriggerAttack()
+    public void TriggerAttack(float damage)
     {
         ContactFilter2D filter = new ContactFilter2D();
         filter.SetLayerMask(enemyLayer);
@@ -39,7 +39,7 @@ public class Melee : MonoBehaviour
             Enemy enemy = results[i].GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(1f);
+                enemy.TakeDamage(damage);
                 Debug.Log("Enemy hit: " + enemy.name);
             }
         }

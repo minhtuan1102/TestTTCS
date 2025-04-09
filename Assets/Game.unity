@@ -16161,7 +16161,7 @@ GameObject:
   - component: {fileID: 1795489576}
   m_Layer: 7
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Barrier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18682,24 +18682,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5443297595106690870, guid: ef65c72a2b3fe29449477c1cdd599751, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.089311
-      objectReference: {fileID: 0}
-    - target: {fileID: 5443297595106690870, guid: ef65c72a2b3fe29449477c1cdd599751, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.089311
-      objectReference: {fileID: 0}
-    - target: {fileID: 5443297595106690870, guid: ef65c72a2b3fe29449477c1cdd599751, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.5446555
-      objectReference: {fileID: 0}
-    - target: {fileID: 5443297595106690870, guid: ef65c72a2b3fe29449477c1cdd599751, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.3603
+      value: -14.3305
       objectReference: {fileID: 0}
     - target: {fileID: 5443297595106690870, guid: ef65c72a2b3fe29449477c1cdd599751, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.0861
+      value: -17.0572
       objectReference: {fileID: 0}
     - target: {fileID: 5443297595106690870, guid: ef65c72a2b3fe29449477c1cdd599751, type: 3}
       propertyPath: m_LocalPosition.z

@@ -19,7 +19,7 @@ MonoBehaviour:
   weight: 1
   ranged: 0
   damage: 5
-  cooldown: 1
-  swing: -120
+  cooldown: 0.75
+  swing: -180
   recoil: 0
-  swingOffset: 30
+  swingOffset: 15

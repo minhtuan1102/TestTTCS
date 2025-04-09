@@ -88,7 +88,7 @@ public class ItemPickup : MonoBehaviour
                         playerScript.TriggerRecoil(itemData.recoil);
                         playerScript.TriggerSwing(itemData.swing);
 
-                        Attack_Swing.TriggerAttack();
+                        Attack_Swing.TriggerAttack(itemData.damage);
                     }
 
                     FireBullet Attack_Shoot = GetComponent<FireBullet>();
