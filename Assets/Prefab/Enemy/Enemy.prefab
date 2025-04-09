@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6408273689044637369}
   - component: {fileID: 3425550405289722682}
   - component: {fileID: 2109179291195371736}
+  - component: {fileID: 2378317581059880288}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
@@ -103,8 +104,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 40
-  m_AngularDamping: 40
+  m_LinearDamping: 10
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -176,3 +177,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
+--- !u!114 &2378317581059880288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996810818875795873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2887bd7de6e2f3b4c80a595d9f003a93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTag: Player
+  moveSpeed: 3
+  attackRange: 2
+  detectionRange: 50
+  attackDamage: 10
+  attackCooldown: 2
+  flipSpriteBasedOnDirection: 1
