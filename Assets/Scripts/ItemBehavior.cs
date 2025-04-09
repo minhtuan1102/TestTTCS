@@ -15,6 +15,9 @@ public class ItemPickup : MonoBehaviour
     private float timer = 0f;
 
     private Transform playerHolder;
+    private float fireCooldown = 0f;
+
+    [SerializeReference] public Item itemData; 
 
     private void Start()
     {
@@ -40,6 +43,9 @@ public class ItemPickup : MonoBehaviour
                             localScale.y = Mathf.Abs(localScale.y);
                             transform.localScale = localScale;
                             transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+                            Player playerScript = playerHolder.GetComponent<Player>();
+                            playerScript.swingOffset = itemData.swingOffset;
                         }
                     }
             }
@@ -59,6 +65,8 @@ public class ItemPickup : MonoBehaviour
             }
         }
 
+        fireCooldown -= Time.deltaTime;
+
         if (Input.GetMouseButton(0)) // Left mouse button (fire)
         {
             Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
@@ -69,35 +77,45 @@ public class ItemPickup : MonoBehaviour
 
             if (playerHolder != null)
             {
-                Player playerScript = playerHolder.transform.GetComponent<Player>();
 
-                Melee Attack_Swing = GetComponent<Melee>();
-                if (Attack_Swing != null)
+                if (fireCooldown <= 0f)
                 {
-                    playerScript.TriggerRecoil(1f);
-                    playerScript.TriggerSwing(-120f);
+                    Player playerScript = playerHolder.transform.GetComponent<Player>();
 
-                    Attack_Swing.TriggerAttack();
+                    Melee Attack_Swing = GetComponent<Melee>();
+                    if (Attack_Swing != null)
+                    {
+                        playerScript.TriggerRecoil(itemData.recoil);
+                        playerScript.TriggerSwing(itemData.swing);
+
+                        Attack_Swing.TriggerAttack();
+                    }
+
+                    FireBullet Attack_Shoot = GetComponent<FireBullet>();
+                    if (Attack_Shoot != null)
+                    {
+                        playerScript.TriggerRecoil(itemData.recoil);
+                        playerScript.TriggerSwing(itemData.swing);
+
+                        Attack_Shoot.Shoot();
+                    }
+
+                    fireCooldown = itemData.cooldown;
                 }
-
-                FireBullet Attack_Shoot = GetComponent<FireBullet>();
-                if (Attack_Shoot != null)
-                {
-                    playerScript.TriggerRecoil(-1f);
-                    playerScript.TriggerSwing(-5f);
-
-                    Attack_Shoot.Shoot();
-                }
-
+           
             }
-        }
+        } 
         
     }
 
     public void Drop()
     {
+        Player playerScript = playerHolder.GetComponent<Player>();
+        playerScript.swingOffset = 0f;
+
         can_Picked_Up = false;
         playerHolder = null;
+
         transform.SetParent(items_collection.transform);
         timer = -3;
     }
