@@ -1,7 +1,9 @@
 ﻿using System;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.UIElements;
 
 public class ItemPickup : MonoBehaviour
@@ -27,13 +29,16 @@ public class ItemPickup : MonoBehaviour
             {
                 if (can_Picked_Up) if (other.CompareTag("Player"))  // Kiểm tra xem có phải người chơi không
                     {
-                        playerHolder = other.transform;
                         Transform player_Hand = other.transform.Find("Main");
                         if (player_Hand.transform.childCount == 0)
                         {
+                            playerHolder = other.transform;
                             Debug.Log("Người chơi đã nhặt vật phẩm!");
                             transform.position = player_Hand.position;
                             transform.SetParent(player_Hand);
+                            Vector3 localScale = transform.localScale;
+                            localScale.y = Mathf.Abs(localScale.y);
+                            transform.localScale = localScale;
                             transform.localRotation = Quaternion.Euler(0, 0, 0);
                         }
                     }
@@ -53,6 +58,40 @@ public class ItemPickup : MonoBehaviour
                 Drop();
             }
         }
+
+        if (Input.GetMouseButton(0)) // Left mouse button (fire)
+        {
+            Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+            // Example: Normal shot with base recoil
+
+            // Example: Charged shot with **double recoil**
+            // TriggerRecoil(fireDirection, 2f);
+
+            if (playerHolder != null)
+            {
+                Player playerScript = playerHolder.transform.GetComponent<Player>();
+
+                Melee Attack_Swing = GetComponent<Melee>();
+                if (Attack_Swing != null)
+                {
+                    playerScript.TriggerRecoil(1f);
+                    playerScript.TriggerSwing(-120f);
+
+                    Attack_Swing.TriggerAttack();
+                }
+
+                FireBullet Attack_Shoot = GetComponent<FireBullet>();
+                if (Attack_Shoot != null)
+                {
+                    playerScript.TriggerRecoil(-1f);
+                    playerScript.TriggerSwing(-5f);
+
+                    Attack_Shoot.Shoot();
+                }
+
+            }
+        }
+        
     }
 
     public void Drop()
