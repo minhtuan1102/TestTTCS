@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
-  m_Name: Sword
+  m_Name: Glock
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: AK-Rifle
   itemIcon: {fileID: 0}
   itemID: 0
   description: 
-  weight: 0
+  weight: 3
   ranged: 0
-  damage: 10
-  cooldown: 1
+  damage: 2
+  cooldown: 0.5
+  swing: 0
+  recoil: -0.4
+  swingOffset: 0

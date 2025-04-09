@@ -104,25 +104,11 @@ public class Player : MonoBehaviour
         {
             Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
             // Example: Normal shot with base recoil
-            TriggerRecoil(1f);
-            TriggerSwing(swingRecoil);
+            
             // Example: Charged shot with **double recoil**
             // TriggerRecoil(fireDirection, 2f);
 
-            foreach (Transform child in main_hand.transform)
-            {
-                Melee Attack_Swing = child.GetComponent<Melee>();
-                if (Attack_Swing != null)
-                {
-                    Attack_Swing.TriggerAttack();
-                }
-
-                FireBullet Attack_Shoot = child.GetComponent<FireBullet>();
-                if (Attack_Shoot != null)
-                {
-                    Attack_Shoot.Shoot();
-                }
-            }
+            
 
         }
 

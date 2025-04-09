@@ -2,16 +2,15 @@
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 10f;
-    public float lifeTime = 2f;
-
     private Rigidbody2D rb;
+
+    [SerializeField] public ProjectileItem itemData;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = transform.right * speed; // bắn theo hướng mặt phải
-        Destroy(gameObject, lifeTime);
+        rb.linearVelocity = transform.right * itemData.speed; // bắn theo hướng mặt phải
+        Destroy(gameObject, itemData.lifeTime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -20,7 +19,8 @@ public class Projectile : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             Debug.Log("Trúng địch!");
-            other.GetComponent<Enemy>().TakeDamage(1f);
+            other.GetComponent<Enemy>().TakeDamage(itemData.damage);
+            Destroy(gameObject);
         }
     }
 }

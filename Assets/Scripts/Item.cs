@@ -15,5 +15,8 @@ public class Item : ScriptableObject
     public float damage = 0f;
     public float cooldown = 0f;
 
-    
+    public float swing = 0f;
+    public float recoil = 0f;
+
+    public float swingOffset = 0f;
 }
