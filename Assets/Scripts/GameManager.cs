@@ -4,14 +4,15 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
     public GameObject gameOverUI;
 
     private void Awake()
     {
+        // Khởi tạo Singleton tạm thời, không dùng DontDestroyOnLoad để tránh lỗi UI
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // giữ qua các scene
         }
         else
         {
@@ -21,17 +22,13 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // Ẩn UI Game Over khi bắt đầu game
+        // Đảm bảo ẩn UI khi bắt đầu
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(false);
         }
-        else
-        {
-            Debug.LogWarning("⚠ GameOverUI chưa được gán trong GameManager!");
-        }
     }
-    
+
     public void ShowGameOver()
     {
         if (gameOverUI != null)
@@ -42,16 +39,12 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        // Xóa toàn bộ dữ liệu người chơi
         PlayerPrefs.DeleteAll();
-
-        // Load lại màn chơi đầu tiên
-        SceneManager.LoadScene("Game"); 
+        SceneManager.LoadScene("Game"); // Đổi thành tên scene gốc
     }
 
     public void ReturnToMenu()
     {
-        // Load lại Main Menu
-        SceneManager.LoadScene("Menu"); 
+        SceneManager.LoadScene("Menu"); // Đổi thành tên scene menu
     }
 }
