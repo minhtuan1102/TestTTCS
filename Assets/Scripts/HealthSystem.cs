@@ -72,6 +72,10 @@ public class HealthSystem : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ShowGameOver();
+        }
     }
 
     private IEnumerator FlashEffect()
