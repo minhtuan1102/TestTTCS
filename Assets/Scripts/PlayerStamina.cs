@@ -6,7 +6,6 @@ public class PlayerStamina : MonoBehaviour
 {
     public Slider staminaBar; // Thanh thể lực (Slider)
     public TextMeshProUGUI staminaText; // Text để hiển thị chỉ số thể lực
-    public TextMeshProUGUI warningText; // Text để hiển thị thông báo (nếu có)
     public float maxStamina = 100f; // Thể lực tối đa
     public float currentStamina; // Thể lực hiện tại
     public float dashStaminaCost = 20f; // Lượng thể lực tiêu hao khi lướt
@@ -42,16 +41,7 @@ public class PlayerStamina : MonoBehaviour
             {
                 Dash();
             }
-            else
-            {
-                // Hiển thị thông báo nếu không đủ thể lực
-                if (warningText != null)
-                {
-                    warningText.text = "Không đủ thể lực để lướt! Cần ít nhất " + minStaminaToDash + " thể lực.";
-                    Invoke("ClearWarning", 2f); // Xóa thông báo sau 2 giây
-                }
-                Debug.Log("Không đủ thể lực để lướt! Cần ít nhất " + minStaminaToDash + " thể lực.");
-            }
+   
         }
     }
 
@@ -95,11 +85,5 @@ public class PlayerStamina : MonoBehaviour
         }
     }
 
-    void ClearWarning()
-    {
-        if (warningText != null)
-        {
-            warningText.text = "";
-        }
-    }
+    
 }
