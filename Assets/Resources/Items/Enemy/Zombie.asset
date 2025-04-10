@@ -9,17 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
-  m_Name: Machine Gun
+  m_Script: {fileID: 11500000, guid: 9d1f069031c7aed4390c8a02ed9de8d8, type: 3}
+  m_Name: Zombie
   m_EditorClassIdentifier: 
-  itemName: AK-Rifle
-  itemIcon: {fileID: 0}
-  itemID: 0
-  description: 
-  weight: 3
-  ranged: 0
-  damage: 1
-  cooldown: 0.1
-  swing: -15
-  recoil: -0.3
-  swingOffset: 15
+  Point: 100
+  Health: 80
+  Speed: 5
+  Damage: 10
+  EnemyModel: {fileID: 1996810818875795873, guid: 595a830a1ce035446846d471aef83638, type: 3}

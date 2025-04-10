@@ -97,7 +97,7 @@ public class ItemPickup : MonoBehaviour
                         playerScript.TriggerRecoil(itemData.recoil);
                         playerScript.TriggerSwing(itemData.swing);
 
-                        Attack_Shoot.Shoot();
+                        Attack_Shoot.Shoot(itemData.damage, itemData.spread, itemData.fireAmount);
                     }
 
                     fireCooldown = itemData.cooldown;

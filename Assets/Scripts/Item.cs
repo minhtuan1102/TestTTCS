@@ -17,6 +17,8 @@ public class Item : ScriptableObject
 
     public float swing = 0f;
     public float recoil = 0f;
+    public float spread = 0f;
+    public int fireAmount = 1;
 
     public float swingOffset = 0f;
 }

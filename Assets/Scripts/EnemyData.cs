@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyData", menuName = "Scriptable Objects/EnemyData")]
+[CreateAssetMenu(fileName = "EnemyData", menuName = "Items/EnemyData")]
 public class EnemyData : ScriptableObject
 {
     public int Point = 100;
@@ -9,4 +9,6 @@ public class EnemyData : ScriptableObject
     public float Speed = 5f;
 
     public float Damage = 10f;
+
+    [SerializeReference] public GameObject EnemyModel;
 }
