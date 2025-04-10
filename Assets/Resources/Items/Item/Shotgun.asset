@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
-  m_Name: AK
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
   itemName: AK-Rifle
   itemIcon: {fileID: 0}
@@ -19,7 +19,9 @@ MonoBehaviour:
   weight: 3
   ranged: 0
   damage: 2
-  cooldown: 0.2
+  cooldown: 2
   swing: 0
-  recoil: -0.2
+  recoil: -1
+  spread: 2
+  fireAmount: 8
   swingOffset: 0

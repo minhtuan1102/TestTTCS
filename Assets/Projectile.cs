@@ -6,6 +6,9 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] public ProjectileItem itemData;
 
+    public float damage = 0f;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -19,7 +22,21 @@ public class Projectile : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             Debug.Log("Trúng địch!");
-            other.GetComponent<Enemy>().TakeDamage(itemData.damage);
+            Enemy enemyData = other.GetComponent<Enemy>();
+
+            if (enemyData != null)
+            {
+                if (enemyData.health > 0f)
+                {
+                    enemyData.TakeDamage(damage);
+                    Destroy(gameObject);
+                }
+            }
+        }
+
+        // Chạm tường xoá đạn
+        if (other.CompareTag("Barrier"))
+        {
             Destroy(gameObject);
         }
     }
