@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        // Khởi tạo Singleton tạm thời, không dùng DontDestroyOnLoad để tránh lỗi UI
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -20,18 +20,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
+        // Đảm bảo ẩn UI khi bắt đầu
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(false);
@@ -49,11 +40,11 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         PlayerPrefs.DeleteAll();
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Game"); // Đổi thành tên scene gốc
     }
 
     public void ReturnToMenu()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Menu"); // Đổi thành tên scene menu
     }
 }
