@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time_between: 3
+  itemData: {fileID: 11400000, guid: 5378420af25a5114b9663b6ae8af52b5, type: 2}
 --- !u!114 &1434803082014052894
 MonoBehaviour:
   m_ObjectHideFlags: 0
