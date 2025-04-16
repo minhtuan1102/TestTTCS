@@ -40,6 +40,15 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - SyncTile
+  - PlayHitAnimation
+  - ShowDeathEffect
+  - SpawnNewItem
+  - SpawnNewWeapon
+  - StartDash
+  - SyncAnimation
+  - SyncFlip
+  - SyncHand
+  - TakeDamage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

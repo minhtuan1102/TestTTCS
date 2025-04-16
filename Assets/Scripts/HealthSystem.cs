@@ -2,9 +2,10 @@
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using Photon.Pun;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class HealthSystem : MonoBehaviour
+public class HealthSystem : MonoBehaviourPun, IPunObservable
 {
     [Header("Health Settings")]
     [SerializeField] private int _maxHealth = 100;
@@ -36,6 +37,7 @@ public class HealthSystem : MonoBehaviour
         InitializeUI();
     }
 
+    [PunRPC]
     public void TakeDamage(int damage)
     {
         if (_currentHealth <= 0) return;
@@ -58,23 +60,25 @@ public class HealthSystem : MonoBehaviour
 
     private void Die()
     {
-        if (_deathEffect != null)
+        photonView.RPC("ShowDeathEffect", RpcTarget.All, transform.position);
+
+        if (photonView.IsMine)
         {
-            Instantiate(_deathEffect, transform.position, Quaternion.identity);
+            PhotonNetwork.Destroy(gameObject);
         }
 
-        if (_destroyOnDeath)
-        {
-            Destroy(_healthCanvas?.gameObject);
-            Destroy(gameObject);
-        }
-        else
-        {
-            gameObject.SetActive(false);
-        }
         if (GameManager.Instance != null)
         {
             GameManager.Instance.ShowGameOver();
+        }
+    }
+
+    [PunRPC]
+    void ShowDeathEffect(Vector3 position)
+    {
+        if (_deathEffect != null)
+        {
+            Instantiate(_deathEffect, position, Quaternion.identity);
         }
     }
 
@@ -114,8 +118,20 @@ public class HealthSystem : MonoBehaviour
     {
         if (_healthCanvas != null)
         {
-            // Giữ thanh máu luôn hướng về camera
-            _healthCanvas.transform.rotation = Camera.main.transform.rotation;
+            _healthCanvas.transform.rotation = Quaternion.identity;
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_currentHealth);
+        }
+        else
+        {
+            _currentHealth = (int)stream.ReceiveNext();
+            UpdateUI();
         }
     }
 }

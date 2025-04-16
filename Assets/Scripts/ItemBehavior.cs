@@ -1,14 +1,8 @@
-﻿using System;
-using TreeEditor;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.InputSystem.HID;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
+using Photon.Pun;
 
-public class ItemPickup : MonoBehaviour
+public class ItemPickup : MonoBehaviourPun, IPunObservable
 {
-
     [SerializeReference] private float time_between = 3f;
     private GameObject items_collection;
     private bool can_Picked_Up = true;
@@ -17,7 +11,7 @@ public class ItemPickup : MonoBehaviour
     private Transform playerHolder;
     private float fireCooldown = 0f;
 
-    [SerializeReference] public Item itemData; 
+    [SerializeReference] public Item itemData;
 
     private void Start()
     {
@@ -26,36 +20,51 @@ public class ItemPickup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other != null)
+        if (!photonView.IsMine) return;
+        if (other != null && can_Picked_Up && other.CompareTag("Player"))
         {
-            if (playerHolder == null)
+            Transform player_Hand = other.transform.Find("Main");
+            if (player_Hand.transform.childCount == 0)
             {
-                if (can_Picked_Up) if (other.CompareTag("Player"))  // Kiểm tra xem có phải người chơi không
-                    {
-                        Transform player_Hand = other.transform.Find("Main");
-                        if (player_Hand.transform.childCount == 0)
-                        {
-                            playerHolder = other.transform;
-                            Debug.Log("Người chơi đã nhặt vật phẩm!");
-                            transform.position = player_Hand.position;
-                            transform.SetParent(player_Hand);
-                            Vector3 localScale = transform.localScale;
-                            localScale.y = Mathf.Abs(localScale.y);
-                            transform.localScale = localScale;
-                            transform.localRotation = Quaternion.Euler(0, 0, 0);
-
-                            Player playerScript = playerHolder.GetComponent<Player>();
-                            playerScript.swingOffset = itemData.swingOffset;
-                        }
-                    }
+                playerHolder = other.transform;
+                photonView.RPC("PickupItem", RpcTarget.All, playerHolder.GetComponent<PhotonView>().ViewID);
             }
+        }
+    }
+
+    [PunRPC]
+    void PickupItem(int playerViewID)
+    {
+        PhotonView playerView = PhotonView.Find(playerViewID);
+        if (playerView == null) return;
+
+        playerHolder = playerView.transform;
+        Transform player_Hand = playerHolder.Find("Main");
+        transform.position = player_Hand.position;
+        transform.SetParent(player_Hand);
+        Vector3 localScale = transform.localScale;
+        localScale.y = Mathf.Abs(localScale.y);
+        transform.localScale = localScale;
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
+
+        Player playerScript = playerHolder.GetComponent<Player>();
+        playerScript.swingOffset = itemData.swingOffset;
+
+        SpawnManager spawnManager = FindObjectOfType<SpawnManager>();
+        if (spawnManager != null)
+        {
+            string type = gameObject.name.Contains("Weapon") ? "Weapon" : "Item";
+            if (type == "Weapon") spawnManager.WeaponPickedUp(gameObject);
+            else spawnManager.ItemPickedUp(gameObject);
         }
     }
 
     private void Update()
     {
         timer += Time.deltaTime;
-        if (timer>=0) can_Picked_Up = true;
+        if (timer >= 0) can_Picked_Up = true;
+
+        if (!photonView.IsMine) return;
 
         if (playerHolder != null)
         {
@@ -67,48 +76,65 @@ public class ItemPickup : MonoBehaviour
 
         fireCooldown -= Time.deltaTime;
 
-        if (Input.GetMouseButton(0)) // Left mouse button (fire)
+        if (Input.GetMouseButton(0))
         {
-            Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-            // Example: Normal shot with base recoil
-
-            // Example: Charged shot with **double recoil**
-            // TriggerRecoil(fireDirection, 2f);
-
-            if (playerHolder != null)
+            if (playerHolder != null && fireCooldown <= 0f)
             {
+                Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+                Player playerScript = playerHolder.GetComponent<Player>();
 
-                if (fireCooldown <= 0f)
+                Melee Attack_Swing = GetComponent<Melee>();
+                if (Attack_Swing != null)
                 {
-                    Player playerScript = playerHolder.transform.GetComponent<Player>();
-
-                    Melee Attack_Swing = GetComponent<Melee>();
-                    if (Attack_Swing != null)
-                    {
-                        playerScript.TriggerRecoil(itemData.recoil);
-                        playerScript.TriggerSwing(itemData.swing);
-
-                        Attack_Swing.TriggerAttack(itemData.damage);
-                    }
-
-                    FireBullet Attack_Shoot = GetComponent<FireBullet>();
-                    if (Attack_Shoot != null)
-                    {
-                        playerScript.TriggerRecoil(itemData.recoil);
-                        playerScript.TriggerSwing(itemData.swing);
-
-                        Attack_Shoot.Shoot(itemData.damage, itemData.spread, itemData.fireAmount);
-                    }
-
-                    fireCooldown = itemData.cooldown;
+                    photonView.RPC("TriggerMelee", RpcTarget.All, itemData.damage, itemData.swing, itemData.recoil);
                 }
-           
+
+                FireBullet Attack_Shoot = GetComponent<FireBullet>();
+                if (Attack_Shoot != null && itemData.ranged)
+                {
+                    photonView.RPC("TriggerShoot", RpcTarget.All, itemData.damage, itemData.spread, itemData.fireAmount, itemData.recoil);
+                }
+
+                fireCooldown = itemData.cooldown;
             }
-        } 
-        
+        }
+    }
+
+    [PunRPC]
+    void TriggerMelee(float damage, float swing, float recoil)
+    {
+        Player playerScript = playerHolder.GetComponent<Player>();
+        playerScript.TriggerRecoil(recoil);
+        playerScript.TriggerSwing(swing);
+
+        Melee Attack_Swing = GetComponent<Melee>();
+        if (Attack_Swing != null)
+        {
+            Attack_Swing.TriggerAttack(damage);
+        }
+    }
+
+    [PunRPC]
+    void TriggerShoot(float damage, float spread, int fireAmount, float recoil)
+    {
+        Player playerScript = playerHolder.GetComponent<Player>();
+        playerScript.TriggerRecoil(recoil);
+
+        FireBullet Attack_Shoot = GetComponent<FireBullet>();
+        if (Attack_Shoot != null)
+        {
+            Attack_Shoot.Shoot(damage, spread, fireAmount);
+        }
     }
 
     public void Drop()
+    {
+        if (!photonView.IsMine) return;
+        photonView.RPC("DropItem", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void DropItem()
     {
         Player playerScript = playerHolder.GetComponent<Player>();
         playerScript.swingOffset = 0f;
@@ -117,6 +143,30 @@ public class ItemPickup : MonoBehaviour
         playerHolder = null;
 
         transform.SetParent(items_collection.transform);
-        timer = -3;
+        timer = -time_between;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(itemData.swingOffset);
+            stream.SendNext(itemData.recoil);
+            stream.SendNext(itemData.damage);
+            stream.SendNext(itemData.swing);
+            stream.SendNext(itemData.spread);
+            stream.SendNext(itemData.fireAmount);
+            stream.SendNext(itemData.cooldown);
+        }
+        else
+        {
+            itemData.swingOffset = (float)stream.ReceiveNext();
+            itemData.recoil = (float)stream.ReceiveNext();
+            itemData.damage = (float)stream.ReceiveNext();
+            itemData.swing = (float)stream.ReceiveNext();
+            itemData.spread = (float)stream.ReceiveNext();
+            itemData.fireAmount = (int)stream.ReceiveNext();
+            itemData.cooldown = (float)stream.ReceiveNext();
+        }
     }
 }

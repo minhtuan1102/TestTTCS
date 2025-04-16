@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using Photon.Pun;
 
-public class EnemyAI : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D), typeof(PhotonView), typeof(HealthSystem))]
+public class EnemyAI_PUN : MonoBehaviourPun
 {
     [SerializeField] private string playerTag = "Player";
     public float moveSpeed = 3f;
@@ -8,37 +10,40 @@ public class EnemyAI : MonoBehaviour
     public float detectionRange = 10f;
     public int attackDamage = 10;
     public float attackCooldown = 2f;
-    public bool flipSpriteBasedOnDirection = true; // Thêm tùy chọn flip sprite
+    public bool flipSpriteBasedOnDirection = true;
 
     private Transform player;
     private float lastAttackTime;
     private Rigidbody2D rb;
     private Animator animator;
-    private SpriteRenderer spriteRenderer; // Thêm SpriteRenderer
+    private SpriteRenderer spriteRenderer;
+    private HealthSystem healthSystem;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Lấy component SpriteRenderer
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        healthSystem = GetComponent<HealthSystem>();
 
-        // Lock rotation in Rigidbody2D
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            enabled = false;
+            return;
+        }
+
         rb.freezeRotation = true;
-
-        GameObject playerObj = GameObject.FindGameObjectWithTag(playerTag);
-        if (playerObj != null)
-        {
-            player = playerObj.transform;
-        }
-        else
-        {
-            Debug.LogError($"Không tìm thấy GameObject với tag '{playerTag}'");
-        }
+        FindNearestPlayer();
     }
 
     void Update()
     {
-        if (player == null) return;
+        if (!PhotonNetwork.IsMasterClient) return;
+        if (player == null)
+        {
+            FindNearestPlayer();
+            if (player == null) return;
+        }
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
@@ -46,43 +51,21 @@ public class EnemyAI : MonoBehaviour
         {
             Vector2 direction = (player.position - transform.position).normalized;
 
-            // Xử lý hướng quay chính xác
-            if (flipSpriteBasedOnDirection)
+            if (flipSpriteBasedOnDirection && spriteRenderer != null)
             {
-                // Flip sprite theo hướng di chuyển (chỉ khi có SpriteRenderer)
-                if (spriteRenderer != null)
-                {
-                    spriteRenderer.flipX = direction.x < 0;
-                }
-                else
-                {
-                    // Fallback: sử dụng localScale nếu không có SpriteRenderer
-                    transform.localScale = new Vector3(
-                        Mathf.Sign(direction.x) * Mathf.Abs(transform.localScale.x),
-                        transform.localScale.y,
-                        transform.localScale.z);
-                }
+                spriteRenderer.flipX = direction.x < 0;
+                photonView.RPC("SyncFlip", RpcTarget.All, spriteRenderer.flipX);
             }
 
             if (distanceToPlayer > attackRange)
             {
-                // Di chuyển
                 rb.linearVelocity = direction * moveSpeed;
-
-                if (animator != null)
-                {
-                    animator.SetBool("IsMoving", true);
-                    animator.SetBool("IsAttacking", false);
-                }
+                photonView.RPC("SyncAnimation", RpcTarget.All, true, false);
             }
             else
             {
                 rb.linearVelocity = Vector2.zero;
-
-                if (animator != null)
-                {
-                    animator.SetBool("IsMoving", false);
-                }
+                photonView.RPC("SyncAnimation", RpcTarget.All, false, false);
 
                 if (Time.time - lastAttackTime > attackCooldown)
                 {
@@ -94,27 +77,91 @@ public class EnemyAI : MonoBehaviour
         else
         {
             rb.linearVelocity = Vector2.zero;
-            if (animator != null)
-            {
-                animator.SetBool("IsMoving", false);
-                animator.SetBool("IsAttacking", false);
-            }
+            photonView.RPC("SyncAnimation", RpcTarget.All, false, false);
         }
     }
 
     void Attack()
     {
-        if (animator != null)
-        {
-            animator.SetBool("IsAttacking", true);
-        }
+        photonView.RPC("SyncAnimation", RpcTarget.All, false, true);
 
         if (Vector2.Distance(transform.position, player.position) <= attackRange)
         {
-            var playerHealth = player.GetComponent<HealthSystem>();
-            if (playerHealth != null)
+            PhotonView playerView = player.GetComponent<PhotonView>();
+            HealthSystem playerHealth = player.GetComponent<HealthSystem>();
+            if (playerView != null && playerHealth != null)
             {
-                playerHealth.TakeDamage(attackDamage);
+                playerView.RPC("TakeDamage", RpcTarget.All, attackDamage);
+            }
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+        healthSystem.TakeDamage(damage);
+        photonView.RPC("PlayHitAnimation", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void SyncFlip(bool flipX)
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.flipX = flipX;
+        }
+    }
+
+    [PunRPC]
+    void SyncAnimation(bool isMoving, bool isAttacking)
+    {
+        if (animator != null)
+        {
+            animator.SetBool("IsMoving", isMoving);
+            animator.SetBool("IsAttacking", isAttacking);
+        }
+    }
+
+    [PunRPC]
+    void PlayHitAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Hit");
+        }
+    }
+
+    void FindNearestPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
+        float closestDistance = float.MaxValue;
+        Transform closestPlayer = null;
+
+        foreach (var playerObj in players)
+        {
+            float distance = Vector2.Distance(transform.position, playerObj.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlayer = playerObj.transform;
+            }
+        }
+
+        player = closestPlayer;
+        if (player == null)
+        {
+            Debug.LogWarning("Không tìm thấy người chơi nào!");
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SpawnManager spawnManager = FindObjectOfType<SpawnManager>();
+            if (spawnManager != null)
+            {
+                spawnManager.EnemyDefeated(gameObject);
             }
         }
     }
