@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: Zombie
   m_EditorClassIdentifier: 
   Point: 100
-  Health: 80
+  Health: 10
   Speed: 5
   Damage: 10
+  Range: 2
+  Attack_Rate: 5
+  WaitTime: 1
   EnemyModel: {fileID: 1996810818875795873, guid: 595a830a1ce035446846d471aef83638, type: 3}
+  Detection_Range: 20
+  Detection_Rate: 0.2
+  Chasing_Time_Threshold: 1
