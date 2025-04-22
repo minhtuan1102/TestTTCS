@@ -1,35 +1,35 @@
-using System;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
+using Photon.Pun;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
-using UnityEngine.XR;
 
-public class Player : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(HealthSystem))]
+[RequireComponent(typeof(PlayerStamina))]
+public class Player : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public float range = 5f; // Player range
-
-    private float vision = 5f; // Player vision
-    public float minVision = -2f; // limit zoom in
-    public float maxVision = 2f; // limit zoom out
-    public float zoomSpeed = 5f;  // Zoom speed
-    public float moveZoomDecrease = 2f; // Vison reduce when moving
+    public float range = 5f;
+    private float vision = 5f;
+    public float minVision = -2f;
+    public float maxVision = 2f;
+    public float zoomSpeed = 5f;
+    public float moveZoomDecrease = 2f;
 
     public float moveSpeed = 5f;
     public float maxSpeed = 10f;
-    public float acceleration = 15f; // Speed up smoothly
-    public float deceleration = 10f; // Slow down smoothly
-    public float linearDrag = 4f; // Adjust for natural movement
+    public float acceleration = 15f;
+    public float deceleration = 10f;
+    public float linearDrag = 4f;
     private Vector3 moveDirrection;
 
     public Vector2 minBounds;
     public Vector2 maxBounds;
 
-    public float dashSpeed = 10f; // Dash speed
-    public float dashDuration = 0.2f; // Dash time
+    public float dashSpeed = 10f;
+    public float dashDuration = 0.2f;
+    public float dashCooldown = 1f; // Thời gian chờ giữa các lần dash
     private bool isDashing = false;
     private float dashTime;
+    private float dashCooldownTimer;
 
     private Rigidbody2D rb;
     private Camera cam;
@@ -37,40 +37,51 @@ public class Player : MonoBehaviour
     private float targetVision;
 
     private SpriteRenderer skin;
-
     private float cellSize = 1f;
 
     private GameObject main_hand;
     public float Hand_Radius = 0.5f;
     private float rotationSpeed = 10f;
 
-    public float recoilForce = 2f;  // Base recoil force
-    public float recoilRecoverySpeed = 5f; // How fast recoil returns to normal
-    public float dampingFactor = 0.1f; // Smooth damping factor
-    private float recoilOffset = 0f; // Recoil displacement (single float)
-    private float recoilVelocity = 0f; // Smooth recoil movement
+    public float recoilForce = 2f;
+    public float recoilRecoverySpeed = 5f;
+    public float dampingFactor = 0.1f;
+    private float recoilOffset = 0f;
+    private float recoilVelocity = 0f;
 
-    public float swingSpeed = 10f; // Speed of swing increasing
+    public float swingSpeed = 10f;
     public float swingOffset = 30f;
     public float swingRecoil = -90f;
-    private float currentSwing = 0f; // Current swing value
-    private bool isSwinging = false; // Whether swinging is happening
-
-    private float targetSwing = 0f; // The target swing angle (can be set dynamically)
+    private float currentSwing = 0f;
+    private float targetSwing = 0f;
     private float inverse = 1f;
 
     private Collider2D player_collider;
+    private HealthSystem healthSystem;
+    private PlayerStamina staminaSystem;
+
+    private Vector3 networkPosition;
+    private Quaternion networkHandRotation;
+    private Vector3 networkScale;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
         player_collider = GetComponent<BoxCollider2D>();
         main_hand = transform.Find("Main").gameObject;
+        healthSystem = GetComponent<HealthSystem>();
+        staminaSystem = GetComponent<PlayerStamina>();
 
-        Tilemap tilemap = GetComponent<Tilemap>();
+        // Kiểm tra Tilemap
+        Tilemap tilemap = FindObjectOfType<Tilemap>();
         if (tilemap != null)
         {
             cellSize = tilemap.layoutGrid.cellSize.x;
+        }
+        else
+        {
+            Debug.LogWarning("Tilemap not found in scene. Using default cellSize.");
         }
 
         rb.gravityScale = 0;
@@ -78,155 +89,231 @@ public class Player : MonoBehaviour
         rb.linearDamping = linearDrag;
         cam = Camera.main;
         targetVision = vision;
+
+        if (main_hand == null)
+        {
+            Debug.LogError("Main hand GameObject not found! Please ensure a child GameObject named 'Main' exists.");
+        }
     }
 
     void Update()
     {
-        // Get Input (WASD or Arrow Keys)
+        if (!photonView.IsMine) return;
+
+        // Xử lý input di chuyển
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
 
-        // If the player presses Q and is not already dashing, start the dash
-        if (Input.GetKeyDown(KeyCode.Q) && !isDashing)
+        // Xử lý input dash
+        dashCooldownTimer -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Q) && !isDashing && dashCooldownTimer <= 0f && staminaSystem.CanDash())
         {
-            // Set the dash direction to the movement direction
-            if (rb.linearVelocity.magnitude > 0)
-            {
-                moveDirrection = rb.linearVelocity.normalized;
-            }
-
-            // Start dashing
-            isDashing = true;
-            dashTime = 0;
+            moveDirrection = movement.magnitude > 0 ? movement.normalized : new Vector2(inverse, 0);
+            staminaSystem.ConsumeStamina(staminaSystem.dashStaminaCost);
+            photonView.RPC("RPC_StartDash", RpcTarget.All);
+            dashCooldownTimer = dashCooldown;
+            staminaSystem.ResetDash(); // Đảm bảo canDash được đặt lại sau cooldown
         }
 
-        if (Input.GetMouseButtonDown(0)) // Left mouse button (fire)
+        // Xử lý input tấn công
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-            // Example: Normal shot with base recoil
-            
-            // Example: Charged shot with **double recoil**
-            // TriggerRecoil(fireDirection, 2f);
-
-            
-
+            FireBullet fireBullet = main_hand.GetComponent<FireBullet>();
+            Melee melee = main_hand.GetComponent<Melee>();
+            if (fireBullet != null)
+            {
+                photonView.RPC("RPC_Shoot", RpcTarget.All, fireDirection, 20f, 5f, 1);
+            }
+            else if (melee != null)
+            {
+                photonView.RPC("RPC_MeleeAttack", RpcTarget.All, 20f);
+            }
         }
 
-        // Normalize diagonal movement
+        // Chuẩn hóa vector di chuyển
         if (movement.magnitude > 1)
             movement.Normalize();
 
+        // Điều chỉnh tầm nhìn camera
         if (movement.magnitude > 0.1f)
         {
-            // Reduce vision when moving
             targetVision = Mathf.Max(range + minVision, range + maxVision - moveZoomDecrease);
         }
         else
         {
-            // Icrease vision when idle
             targetVision = range + maxVision;
         }
 
-        // Smooth zoom
         vision = Mathf.Lerp(vision, targetVision * cellSize, Time.deltaTime * zoomSpeed);
 
-        // Camera update
+        // Cập nhật camera
         if (cam.orthographic)
             cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, vision, Time.deltaTime * zoomSpeed);
         else
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, vision * zoomSpeed, Time.deltaTime * zoomSpeed);
 
-        // Smooth Camera Follow
         Vector3 targetCamPos = new Vector3(rb.position.x, rb.position.y, -10);
         cam.transform.position = Vector3.Lerp(cam.transform.position, targetCamPos, Time.deltaTime * 3f);
     }
 
-    // Function to set the target swing angle dynamically
     public void TriggerSwing(float angle)
     {
-        targetSwing = angle; // Change the target swing angle
+        targetSwing = angle;
+        photonView.RPC("RPC_TriggerSwing", RpcTarget.All, angle);
     }
 
     public void TriggerRecoil(float intensity)
     {
         recoilOffset = recoilForce * intensity;
+        photonView.RPC("RPC_TriggerRecoil", RpcTarget.All, intensity);
+    }
+
+    [PunRPC]
+    void RPC_Shoot(Vector2 fireDirection, float damage, float spread, int fireAmount)
+    {
+        FireBullet fireBullet = main_hand.GetComponent<FireBullet>();
+        if (fireBullet != null)
+        {
+            fireBullet.Shoot(damage, spread, fireAmount);
+            TriggerRecoil(1f);
+            TriggerSwing(swingOffset);
+        }
+    }
+
+    [PunRPC]
+    void RPC_MeleeAttack(float damage)
+    {
+        Melee melee = main_hand.GetComponent<Melee>();
+        if (melee != null)
+        {
+            melee.TriggerAttack(damage);
+            TriggerRecoil(1f);
+            TriggerSwing(swingOffset);
+        }
+    }
+
+    [PunRPC]
+    void RPC_TriggerSwing(float angle)
+    {
+        targetSwing = angle;
+    }
+
+    [PunRPC]
+    void RPC_TriggerRecoil(float intensity)
+    {
+        recoilOffset = recoilForce * intensity;
+    }
+
+    [PunRPC]
+    public void RPC_StartDash()
+    {
+        isDashing = true;
+        dashTime = 0;
+    }
+
+    [PunRPC]
+    public void RPC_EndDash()
+    {
+        isDashing = false;
     }
 
     void FixedUpdate()
     {
-
-        if (isDashing)
+        if (photonView.IsMine)
         {
-            // Move the player in the dash direction
-            rb.linearVelocity = moveDirrection * dashSpeed;
-
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"),true);
-
-            // Timer for the dash duration
-            dashTime += Time.fixedDeltaTime;
-
-            // Stop dashing after the duration
-            if (dashTime >= dashDuration)
+            if (isDashing)
             {
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"),false);
-                isDashing = false;
-                rb.linearVelocity = Vector2.zero; // Stop player movement after dash
+                rb.linearVelocity = moveDirrection * dashSpeed;
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
+
+                dashTime += Time.fixedDeltaTime;
+                if (dashTime >= dashDuration)
+                {
+                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+                    isDashing = false;
+                    rb.linearVelocity = Vector2.zero;
+                    photonView.RPC("RPC_EndDash", RpcTarget.All);
+                }
             }
-        }
 
-        if (movement.magnitude > 0)
-        {
-            // Apply acceleration-based force for smoother movement
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, movement * maxSpeed, Time.fixedDeltaTime * acceleration);
+            if (movement.magnitude > 0 && !isDashing)
+            {
+                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, movement * maxSpeed, Time.fixedDeltaTime * acceleration);
+            }
+            else if (!isDashing)
+            {
+                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.fixedDeltaTime * deceleration);
+            }
+
+            // Giới hạn vị trí
+            rb.position = new Vector2(
+                Mathf.Clamp(rb.position.x, minBounds.x, maxBounds.x),
+                Mathf.Clamp(rb.position.y, minBounds.y, maxBounds.y)
+            );
+
+            // Xử lý xoay tay
+            Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 localScale = main_hand.transform.localScale;
+            if (mousePosition.x > transform.position.x)
+            {
+                skin.flipX = false;
+                inverse = 1f;
+                localScale.y = Mathf.Abs(localScale.y);
+            }
+            else
+            {
+                skin.flipX = true;
+                inverse = -1f;
+                localScale.y = -Mathf.Abs(localScale.y);
+            }
+
+            main_hand.transform.localScale = localScale;
+
+            // Xử lý recoil và swing
+            recoilOffset = Mathf.SmoothDamp(recoilOffset, 0f, ref recoilVelocity, recoilRecoverySpeed * Time.deltaTime);
+            currentSwing = Mathf.MoveTowards(currentSwing, targetSwing, swingSpeed * Time.deltaTime);
+
+            if (currentSwing == targetSwing)
+            {
+                targetSwing = 0f;
+            }
+
+            Vector3 direction = mousePosition - main_hand.transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
+            main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
         }
         else
         {
-            // Apply deceleration to slow down smoothly
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.fixedDeltaTime * deceleration);
+            transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * 10);
+            main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, networkHandRotation, Time.deltaTime * 10);
+            main_hand.transform.localScale = networkScale;
         }
+    }
 
-        // Keep player inside bounds
-        rb.position = new Vector2(
-            Mathf.Clamp(rb.position.x, minBounds.x, maxBounds.x),
-            Mathf.Clamp(rb.position.y, minBounds.y, maxBounds.y)
-        );
-
-        // Update Rendering
-        Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition); // Mouse pos
-        Vector3 localScale = main_hand.transform.localScale;
-        if (mousePosition.x > transform.position.x)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
         {
-            skin.flipX = false; // Flip skin
-            inverse = 1f;
-            localScale.y = Mathf.Abs(localScale.y);
+            stream.SendNext(transform.position);
+            stream.SendNext(main_hand.transform.rotation);
+            stream.SendNext(healthSystem.CurrentHealth);
+            stream.SendNext(staminaSystem.currentStamina);
+            stream.SendNext(currentSwing);
+            stream.SendNext(skin.flipX);
+            stream.SendNext(main_hand.transform.localScale);
+            stream.SendNext(isDashing);
         }
         else
         {
-            skin.flipX = true;
-            inverse = -1f;
-            localScale.y = -Mathf.Abs(localScale.y);
+            networkPosition = (Vector3)stream.ReceiveNext();
+            networkHandRotation = (Quaternion)stream.ReceiveNext();
+            healthSystem.TakeDamage(healthSystem.CurrentHealth - (int)stream.ReceiveNext());
+            currentSwing = (float)stream.ReceiveNext();
+            skin.flipX = (bool)stream.ReceiveNext();
+            networkScale = (Vector3)stream.ReceiveNext();
+            isDashing = (bool)stream.ReceiveNext();
         }
-
-        main_hand.transform.localScale = localScale;
-
-        // Hand movement
-
-        // Smoothly interpolate recoil
-        recoilOffset = Mathf.SmoothDamp(recoilOffset, 0f, ref recoilVelocity, recoilRecoverySpeed * Time.deltaTime);
-        currentSwing = Mathf.MoveTowards(currentSwing, targetSwing, swingSpeed * Time.deltaTime);
-
-        // If we reached the target swing angle, stop swinging and reset to 0
-        if (currentSwing == targetSwing)
-        {
-            targetSwing = 0f;
-        }
-
-        Vector3 direction = mousePosition - main_hand.transform.position;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Hand Update
-        main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
-        main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset)  * Hand_Radius;
     }
 }
