@@ -19,7 +19,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: asia
     Server: 
     Port: 0
     ProxyServer: 
@@ -27,9 +27,9 @@ MonoBehaviour:
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0
-    NetworkLogging: 1
+    NetworkLogging: 5
   DevRegion: 
-  PunLogging: 0
+  PunLogging: 2
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
@@ -40,6 +40,20 @@ MonoBehaviour:
   - Fire
   - RespawnSpaceship
   - SyncTile
+  - RPC_EndDash
+  - RPC_Shoot
+  - RPC_StartDash
+  - RPC_TriggerAttack
+  - RPC_TriggerRecoil
+  - RPC_TriggerSwing
+  - RPC_UpdateHealth
+  - RPC_Pickup
+  - RPC_Die
+  - RPC_MeleeAttack
+  - RPC_UpdateStamina
+  - RPC_ApplyDamage
+  - RPC_DealDamage
+  - RPC_ApplyDamageToEnemy
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

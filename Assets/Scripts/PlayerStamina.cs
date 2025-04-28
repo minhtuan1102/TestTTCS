@@ -1,89 +1,99 @@
-﻿    using UnityEngine;
-    using UnityEngine.UI; // Để sử dụng Slider
-    using TMPro; // Để sử dụng TextMeshPro
+﻿using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using Photon.Pun;
 
-    public class PlayerStamina : MonoBehaviour
+[RequireComponent(typeof(Player))]
+public class PlayerStamina : MonoBehaviourPunCallbacks
+{
+    public Slider staminaBar; // Thanh UI hiển thị stamina
+    public TextMeshProUGUI staminaText; // Text hiển thị giá trị stamina
+    public float maxStamina = 100f; // Stamina tối đa
+    public float currentStamina; // Stamina hiện tại
+    public float dashStaminaCost = 20f; // Lượng stamina tiêu thụ khi dash
+    public float minStaminaToDash = 30f; // Stamina tối thiểu để dash
+    public float staminaRegenRate = 10f; // Tốc độ hồi stamina mỗi giây
+
+    private bool canDash = true; // Trạng thái cho phép dash
+    private bool isDashLocked = false; // Khóa dash nếu stamina không đủ
+    private Player player; // Tham chiếu đến component Player
+
+    void Start()
     {
-        public Slider staminaBar; // Thanh thể lực (Slider)
-        public TextMeshProUGUI staminaText; // Text để hiển thị chỉ số thể lực
-        public float maxStamina = 100f; // Thể lực tối đa
-        public float currentStamina; // Thể lực hiện tại
-        public float dashStaminaCost = 20f; // Lượng thể lực tiêu hao khi lướt
-        public float minStaminaToDash = 30f; // Mức thể lực tối thiểu để có thể lướt
-
-        private bool canDash = true; // Kiểm tra xem có thể lướt được không
-        private bool isDashLocked = false; // Biến mới để khóa lướt khi thể lực không đủ
-
-        void Start()
+        // Lấy component Player
+        player = GetComponent<Player>();
+        if (player == null)
         {
-            currentStamina = maxStamina; // Khởi tạo thể lực đầy
-            staminaBar.maxValue = maxStamina; // Đặt giá trị tối đa cho Slider
-            staminaBar.value = currentStamina; // Cập nhật giá trị ban đầu
-            UpdateStaminaUI(); // Cập nhật giao diện ban đầu
+            Debug.LogError("Player component not found on GameObject!");
         }
 
-        void Update()
+        // Kiểm tra staminaBar và staminaText
+        if (staminaBar == null)
         {
-            // Kiểm tra thể lực để quyết định có khóa lướt hay không
-            if (currentStamina < minStaminaToDash || currentStamina < dashStaminaCost)
-            {
-                isDashLocked = true; // Khóa lướt nếu thể lực không đủ
-            }
-            else
-            {
-                isDashLocked = false; // Mở khóa lướt nếu thể lực đủ
-            }
-
-            // Kiểm tra input để lướt (sử dụng phím Q)
-            if (Input.GetKeyDown(KeyCode.Q) && canDash && !isDashLocked)
-            {
-                if (currentStamina >= minStaminaToDash && currentStamina >= dashStaminaCost)
-                {
-                    Dash();
-                }
-   
-            }
+            Debug.LogWarning("StaminaBar Slider not assigned in Inspector!");
+        }
+        if (staminaText == null)
+        {
+            Debug.LogWarning("StaminaText TextMeshProUGUI not assigned in Inspector!");
         }
 
-        void Dash()
+        // Khởi tạo stamina
+        currentStamina = maxStamina;
+        if (staminaBar != null)
         {
-            // Giảm thể lực khi lướt
-            currentStamina -= dashStaminaCost;
-            currentStamina = Mathf.Max(currentStamina, 0); // Đảm bảo không âm
-            UpdateStaminaUI(); // Cập nhật giao diện
-
-            // Thực hiện hành động lướt (dash) ở đây
-            Debug.Log("Player dashed!");
-
-            // Tạm thời khóa khả năng lướt (cooldown)
-            canDash = false;
-            Invoke("ResetDash", 1f); // Sau 1 giây có thể lướt lại
-        }
-
-        void ResetDash()
-        {
-            canDash = true;
-        }
-
-        public void RestoreStamina(float amount)
-        {
-            // Hồi phục thể lực
-            currentStamina += amount;
-            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina); // Giới hạn giá trị từ 0 đến maxStamina
-            UpdateStaminaUI(); // Cập nhật giao diện
-        }
-
-        void UpdateStaminaUI()
-        {
-            // Cập nhật giá trị thanh thể lực
+            staminaBar.maxValue = maxStamina;
             staminaBar.value = currentStamina;
-
-            // Cập nhật chỉ số thể lực dạng "current/max"
-            if (staminaText != null)
-            {
-                staminaText.text = Mathf.RoundToInt(currentStamina) + "/" + Mathf.RoundToInt(maxStamina);
-            }
         }
-
-    
+        UpdateStaminaUI();
     }
+
+    void Update()
+    {
+        if (!photonView.IsMine) return;
+
+        // Kiểm tra điều kiện khóa dash
+        isDashLocked = currentStamina < minStaminaToDash || currentStamina < dashStaminaCost;
+    }
+
+    // Tiêu thụ stamina
+    public void ConsumeStamina(float amount)
+    {
+        if (!photonView.IsMine) return;
+
+        currentStamina -= amount;
+        currentStamina = Mathf.Max(currentStamina, 0);
+        photonView.RPC("RPC_UpdateStamina", RpcTarget.AllBuffered, currentStamina);
+    }
+
+    // Cập nhật UI stamina
+    private void UpdateStaminaUI()
+    {
+        if (staminaBar != null)
+        {
+            staminaBar.value = currentStamina;
+        }
+        if (staminaText != null)
+        {
+            staminaText.text = $"{Mathf.RoundToInt(currentStamina)}/{Mathf.RoundToInt(maxStamina)}";
+        }
+    }
+
+    [PunRPC]
+    void RPC_UpdateStamina(float newStamina)
+    {
+        currentStamina = newStamina;
+        UpdateStaminaUI();
+    }
+
+    // Kiểm tra xem có thể dash được không
+    public bool CanDash()
+    {
+        return canDash && !isDashLocked && currentStamina >= dashStaminaCost && currentStamina >= minStaminaToDash;
+    }
+
+    // Đặt lại khả năng dash sau cooldown
+    public void ResetDash()
+    {
+        canDash = true;
+    }
+}

@@ -1,84 +1,107 @@
-﻿using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
-[RequireComponent(typeof(NavMeshAgent))]
+using Photon.Pun;
 
-public class EnemyAI : MonoBehaviour
+// Yêu cầu các component cần thiết
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(HealthSystem))]
+public class EnemyAI : MonoBehaviourPunCallbacks, IPunObservable
 {
-    private UnityEngine.Vector3 targetPos;
+    // Biến lưu vị trí mục tiêu và Transform của mục tiêu (người chơi)
+    private Vector3 targetPos;
     private Transform target;
 
-    NavMeshAgent agent;
+    // Component NavMeshAgent để điều khiển di chuyển
+    private NavMeshAgent agent;
+    // LayerMask để kiểm tra chướng ngại vật khi phát hiện người chơi
     public LayerMask obstacleMask;
+    // ScriptableObject chứa dữ liệu cấu hình của enemy
     public EnemyData data;
 
-    // Timer
+    // Các bộ đếm thời gian để quản lý hành vi
+    private float chaseTimer = 0f; // Thời gian đuổi theo
+    private float detectTimer = 0f; // Thời gian phát hiện
+    private float attackTimer = 0f; // Thời gian giữa các lần tấn công
+    private float waitingTimer = 0f; // Thời gian chờ sau khi tấn công
 
-    private float chaseTimer = 0f;
-    private float detectTimer = 0f;
-    private float attackTimer = 0f;
-    private float waitingTimer = 0f;
+    // Component HealthSystem của enemy
+    private HealthSystem healthSystem;
 
+    // Vị trí mạng để đồng bộ hóa qua Photon
+    private Vector3 networkPosition;
+
+    // Khởi tạo
     void Start()
     {
+        // Lấy component NavMeshAgent
         agent = GetComponent<NavMeshAgent>();
+        // Tắt cập nhật rotation và upAxis vì sử dụng 2D
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-
+        // Thiết lập tốc độ di chuyển từ dữ liệu
         agent.speed = data.Speed;
+        // Lấy component HealthSystem
+        healthSystem = GetComponent<HealthSystem>();
     }
 
+    // Tìm người chơi gần nhất trong tầm nhìn
     private Transform FindPlayer()
     {
         Transform detectedPlayer = null;
         float minDistance = Mathf.Infinity;
-        foreach (Transform player in GameObject.Find("Players").transform)
+        // Tìm tất cả người chơi có tag "Player"
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players)
         {
-            UnityEngine.Vector2 dirToPlayer = (player.position - transform.position).normalized;
-            float distanceToPlayer = UnityEngine.Vector2.Distance(transform.position, player.position);
+            // Tính hướng và khoảng cách đến người chơi
+            Vector2 dirToPlayer = (player.transform.position - transform.position).normalized;
+            float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
+            // Sử dụng Raycast để kiểm tra chướng ngại vật
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer, distanceToPlayer, obstacleMask);
 
+            // Nếu không có chướng ngại vật, kiểm tra khoảng cách
             if (hit.collider == null)
             {
                 if (minDistance > distanceToPlayer)
                 {
                     minDistance = distanceToPlayer;
-                    detectedPlayer = player;
+                    detectedPlayer = player.transform;
                 }
             }
         }
         return detectedPlayer;
     }
 
-    bool CheckIfNear(UnityEngine.Vector3 pos, float radius)
+    // Kiểm tra xem enemy có gần một vị trí cụ thể trong bán kính cho trước không
+    private bool CheckIfNear(Vector3 pos, float radius)
     {
-        if (UnityEngine.Vector3.Distance(transform.position, pos) <= radius)
-        {
-            return true;
-        }
-        return false;
+        return Vector3.Distance(transform.position, pos) <= radius;
     }
 
+    // Cập nhật logic mỗi frame
     private void Update()
     {
-        // Cập nhật tất cả timer
+        // Nếu không phải là instance chính (không phải owner), đồng bộ vị trí
+        if (!photonView.IsMine)
+        {
+            transform.position = Vector3.Lerp(transform.position, networkPosition, Time.deltaTime * 10);
+            return;
+        }
+
+        // Cập nhật các bộ đếm thời gian
         detectTimer += Time.fixedDeltaTime;
         attackTimer += Time.fixedDeltaTime;
         chaseTimer += Time.fixedDeltaTime;
         waitingTimer += Time.fixedDeltaTime;
 
-        // Nếu đang trong thời gian "chờ" sau tấn công thì không làm gì
+        // Nếu đang trong thời gian chờ, không làm gì
         if (waitingTimer < 0f)
         {
             return;
         }
 
-        // Logic phát hiện player
+        // Phát hiện người chơi
         if (detectTimer >= 0f)
         {
             Transform detected = FindPlayer();
@@ -98,27 +121,68 @@ public class EnemyAI : MonoBehaviour
             detectTimer = -data.Detection_Rate;
         }
 
-        // Logic tấn công nếu đủ điều kiện
-        if (attackTimer >= data.Attack_Rate && target != null) // Thêm điều kiện cooldown cho tấn công
+        // Logic tấn công
+        if (attackTimer >= data.Attack_Rate && target != null)
         {
             if (CheckIfNear(target.position, data.Range))
             {
-                attackTimer = 0f; // Đặt lại thời gian tấn công (reset cooldown)
-                waitingTimer = -data.WaitTime; // Delay sau khi đánh
-                EnemySwing swing_Attack = transform.Find("Attack").GetComponent<EnemySwing>();
-                if (swing_Attack != null)
-                {
-                    swing_Attack.TriggerAttack(data.Damage);
-                }
+                // Đặt lại bộ đếm thời gian tấn công và chờ
+                attackTimer = 0f;
+                waitingTimer = -data.WaitTime;
+                // Gọi RPC để thực hiện tấn công
+                photonView.RPC("RPC_TriggerAttack", RpcTarget.All, data.Damage, target.gameObject.GetPhotonView().ViewID);
+                // Dừng di chuyển khi tấn công
                 agent.SetDestination(transform.position);
             }
         }
 
-        // Di chuyển đến target nếu không chờ
+        // Di chuyển đến mục tiêu nếu không trong thời gian chờ
         if (waitingTimer >= 0f && target != null)
         {
             agent.SetDestination(targetPos);
         }
+    }
 
+    // RPC để thực hiện tấn công
+    [PunRPC]
+    void RPC_TriggerAttack(float damage, int targetViewID)
+    {
+        PhotonView targetPhotonView = PhotonView.Find(targetViewID);
+        if (targetPhotonView == null)
+        {
+            Debug.LogWarning("Target PhotonView not found!");
+            return;
+        }
+
+        HealthSystem targetHealth = targetPhotonView.gameObject.GetComponent<HealthSystem>();
+        if (targetHealth != null)
+        {
+            targetHealth.TakeDamage((int)damage); // Gọi TakeDamage trực tiếp
+            Debug.Log($"Enemy attacked player {targetPhotonView.gameObject.name} for {damage} damage.");
+        }
+        else
+        {
+            Debug.LogWarning("Target does not have HealthSystem component!");
+        }
+    }
+
+    // Đồng bộ hóa qua Photon
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(healthSystem.CurrentHealth);
+            stream.SendNext(target != null ? target.position : Vector3.zero); // Đồng bộ vị trí mục tiêu
+        }
+        else
+        {
+            networkPosition = (Vector3)stream.ReceiveNext();
+            int receivedHealth = (int)stream.ReceiveNext();
+            Vector3 targetPos = (Vector3)stream.ReceiveNext();
+            healthSystem.TakeDamage(healthSystem.CurrentHealth - receivedHealth);
+            if (targetPos != Vector3.zero)
+                this.targetPos = targetPos;
+        }
     }
 }

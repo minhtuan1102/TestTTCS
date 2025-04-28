@@ -1,5 +1,4 @@
 ﻿using System;
-using TreeEditor;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -17,7 +16,7 @@ public class ItemPickup : MonoBehaviour
     private Transform playerHolder;
     private float fireCooldown = 0f;
 
-    [SerializeReference] public Item itemData; 
+    [SerializeReference] public Item itemData;  
 
     private void Start()
     {
