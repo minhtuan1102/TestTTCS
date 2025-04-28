@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "D:\\UnityProject\\TestTTCS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\unityproject\\testttcs\\assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\unityproject\\testttcs\\assets\\pointinglight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\pointinglight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\unityproject\\testttcs\\assets\\textmesh pro\\examples \u0026 extras\\scripts\\objectspin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\textmesh pro\\examples \u0026 extras\\scripts\\objectspin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\enemyswing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\enemyswing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\melee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\melee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,11 +23,27 @@
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemydata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F79A6470-B4E6-DD9E-DC92-05358A39B160}|NavMeshPlus.csproj|c:\\users\\admin\\downloads\\navmeshplus-master\\navmeshplus-master\\navmeshcomponents\\scripts\\collectsources2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\scripts\\itembehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\itembehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\UnityProject\\TestTTCS\\Assets\\NavMeshComponents\\Editor\\AgentOverride2dEditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\NavMeshComponents\\Editor\\AgentOverride2dEditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\melee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\melee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Admin\\Downloads\\NavMeshPlus-master\\NavMeshPlus-master\\NavMeshComponents\\Scripts\\CollectSources2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{46DE25A7-FE07-14A2-F413-3206328344E9}|NavMeshPlusEditor.csproj|D:\\UnityProject\\TestTTCS\\Assets\\NavMeshComponents\\Editor\\AgentOverride2dEditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{46DE25A7-FE07-14A2-F413-3206328344E9}|NavMeshPlusEditor.csproj|solutionrelative:Assets\\NavMeshComponents\\Editor\\AgentOverride2dEditor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,19 +62,66 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PointingLight.cs",
+              "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\PointingLight.cs",
+              "RelativeDocumentMoniker": "Assets\\PointingLight.cs",
+              "ToolTip": "D:\\UnityProject\\TestTTCS\\Assets\\PointingLight.cs",
+              "RelativeToolTip": "Assets\\PointingLight.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T07:13:26.419Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ObjectSpin.cs",
+              "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\TextMesh Pro\\Examples \u0026 Extras\\Scripts\\ObjectSpin.cs",
+              "RelativeDocumentMoniker": "Assets\\TextMesh Pro\\Examples \u0026 Extras\\Scripts\\ObjectSpin.cs",
+              "ToolTip": "D:\\UnityProject\\TestTTCS\\Assets\\TextMesh Pro\\Examples \u0026 Extras\\Scripts\\ObjectSpin.cs",
+              "RelativeToolTip": "Assets\\TextMesh Pro\\Examples \u0026 Extras\\Scripts\\ObjectSpin.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAACAAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T07:11:26.041Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ItemBehavior.cs",
+              "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\ItemBehavior.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ItemBehavior.cs",
+              "ToolTip": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\ItemBehavior.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ItemBehavior.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T06:13:13.486Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "EnemyAI.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\EnemyAI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAI.cs",
               "ToolTip": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\EnemyAI.cs",
               "RelativeToolTip": "Assets\\Scripts\\EnemyAI.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAADwv10AAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAADwv10AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T09:24:22.177Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T09:24:22.177Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
+              "Title": "CollectSources2d.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\NavMeshPlus-master\\NavMeshPlus-master\\NavMeshComponents\\Scripts\\CollectSources2d.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\NavMeshPlus-master\\NavMeshPlus-master\\NavMeshComponents\\Scripts\\CollectSources2d.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACYAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T09:30:22.703Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "HealthSystem.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\HealthSystem.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\HealthSystem.cs",
@@ -74,7 +133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "Melee.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\Melee.cs",
               "RelativeDocumentMoniker": "Assets\\Melee.cs",
@@ -86,7 +145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "EnemySwing.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\EnemySwing.cs",
               "RelativeDocumentMoniker": "Assets\\EnemySwing.cs",
@@ -94,23 +153,25 @@
               "RelativeToolTip": "Assets\\EnemySwing.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAAADAAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T13:57:07.333Z"
+              "WhenOpened": "2025-04-16T13:57:07.333Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Player.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\Player.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
               "ToolTip": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAANEAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T12:55:49.436Z"
+              "WhenOpened": "2025-04-16T12:55:49.436Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "EnemyData.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\EnemyData.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyData.cs",
@@ -118,25 +179,12 @@
               "RelativeToolTip": "Assets\\Scripts\\EnemyData.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T12:25:16.791Z"
+              "WhenOpened": "2025-04-16T12:25:16.791Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CollectSources2d.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\NavMeshPlus-master\\NavMeshPlus-master\\NavMeshComponents\\Scripts\\CollectSources2d.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\NavMeshPlus-master\\NavMeshPlus-master\\NavMeshComponents\\Scripts\\CollectSources2d.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACYAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T09:30:22.703Z"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "AgentOverride2dEditor.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\NavMeshComponents\\Editor\\AgentOverride2dEditor.cs",
               "RelativeDocumentMoniker": "Assets\\NavMeshComponents\\Editor\\AgentOverride2dEditor.cs",
