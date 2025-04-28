@@ -1,131 +1,132 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections;
 using Photon.Pun;
+using System.Collections;
+
+public enum HealthType
+{
+    Player,
+    Enemy
+}
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class HealthSystem : MonoBehaviourPunCallbacks
 {
+    [Header("Type Settings")]
+    [SerializeField] private HealthType healthType;
+    [SerializeField] private EnemyData enemyData; // Chỉ dùng nếu là Enemy
+
     [Header("Health Settings")]
-    [SerializeField] private int _maxHealth = 100;
-    [SerializeField] private bool _destroyOnDeath = true;
-    [SerializeField] private EnemyData enemyData; // Tùy chọn: lấy máu từ EnemyData
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private bool destroyOnDeath = true;
 
     [Header("Visual Feedback")]
-    [SerializeField] private Color _damageColor = Color.red;
-    [SerializeField] private float _flashDuration = 0.1f;
-    [SerializeField] private GameObject _deathEffect;
+    [SerializeField] private Color damageColor = Color.red;
+    [SerializeField] private float flashDuration = 0.1f;
+    [SerializeField] private GameObject deathEffect;
 
-    [Header("UI References (Set in Editor)")]
-    [SerializeField] private Slider _healthSlider;
-    [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private Canvas _healthCanvas;
+    [Header("UI References")]
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private TMP_Text healthText;
+    [SerializeField] private Canvas healthCanvas;
 
-    private int _currentHealth;
-    private SpriteRenderer _spriteRenderer;
-    private Color _originalColor;
+    private int currentHealth;
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
 
-    public int CurrentHealth => _currentHealth;
-    public int MaxHealth => _maxHealth;
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => maxHealth;
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _originalColor = _spriteRenderer.color;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
 
-        // Tự tìm healthCanvas nếu chưa gán
-        if (_healthCanvas == null)
-        {
-            _healthCanvas = GetComponentInChildren<Canvas>();
-        }
+        if (healthCanvas == null)
+            healthCanvas = GetComponentInChildren<Canvas>();
 
-        // Lấy maxHealth từ EnemyData nếu có
-        _maxHealth = enemyData != null ? (int)enemyData.Health : _maxHealth;
-        _currentHealth = _maxHealth;
+        if (healthType == HealthType.Enemy && enemyData != null)
+            maxHealth = (int)enemyData.Health;
+
+        currentHealth = maxHealth;
 
         InitializeUI();
     }
 
-
-    public void TakeDamage(int damage)
+    public void TakeDamage(int amount)
     {
-        if (!photonView.IsMine || !PhotonNetwork.IsConnectedAndReady) return;
+        // Đã bỏ kiểm tra photonView.IsMine
+        if (currentHealth <= 0) return;
 
-        if (_currentHealth <= 0) return;
+        currentHealth = Mathf.Max(0, currentHealth - amount);
+        photonView.RPC(nameof(RPC_UpdateHealth), RpcTarget.AllBuffered, currentHealth);
 
-        _currentHealth = Mathf.Max(0, _currentHealth - damage);
-        photonView.RPC("RPC_UpdateHealth", RpcTarget.AllBuffered, _currentHealth);
         StartCoroutine(FlashEffect());
 
-        if (_currentHealth <= 0)
-        {
-            photonView.RPC("RPC_Die", RpcTarget.All);
-        }
+        if (currentHealth <= 0)
+            photonView.RPC(nameof(RPC_Die), RpcTarget.All);
     }
 
     public void Heal(int amount)
     {
         if (!photonView.IsMine || !PhotonNetwork.IsConnectedAndReady) return;
 
-        _currentHealth = Mathf.Min(_maxHealth, _currentHealth + amount);
-        photonView.RPC("RPC_UpdateHealth", RpcTarget.AllBuffered, _currentHealth);
+        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        photonView.RPC(nameof(RPC_UpdateHealth), RpcTarget.AllBuffered, currentHealth);
     }
 
     [PunRPC]
-    void RPC_UpdateHealth(int newHealth)
+    private void RPC_UpdateHealth(int newHealth)
     {
-        _currentHealth = newHealth;
+        currentHealth = newHealth;
         UpdateUI();
     }
 
     [PunRPC]
-    void RPC_Die()
+    private void RPC_Die()
     {
-        if (_deathEffect != null)
+        if (deathEffect != null)
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+        switch (healthType)
         {
-            Instantiate(_deathEffect, transform.position, Quaternion.identity);
+            case HealthType.Enemy:
+                SpawnManager spawnManager = FindObjectOfType<SpawnManager>();
+                spawnManager?.EnemyDefeated(gameObject);
+                break;
+            case HealthType.Player:
+                if (GameManager.Instance != null && photonView.IsMine)
+                    GameManager.Instance.ShowGameOver();
+                break;
         }
 
-        if (gameObject.CompareTag("Enemy"))
+        if (destroyOnDeath)
         {
-            SpawnManager spawnManager = FindObjectOfType<SpawnManager>();
-            spawnManager?.EnemyDefeated(gameObject);
-        }
-
-        if (_destroyOnDeath)
-        {
-            Destroy(_healthCanvas?.gameObject);
+            Destroy(healthCanvas?.gameObject);
             if (photonView.IsMine)
-            {
                 PhotonNetwork.Destroy(gameObject);
-            }
         }
         else
         {
             gameObject.SetActive(false);
         }
-
-        if (GameManager.Instance != null && photonView.IsMine && gameObject.CompareTag("Player"))
-        {
-            GameManager.Instance.ShowGameOver();
-        }
     }
 
     private IEnumerator FlashEffect()
     {
-        _spriteRenderer.color = _damageColor;
-        yield return new WaitForSeconds(_flashDuration);
-        _spriteRenderer.color = _originalColor;
+        spriteRenderer.color = damageColor;
+        yield return new WaitForSeconds(flashDuration);
+        spriteRenderer.color = originalColor;
     }
 
     private void InitializeUI()
     {
-        if (_healthSlider != null)
+        if (healthSlider != null)
         {
-            _healthSlider.minValue = 0;
-            _healthSlider.maxValue = _maxHealth;
-            _healthSlider.value = _currentHealth;
+            healthSlider.minValue = 0;
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = currentHealth;
         }
 
         UpdateUI();
@@ -133,22 +134,16 @@ public class HealthSystem : MonoBehaviourPunCallbacks
 
     private void UpdateUI()
     {
-        if (_healthSlider != null)
-        {
-            _healthSlider.value = _currentHealth;
-        }
+        if (healthSlider != null)
+            healthSlider.value = currentHealth;
 
-        if (_healthText != null)
-        {
-            _healthText.text = $"{_currentHealth}/{_maxHealth}";
-        }
+        if (healthText != null)
+            healthText.text = $"{currentHealth}/{maxHealth}";
     }
 
     private void LateUpdate()
     {
-        if (_healthCanvas != null)
-        {
-            _healthCanvas.transform.rotation = Camera.main.transform.rotation;
-        }
+        if (healthCanvas != null && Camera.main != null)
+            healthCanvas.transform.rotation = Camera.main.transform.rotation;
     }
 }

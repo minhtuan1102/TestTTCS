@@ -104,7 +104,7 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
+  m_UseAutoMass: 0
   m_Mass: 1.4228516
   m_LinearDamping: 10
   m_AngularDamping: 50
@@ -204,7 +204,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5313242232560580697}
@@ -239,12 +239,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 770d151b31a877144a213695cab4e5f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
-  _destroyOnDeath: 1
+  healthType: 1
   enemyData: {fileID: 11400000, guid: e90e3962a0126594d8980aac2b26b59a, type: 2}
-  _damageColor: {r: 1, g: 0, b: 0, a: 1}
-  _flashDuration: 0.1
-  _deathEffect: {fileID: 0}
-  _healthSlider: {fileID: 1464098812064222589, guid: df216cf3e16c82e419a6e4332c161a62, type: 3}
-  _healthText: {fileID: 0}
-  _healthCanvas: {fileID: 0}
+  maxHealth: 100
+  destroyOnDeath: 1
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
+  deathEffect: {fileID: 0}
+  healthSlider: {fileID: 0}
+  healthText: {fileID: 0}
+  healthCanvas: {fileID: 0}

@@ -3,48 +3,48 @@
   "WorkspaceRootPath": "D:\\Create with Code\\TestTTCS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\mainmenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\mainmenucontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\create with code\\testttcs\\assets\\scripts\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\lobbycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lobbycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7212F-FFE3-6E10-CEBA-9F34ED427C97}|PhotonUnityNetworking.csproj|d:\\create with code\\testttcs\\assets\\photon\\photonunitynetworking\\code\\photonnetworkpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7212F-FFE3-6E10-CEBA-9F34ED427C97}|PhotonUnityNetworking.csproj|solutionrelative:assets\\photon\\photonunitynetworking\\code\\photonnetworkpart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9C113B77-671F-8C24-BAE1-FA37D877ADC2}|PhotonRealtime.csproj|d:\\create with code\\testttcs\\assets\\photon\\photonrealtime\\code\\loadbalancingclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9C113B77-671F-8C24-BAE1-FA37D877ADC2}|PhotonRealtime.csproj|solutionrelative:assets\\photon\\photonrealtime\\code\\loadbalancingclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\spawnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\spawnmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\create with code\\testttcs\\assets\\scripts\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\networkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyai.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C9C7212F-FFE3-6E10-CEBA-9F34ED427C97}|PhotonUnityNetworking.csproj|D:\\Create with Code\\TestTTCS\\assets\\photon\\photonunitynetworking\\code\\photonnetwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7212F-FFE3-6E10-CEBA-9F34ED427C97}|PhotonUnityNetworking.csproj|solutionrelative:assets\\photon\\photonunitynetworking\\code\\photonnetwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\healthsystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\enemydata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemydata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\photoninitilizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\photoninitilizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\create with code\\testttcs\\assets\\scripts\\itembehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\itembehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\playerstamina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerstamina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\staminapickup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\staminapickup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\melee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\melee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\Create with Code\\TestTTCS\\assets\\scripts\\healthpickup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\healthpickup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,147 +54,150 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 10,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EnemyData.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\EnemyData.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyData.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\EnemyData.cs",
+              "RelativeToolTip": "Assets\\Scripts\\EnemyData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T03:15:26.115Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NetworkManager.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\NetworkManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\NetworkManager.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\NetworkManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\NetworkManager.cs",
+              "ViewState": "AgIAAJwAAAAAAAAAAAAcwMIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T07:02:10.713Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PhotonNetworkPart.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
-              "RelativeDocumentMoniker": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
-              "RelativeToolTip": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetworkPart.cs",
-              "ViewState": "AgIAAOMJAAAAAAAAAADwv/EJAADcAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "ItemBehavior.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\ItemBehavior.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\ItemBehavior.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\ItemBehavior.cs",
+              "RelativeToolTip": "Assets\\Scripts\\ItemBehavior.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T07:57:18.745Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LoadBalancingClient.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
-              "RelativeDocumentMoniker": "Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
-              "RelativeToolTip": "Assets\\Photon\\PhotonRealtime\\Code\\LoadBalancingClient.cs",
-              "ViewState": "AgIAAKgKAAAAAAAAAAAawLcKAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T07:46:44.191Z",
+              "WhenOpened": "2025-04-28T06:48:56.741Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "Item.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\Item.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Item.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\Item.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Item.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Melee.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Melee.cs",
+              "RelativeDocumentMoniker": "Assets\\Melee.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Melee.cs",
+              "RelativeToolTip": "Assets\\Melee.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI8AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T02:43:29.192Z"
+              "WhenOpened": "2025-04-28T06:28:25.752Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HealthSystem.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\HealthSystem.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\HealthSystem.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\HealthSystem.cs",
+              "RelativeToolTip": "Assets\\Scripts\\HealthSystem.cs",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAcwJUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T03:15:32.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "HealthPickup.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\HealthPickup.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\HealthPickup.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\HealthPickup.cs",
+              "RelativeToolTip": "Assets\\Scripts\\HealthPickup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T03:15:30.492Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EnemyAI.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\EnemyAI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAI.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\EnemyAI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\EnemyAI.cs",
+              "ViewState": "AgIAAJMAAAAAAAAAAAA8wLwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T03:15:24.196Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "PhotonNetwork.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetwork.cs",
-              "RelativeDocumentMoniker": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetwork.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetwork.cs",
-              "RelativeToolTip": "Assets\\Photon\\PhotonUnityNetworking\\Code\\PhotonNetwork.cs",
-              "ViewState": "AgIAAN4GAAAAAAAAAAAUwOwGAAB6AAAAAAAAAA==",
+              "Title": "StaminaPickup.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\StaminaPickup.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\StaminaPickup.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\StaminaPickup.cs",
+              "RelativeToolTip": "Assets\\Scripts\\StaminaPickup.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T00:59:11.264Z"
+              "WhenOpened": "2025-04-28T03:15:21.003Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "PlayerStamina.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\PlayerStamina.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerStamina.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\PlayerStamina.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerStamina.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T03:15:18.503Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Player.cs",
               "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\Player.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Player.cs",
               "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\Player.cs",
               "RelativeToolTip": "Assets\\Scripts\\Player.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEEBAAAAAAAAAAAuwGsBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T14:50:31.267Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "NetworkManager.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\NetworkManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\NetworkManager.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\NetworkManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\NetworkManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T14:48:38.687Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "PhotonInitilizer.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\PhotonInitilizer.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\PhotonInitilizer.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\PhotonInitilizer.cs",
-              "RelativeToolTip": "Assets\\Scripts\\PhotonInitilizer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T14:38:32.101Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SpawnManager.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\SpawnManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\SpawnManager.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\SpawnManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\SpawnManager.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAqwHYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T08:08:05.072Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MainMenuController.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\MainMenuController.cs",
-              "RelativeDocumentMoniker": "Assets\\MainMenuController.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\MainMenuController.cs",
-              "RelativeToolTip": "Assets\\MainMenuController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAuwCEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T01:02:42.349Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "LobbyController.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\LobbyController.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\LobbyController.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\LobbyController.cs",
-              "RelativeToolTip": "Assets\\Scripts\\LobbyController.cs",
-              "ViewState": "AgIAAF0AAAAAAAAAAAA8wHcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:34:51.388Z",
+              "WhenOpened": "2025-04-28T03:15:13.863Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "LoginController.cs",
-              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\LoginController.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\LoginController.cs",
-              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\LoginController.cs",
-              "RelativeToolTip": "Assets\\Scripts\\LoginController.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAqwGQAAAABAAAAAAAAAA==",
+              "Title": "SpawnManager.cs",
+              "DocumentMoniker": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\SpawnManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\SpawnManager.cs",
+              "ToolTip": "D:\\Create with Code\\TestTTCS\\Assets\\Scripts\\SpawnManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\SpawnManager.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAiwIcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-19T10:18:47.337Z",
+              "WhenOpened": "2025-04-28T03:15:05.313Z",
               "EditorCaption": ""
             }
           ]

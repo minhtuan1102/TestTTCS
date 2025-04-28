@@ -147,7 +147,6 @@ public class EnemyAI : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void RPC_TriggerAttack(float damage, int targetViewID)
     {
-        // Tìm PhotonView của mục tiêu
         PhotonView targetPhotonView = PhotonView.Find(targetViewID);
         if (targetPhotonView == null)
         {
@@ -155,12 +154,10 @@ public class EnemyAI : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
 
-        // Lấy HealthSystem của mục tiêu
         HealthSystem targetHealth = targetPhotonView.gameObject.GetComponent<HealthSystem>();
         if (targetHealth != null)
         {
-            // Gây sát thương
-            targetHealth.TakeDamage((int)damage);
+            targetHealth.TakeDamage((int)damage); // Gọi TakeDamage trực tiếp
             Debug.Log($"Enemy attacked player {targetPhotonView.gameObject.name} for {damage} damage.");
         }
         else
@@ -174,16 +171,18 @@ public class EnemyAI : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (stream.IsWriting)
         {
-            // Gửi vị trí và máu của enemy
             stream.SendNext(transform.position);
             stream.SendNext(healthSystem.CurrentHealth);
+            stream.SendNext(target != null ? target.position : Vector3.zero); // Đồng bộ vị trí mục tiêu
         }
         else
         {
-            // Nhận vị trí và cập nhật máu
             networkPosition = (Vector3)stream.ReceiveNext();
             int receivedHealth = (int)stream.ReceiveNext();
+            Vector3 targetPos = (Vector3)stream.ReceiveNext();
             healthSystem.TakeDamage(healthSystem.CurrentHealth - receivedHealth);
+            if (targetPos != Vector3.zero)
+                this.targetPos = targetPos;
         }
     }
 }

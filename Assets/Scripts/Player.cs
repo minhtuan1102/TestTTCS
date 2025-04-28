@@ -71,7 +71,33 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         player_collider = GetComponent<BoxCollider2D>();
         main_hand = transform.Find("Main").gameObject;
         healthSystem = GetComponent<HealthSystem>();
-        staminaSystem = GetComponent<PlayerStamina>();
+        staminaSystem = GetComponent < PlayerStamina>();
+
+        // Kiểm tra các component cần thiết
+        if (rb == null)
+        {
+            Debug.LogError($"Rigidbody2D không được tìm thấy trên {gameObject.name}!");
+        }
+        if (skin == null)
+        {
+            Debug.LogError($"SpriteRenderer không được tìm thấy trên {gameObject.name}!");
+        }
+        if (player_collider == null)
+        {
+            Debug.LogError($"BoxCollider2D không được tìm thấy trên {gameObject.name}!");
+        }
+        if (main_hand == null)
+        {
+            Debug.LogError("Main hand GameObject không được tìm thấy! Vui lòng đảm bảo có GameObject con tên 'Main'.");
+        }
+        if (healthSystem == null)
+        {
+            Debug.LogError($"HealthSystem không được tìm thấy trên {gameObject.name}!");
+        }
+        if (staminaSystem == null)
+        {
+            Debug.LogError($"PlayerStamina không được tìm thấy trên {gameObject.name}!");
+        }
 
         // Kiểm tra Tilemap
         Tilemap tilemap = FindObjectOfType<Tilemap>();
@@ -81,7 +107,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            Debug.LogWarning("Tilemap not found in scene. Using default cellSize.");
+            Debug.LogWarning("Tilemap không được tìm thấy trong scene. Sử dụng cellSize mặc định.");
         }
 
         rb.gravityScale = 0;
@@ -89,11 +115,6 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         rb.linearDamping = linearDrag;
         cam = Camera.main;
         targetVision = vision;
-
-        if (main_hand == null)
-        {
-            Debug.LogError("Main hand GameObject not found! Please ensure a child GameObject named 'Main' exists.");
-        }
     }
 
     void Update()
@@ -294,26 +315,50 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning($"Player {gameObject.name} đã bị hủy, bỏ qua đồng bộ.");
+            return;
+        }
+
         if (stream.IsWriting)
         {
-            stream.SendNext(transform.position);
-            stream.SendNext(main_hand.transform.rotation);
-            stream.SendNext(healthSystem.CurrentHealth);
-            stream.SendNext(staminaSystem.currentStamina);
-            stream.SendNext(currentSwing);
-            stream.SendNext(skin.flipX);
-            stream.SendNext(main_hand.transform.localScale);
-            stream.SendNext(isDashing);
+            // Kiểm tra null trước khi gửi dữ liệu
+            if (main_hand == null || healthSystem == null || staminaSystem == null || skin == null)
+            {
+                Debug.LogWarning($"Không thể gửi dữ liệu đồng bộ từ {gameObject.name}: Một hoặc nhiều component là null.");
+                return;
+            }
+
+            stream.SendNext(transform.position);                    // Vector3
+            stream.SendNext(main_hand.transform.rotation);          // Quaternion
+            stream.SendNext(healthSystem.CurrentHealth);            // int
+            stream.SendNext(staminaSystem.currentStamina);          // float
+            stream.SendNext(currentSwing);                         // float
+            stream.SendNext(skin.flipX);                           // bool
+            stream.SendNext(main_hand.transform.localScale);       // Vector3
+            stream.SendNext(isDashing);                            // bool
         }
         else
         {
-            networkPosition = (Vector3)stream.ReceiveNext();
-            networkHandRotation = (Quaternion)stream.ReceiveNext();
-            healthSystem.TakeDamage(healthSystem.CurrentHealth - (int)stream.ReceiveNext());
-            currentSwing = (float)stream.ReceiveNext();
-            skin.flipX = (bool)stream.ReceiveNext();
-            networkScale = (Vector3)stream.ReceiveNext();
-            isDashing = (bool)stream.ReceiveNext();
+            // Kiểm tra null trước khi nhận dữ liệu
+            if (healthSystem == null || skin == null)
+            {
+                Debug.LogWarning($"Không thể nhận dữ liệu đồng bộ trên {gameObject.name}: healthSystem hoặc skin là null.");
+                return;
+            }
+
+            networkPosition = (Vector3)stream.ReceiveNext();       // Vector3
+            networkHandRotation = (Quaternion)stream.ReceiveNext(); // Quaternion
+            int receivedHealth = (int)stream.ReceiveNext();        // int
+            float receivedStamina = (float)stream.ReceiveNext();   // float
+            currentSwing = (float)stream.ReceiveNext();            // float
+            skin.flipX = (bool)stream.ReceiveNext();               // bool
+            networkScale = (Vector3)stream.ReceiveNext();          // Vector3
+            isDashing = (bool)stream.ReceiveNext();                // bool
+
+            // Cập nhật health một cách an toàn
+            healthSystem.TakeDamage(healthSystem.CurrentHealth - receivedHealth);
         }
     }
 }

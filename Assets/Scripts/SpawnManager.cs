@@ -56,6 +56,7 @@ public class SpawnManager : MonoBehaviourPunCallbacks
         Debug.Log("Bắt đầu spawn!");
 
         InvokeRepeating(nameof(SpawnEnemy), 0f, spawnDelay);
+
         for (int i = 0; i < maxWeapons; i++) SpawnWeapon();
         for (int i = 0; i < maxItems; i++) SpawnItem();
     }
@@ -65,7 +66,9 @@ public class SpawnManager : MonoBehaviourPunCallbacks
         if (!CanSpawn() || activeEnemies.Count >= maxEnemies) return;
 
         Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * spawnRadius;
-        GameObject enemy = PhotonNetwork.Instantiate(GetRandom(enemyPrefabs).name, spawnPos, Quaternion.identity);
+
+        // Spawn RoomObject để tồn tại dù MasterClient out
+        GameObject enemy = PhotonNetwork.InstantiateRoomObject(GetRandom(enemyPrefabs).name, spawnPos, Quaternion.identity);
         activeEnemies.Add(enemy);
     }
 
@@ -74,7 +77,8 @@ public class SpawnManager : MonoBehaviourPunCallbacks
         if (!CanSpawn() || activeWeapons.Count >= maxWeapons) return;
 
         Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * weaponSpawnRadius;
-        GameObject weapon = PhotonNetwork.Instantiate(GetRandom(weaponPrefabs).name, spawnPos, Quaternion.identity);
+
+        GameObject weapon = PhotonNetwork.InstantiateRoomObject(GetRandom(weaponPrefabs).name, spawnPos, Quaternion.identity);
         activeWeapons.Add(weapon);
     }
 
@@ -83,7 +87,8 @@ public class SpawnManager : MonoBehaviourPunCallbacks
         if (!CanSpawn() || activeItems.Count >= maxItems) return;
 
         Vector2 spawnPos = (Vector2)transform.position + Random.insideUnitCircle * itemSpawnRadius;
-        GameObject item = PhotonNetwork.Instantiate(GetRandom(itemPrefabs).name, spawnPos, Quaternion.identity);
+
+        GameObject item = PhotonNetwork.InstantiateRoomObject(GetRandom(itemPrefabs).name, spawnPos, Quaternion.identity);
         activeItems.Add(item);
     }
 
@@ -96,23 +101,35 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     {
         if (activeEnemies.Remove(enemy))
         {
+            // Chỉ Master Client destroy
+            if (PhotonNetwork.IsMasterClient)
+                PhotonNetwork.Destroy(enemy);
+
             Debug.Log("Enemy defeated.");
         }
     }
 
     public void WeaponPickedUp(GameObject weapon)
     {
-        if (activeWeapons.Remove(weapon) && CanSpawn())
+        if (activeWeapons.Remove(weapon))
         {
-            SpawnWeapon();
+            if (PhotonNetwork.IsMasterClient)
+                PhotonNetwork.Destroy(weapon);
+
+            if (CanSpawn())
+                SpawnWeapon();
         }
     }
 
     public void ItemPickedUp(GameObject item)
     {
-        if (activeItems.Remove(item) && CanSpawn())
+        if (activeItems.Remove(item))
         {
-            SpawnItem();
+            if (PhotonNetwork.IsMasterClient)
+                PhotonNetwork.Destroy(item);
+
+            if (CanSpawn())
+                SpawnItem();
         }
     }
 }

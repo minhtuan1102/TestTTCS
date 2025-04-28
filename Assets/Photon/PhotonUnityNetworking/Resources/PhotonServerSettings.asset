@@ -53,6 +53,7 @@ MonoBehaviour:
   - RPC_UpdateStamina
   - RPC_ApplyDamage
   - RPC_DealDamage
+  - RPC_ApplyDamageToEnemy
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
