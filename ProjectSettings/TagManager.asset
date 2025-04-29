@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Item
   - Barrier
+  - Minimap
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - HealthBar
   - Barrier
   - Player
-  - 
-  - 
+  - Map
+  - MiniMapLight
   - 
   - 
   - 
