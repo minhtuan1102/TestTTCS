@@ -104,7 +104,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.25
+  m_Mass: 1.4228516
   m_LinearDamping: 10
   m_AngularDamping: 50
   m_GravityScale: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   data: {fileID: 11400000, guid: e90e3962a0126594d8980aac2b26b59a, type: 2}
 --- !u!195 &9166891133223098938
 NavMeshAgent:
