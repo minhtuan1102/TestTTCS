@@ -13,13 +13,25 @@ MonoBehaviour:
   m_Name: Glock
   m_EditorClassIdentifier: 
   itemName: AK-Rifle
-  itemIcon: {fileID: 0}
+  icon: {fileID: 0}
   itemID: 0
-  description: 
+  itemDescription: 
+  Prefab: {fileID: 0}
   weight: 3
-  ranged: 0
-  damage: 2
-  cooldown: 0.5
+  value: 0
+  isConsumable: 0
+  effectDescription: 
+  effectsModules: []
+  canAttack: 1
   swing: 0
   recoil: -0.4
   swingOffset: 0
+  damage: 2
+  cooldown: 0.5
+  canMelee: 0
+  hitbox: {fileID: 0}
+  canShoot: 0
+  fireAmount: 1
+  spread: 0
+  projectile: {fileID: 0}
+  options: []

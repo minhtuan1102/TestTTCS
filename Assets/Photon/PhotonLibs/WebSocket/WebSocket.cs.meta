@@ -6,6 +6,7 @@ MonoImporter:
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
+<<<<<<< Updated upstream
 AssetOrigin:
   serializedVersion: 1
   productId: 119922
@@ -13,3 +14,5 @@ AssetOrigin:
   packageVersion: 2.49
   assetPath: Assets/Photon/PhotonLibs/WebSocket/WebSocket.cs
   uploadId: 722643
+=======
+>>>>>>> Stashed changes

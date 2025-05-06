@@ -12,7 +12,11 @@ PluginImporter:
   validateReferences: 1
   platformData:
   - first:
+<<<<<<< Updated upstream
       Any: 
+=======
+      Any:
+>>>>>>> Stashed changes
     second:
       enabled: 0
       settings: {}
@@ -27,6 +31,7 @@ PluginImporter:
     second:
       enabled: 1
       settings: {}
+<<<<<<< Updated upstream
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -37,3 +42,8 @@ AssetOrigin:
   packageVersion: 2.49
   assetPath: Assets/Photon/PhotonLibs/WebSocket/WebSocket.jslib
   uploadId: 722643
+=======
+  userData:
+  assetBundleName:
+  assetBundleVariant:
+>>>>>>> Stashed changes

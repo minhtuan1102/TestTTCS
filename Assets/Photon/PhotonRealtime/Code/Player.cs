@@ -1,17 +1,28 @@
 // ----------------------------------------------------------------------------
 // <copyright file="Player.cs" company="Exit Games GmbH">
+<<<<<<< Updated upstream
 //   Loadbalancing Framework for Photon - Copyright (C) 2018 Exit Games GmbH
 // </copyright>
 // <summary>
 //   Per client in a room, a Player is created. This client's Player is also
 //   known as PhotonClient.LocalPlayer and the only one you might change
 //   properties for.
+=======
+// Photon Realtime API - Copyright (C) 2022 Exit Games GmbH
+// </copyright>
+// <summary>
+// Defines a Player for the Realtime API.
+>>>>>>> Stashed changes
 // </summary>
 // <author>developer@photonengine.com</author>
 // ----------------------------------------------------------------------------
 
+<<<<<<< Updated upstream
 
 #if UNITY_4_7 || UNITY_5 || UNITY_5_3_OR_NEWER
+=======
+#if UNITY_2017_4_OR_NEWER
+>>>>>>> Stashed changes
 #define SUPPORTED_UNITY
 #endif
 
@@ -21,6 +32,7 @@ namespace Photon.Realtime
     using System;
     using System.Collections;
     using System.Collections.Generic;
+<<<<<<< Updated upstream
     using ExitGames.Client.Photon;
 
     #if SUPPORTED_UNITY
@@ -29,6 +41,13 @@ namespace Photon.Realtime
     #if SUPPORTED_UNITY || NETFX_CORE
     using Hashtable = ExitGames.Client.Photon.Hashtable;
     using SupportClass = ExitGames.Client.Photon.SupportClass;
+=======
+    using Photon.Client;
+
+    #if SUPPORTED_UNITY
+    using UnityEngine;
+    using SupportClass = Photon.Client.SupportClass;
+>>>>>>> Stashed changes
     #endif
 
 
@@ -60,7 +79,11 @@ namespace Photon.Realtime
         /// <summary>Only one player is controlled by each client. Others are not local.</summary>
         public readonly bool IsLocal;
 
+<<<<<<< Updated upstream
 
+=======
+        /// <summary>True if this player was inactive and did become active again.</summary>
+>>>>>>> Stashed changes
         public bool HasRejoined
         {
             get; internal set;
@@ -70,10 +93,17 @@ namespace Photon.Realtime
         /// <summary>Background field for nickName.</summary>
 		private string nickName = string.Empty;
 
+<<<<<<< Updated upstream
         /// <summary>Non-unique nickname of this player. Synced automatically in a room.</summary>
         /// <remarks>
         /// A player might change his own playername in a room (it's only a property).
         /// Setting this value updates the server and other players (using an operation).
+=======
+        /// <summary>Nickname of this player. Non-unique and not authenticated. Synced automatically in a room.</summary>
+        /// <remarks>
+        /// A player might change his own nickname in a room (it's only a property).
+        /// Setting this value updates the server and other players (using OpSetProperties internally).
+>>>>>>> Stashed changes
         /// </remarks>
         public string NickName
         {
@@ -93,13 +123,21 @@ namespace Photon.Realtime
                 // update a room, if we changed our nickName locally
                 if (this.IsLocal)
                 {
+<<<<<<< Updated upstream
                     this.SetPlayerNameProperty();
+=======
+                    this.SetNickNameProperty();
+>>>>>>> Stashed changes
                 }
             }
         }
 
         /// <summary>UserId of the player, available when the room got created with RoomOptions.PublishUserId = true.</summary>
+<<<<<<< Updated upstream
         /// <remarks>Useful for <see cref="LoadBalancingClient.OpFindFriends"/> and blocking slots in a room for expected players (e.g. in <see cref="LoadBalancingClient.OpCreateRoom"/>).</remarks>
+=======
+        /// <remarks>Useful for <see cref="RealtimeClient.OpFindFriends"/> and blocking slots in a room for expected players (e.g. in <see cref="RealtimeClient.OpCreateRoom"/>).</remarks>
+>>>>>>> Stashed changes
         public string UserId { get; internal set; }
 
         /// <summary>
@@ -128,12 +166,20 @@ namespace Photon.Realtime
 
         /// <summary>Read-only cache for custom properties of player. Set via Player.SetCustomProperties.</summary>
         /// <remarks>
+<<<<<<< Updated upstream
         /// Don't modify the content of this Hashtable. Use SetCustomProperties and the
+=======
+        /// Don't modify the content of this PhotonHashtable. Use SetCustomProperties and the
+>>>>>>> Stashed changes
         /// properties of this class to modify values. When you use those, the client will
         /// sync values with the server.
         /// </remarks>
         /// <see cref="SetCustomProperties"/>
+<<<<<<< Updated upstream
         public Hashtable CustomProperties { get; set; }
+=======
+        public PhotonHashtable CustomProperties { get; set; }
+>>>>>>> Stashed changes
 
         /// <summary>Can be used to store a reference that's useful to know "by player".</summary>
         /// <remarks>Example: Set a player's character as Tag by assigning the GameObject on Instantiate.</remarks>
@@ -142,11 +188,15 @@ namespace Photon.Realtime
 
         /// <summary>
         /// Creates a player instance.
+<<<<<<< Updated upstream
         /// To extend and replace this Player, override LoadBalancingPeer.CreatePlayer().
+=======
+>>>>>>> Stashed changes
         /// </summary>
         /// <param name="nickName">NickName of the player (a "well known property").</param>
         /// <param name="actorNumber">ID or ActorNumber of this player in the current room (a shortcut to identify each player in room)</param>
         /// <param name="isLocal">If this is the local peer's player (or a remote one).</param>
+<<<<<<< Updated upstream
         protected internal Player(string nickName, int actorNumber, bool isLocal) : this(nickName, actorNumber, isLocal, null)
         {
         }
@@ -160,12 +210,20 @@ namespace Photon.Realtime
         /// <param name="isLocal">If this is the local peer's player (or a remote one).</param>
         /// <param name="playerProperties">A Hashtable of custom properties to be synced. Must use String-typed keys and serializable datatypes as values.</param>
         protected internal Player(string nickName, int actorNumber, bool isLocal, Hashtable playerProperties)
+=======
+        /// <param name="playerProperties">A PhotonHashtable of custom properties to be synced. Must use String-typed keys and serializable datatypes as values.</param>
+        protected internal Player(string nickName, int actorNumber, bool isLocal, PhotonHashtable playerProperties = null)
+>>>>>>> Stashed changes
         {
             this.IsLocal = isLocal;
             this.actorNumber = actorNumber;
             this.NickName = nickName;
 
+<<<<<<< Updated upstream
             this.CustomProperties = new Hashtable();
+=======
+            this.CustomProperties = new PhotonHashtable();
+>>>>>>> Stashed changes
             this.InternalCacheProperties(playerProperties);
         }
 
@@ -245,17 +303,29 @@ namespace Photon.Realtime
         /// This only updates the CustomProperties and doesn't send them to the server.
         /// Mostly used when creating new remote players, where the server sends their properties.
         /// </remarks>
+<<<<<<< Updated upstream
         protected internal virtual void InternalCacheProperties(Hashtable properties)
+=======
+        protected internal void InternalCacheProperties(PhotonHashtable properties)
+>>>>>>> Stashed changes
         {
             if (properties == null || properties.Count == 0 || this.CustomProperties.Equals(properties))
             {
                 return;
             }
+<<<<<<< Updated upstream
             
             // only remote player instances update their NickName from the properties
             if (!this.IsLocal && properties.ContainsKey(ActorProperties.PlayerName))
             {
                 string nameInServersProperties = (string)properties[ActorProperties.PlayerName];
+=======
+
+            // only remote player instances update their NickName from the properties
+            if (!this.IsLocal && properties.ContainsKey(ActorProperties.NickName))
+            {
+                string nameInServersProperties = (string)properties[ActorProperties.NickName];
+>>>>>>> Stashed changes
                 this.NickName = nameInServersProperties;
             }
 
@@ -265,10 +335,17 @@ namespace Photon.Realtime
             }
             if (properties.ContainsKey(ActorProperties.IsInactive))
             {
+<<<<<<< Updated upstream
                 this.IsInactive = (bool)properties[ActorProperties.IsInactive]; //TURNBASED new well-known property for players
             }
 
             this.CustomProperties.MergeStringKeys(properties);
+=======
+                this.IsInactive = (bool)properties[ActorProperties.IsInactive]; //well-known property for players
+            }
+
+            this.CustomProperties.Merge(properties);
+>>>>>>> Stashed changes
             this.CustomProperties.StripKeysWithNullValues();
         }
 
@@ -364,6 +441,7 @@ namespace Photon.Realtime
         ///
         /// Properties get saved with the game state for Turnbased games (which use IsPersistent = true).
         /// </remarks>
+<<<<<<< Updated upstream
         /// <param name="propertiesToSet">Hashtable of Custom Properties to be set. </param>
         /// <param name="expectedValues">If non-null, these are the property-values the server will check as condition for this update.</param>
         /// <param name="webFlags">Defines if this SetCustomProperties-operation gets forwarded to your WebHooks. Client must be in room.</param>
@@ -382,11 +460,36 @@ namespace Photon.Realtime
             }
 
             Hashtable customProps = propertiesToSet.StripToStringKeys() as Hashtable;
+=======
+        /// <param name="propertiesToSet">PhotonHashtable of Custom Properties to be set. </param>
+        /// <param name="expectedValues">If non-null, these are the property-values the server will check as condition for this update.</param>
+        /// <returns>
+        /// False if propertiesToSet is null or empty or have no keys (of allowed types).
+        /// True in offline mode even if expectedProperties are used.
+        /// If not in a room, returns true if local player and expectedValues are null.
+        /// (Use this to cache properties to be sent when joining a room).
+        /// Otherwise, returns if this operation could be sent to the server.
+        /// </returns>
+        public bool SetCustomProperties(PhotonHashtable propertiesToSet, PhotonHashtable expectedValues = null)
+        {
+            if (!propertiesToSet.CustomPropKeyTypesValid())
+            {
+                Log.Error("Player.SetCustomProperties() failed. Parameter propertiesToSet must be non-null, not empty and contain only int or string keys.");
+                return false;
+            }
+
+            if (expectedValues != null && !expectedValues.CustomPropKeyTypesValid())
+            {
+                Log.Error("Player.SetCustomProperties() failed. Parameter expectedValues must contain only int or string keys if it is not null.");
+                return false;
+            }
+>>>>>>> Stashed changes
 
             if (this.RoomReference != null)
             {
                 if (this.RoomReference.IsOffline)
                 {
+<<<<<<< Updated upstream
                     if (customProps.Count == 0)
                     {
                         return false;
@@ -395,18 +498,31 @@ namespace Photon.Realtime
                     this.CustomProperties.StripKeysWithNullValues();
                     // invoking callbacks
                     this.RoomReference.LoadBalancingClient.InRoomCallbackTargets.OnPlayerPropertiesUpdate(this, customProps);
+=======
+                    this.CustomProperties.Merge(propertiesToSet);
+                    this.CustomProperties.StripKeysWithNullValues();
+
+                    // invoking callbacks
+                    this.RoomReference.RealtimeClient.InRoomCallbackTargets.OnPlayerPropertiesUpdate(this, propertiesToSet);
+>>>>>>> Stashed changes
                     return true;
                 }
                 else
                 {
+<<<<<<< Updated upstream
                     Hashtable customPropsToCheck = expectedValues.StripToStringKeys() as Hashtable;
 
                     // send (sync) these new values if in online room
                     return this.RoomReference.LoadBalancingClient.OpSetPropertiesOfActor(this.actorNumber, customProps, customPropsToCheck, webFlags);
+=======
+                    // send (sync) these new values if in online room
+                    return this.RoomReference.RealtimeClient.OpSetPropertiesOfActor(this.actorNumber, propertiesToSet, expectedValues);
+>>>>>>> Stashed changes
                 }
             }
             if (this.IsLocal)
             {
+<<<<<<< Updated upstream
                 if (customProps.Count == 0)
                 {
                     return false;
@@ -414,6 +530,11 @@ namespace Photon.Realtime
                 if (expectedValues == null && webFlags == null)
                 {
                     this.CustomProperties.Merge(customProps);
+=======
+                if (expectedValues == null)
+                {
+                    this.CustomProperties.Merge(propertiesToSet);
+>>>>>>> Stashed changes
                     this.CustomProperties.StripKeysWithNullValues();
                     return true;
                 }
@@ -422,7 +543,11 @@ namespace Photon.Realtime
             return false;
         }
 
+<<<<<<< Updated upstream
 
+=======
+        
+>>>>>>> Stashed changes
         /// <summary>If there is a nickname in the room props, but it's not the current (local) one, update the room when joining/joined.</summary>
         internal bool UpdateNickNameOnJoined()
         {
@@ -431,18 +556,29 @@ namespace Photon.Realtime
                 return false;
             }
 
+<<<<<<< Updated upstream
             bool found = this.RoomReference.CustomProperties.ContainsKey(ActorProperties.PlayerName);
             string nickFromProps = found ? this.RoomReference.CustomProperties[ActorProperties.PlayerName] as string : string.Empty;
 
             if (!string.Equals(this.NickName, nickFromProps))
             {
                 return this.SetPlayerNameProperty();
+=======
+            object nameObj = null;
+            this.RoomReference.CustomProperties.TryGetValue(ActorProperties.NickName, out nameObj);
+            string nickFromProps = nameObj as string;
+
+            if (!string.Equals(this.NickName, nickFromProps) && !(string.IsNullOrEmpty(this.NickName) && string.IsNullOrEmpty(nickFromProps)))
+            {
+                return this.SetNickNameProperty();
+>>>>>>> Stashed changes
             }
 
             return true;
         }
 
         /// <summary>Uses OpSetPropertiesOfActor to sync this player's NickName (server is being updated with this.NickName).</summary>
+<<<<<<< Updated upstream
         private bool SetPlayerNameProperty()
         {
             if (this.RoomReference != null && !this.RoomReference.IsOffline)
@@ -450,6 +586,15 @@ namespace Photon.Realtime
                 Hashtable properties = new Hashtable();
                 properties[ActorProperties.PlayerName] = this.nickName;
                 return this.RoomReference.LoadBalancingClient.OpSetPropertiesOfActor(this.ActorNumber, properties);
+=======
+        private bool SetNickNameProperty()
+        {
+            if (this.RoomReference != null && !this.RoomReference.IsOffline)
+            {
+                PhotonHashtable properties = new PhotonHashtable();
+                properties[ActorProperties.NickName] = this.NickName;
+                return this.RoomReference.RealtimeClient.OpSetPropertiesOfActor(this.ActorNumber, properties);
+>>>>>>> Stashed changes
             }
 
             return false;

@@ -1,24 +1,66 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewItem", menuName = "Items/Item")]
+[System.Serializable]
+public class AttackScript
+{
+    public MonoBehaviour Script;
+    public Collider2D Collider;
+}
+
+[CreateAssetMenu]
 public class Item : ScriptableObject
 {
+
+    
     public string itemName;      // Name
-    public Sprite itemIcon;      // Icon
+    public Sprite icon;      // Icon
     public int itemID;           // ID của vật phẩm
-    public string description;   // Mô tả của vật phẩm
+    public string itemDescription;   // Mô tả của vật phẩm
 
-    public float weight;         // Trọng lượng của vật phẩm
+    public GameObject Prefab;
 
-    public bool ranged = false;
+    // Storage Stats
 
-    public float damage = 0f;
-    public float cooldown = 0f;
+    public float weight = 0f;
+    public int value = 0;
 
-    public float swing = 0f;
-    public float recoil = 0f;
-    public float spread = 0f;
-    public int fireAmount = 1;
+    // Consuming Stats
 
-    public float swingOffset = 0f;
+    public bool isConsumable = false;
+    public string effectDescription = "";
+
+    public List<MonoScript> effectsModules = new List<MonoScript>();
+
+    // Attack Stats
+
+    public bool canAttack = false;
+
+        // Animation
+
+        public float swing = 0f;
+        public float recoil = 0f;
+        public float swingOffset = 0f;
+
+        // Stats
+
+        public float damage = 0f;
+        public float cooldown = 0f;
+
+        // Melee
+        public bool canMelee = false;
+        public Transform hitbox;
+
+        // Shooting
+
+        public bool canShoot = false;
+        public int fireAmount = 1;
+        public float spread = 0f;
+
+        public Transform projectile;
+
+        // Other
+        public List<MonoBehaviour> options;
 }

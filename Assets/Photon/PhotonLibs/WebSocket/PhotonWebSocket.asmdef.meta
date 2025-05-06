@@ -5,6 +5,7 @@ AssemblyDefinitionImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< Updated upstream
 AssetOrigin:
   serializedVersion: 1
   productId: 119922
@@ -12,3 +13,5 @@ AssetOrigin:
   packageVersion: 2.49
   assetPath: Assets/Photon/PhotonLibs/WebSocket/PhotonWebSocket.asmdef
   uploadId: 722643
+=======
+>>>>>>> Stashed changes

@@ -55,6 +55,8 @@ public class EnemySwing : MonoBehaviour
                 if (hp != null)
                 {
                     hp.TakeDamage((int)damage);
+
+                    Debug.LogWarning("Đánh người chơi!" + damage);
                 }
                 break; // Chỉ đánh 1 địch
             }

@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 ﻿// ----------------------------------------------------------------------------
 // <copyright file="PhotonPing.cs" company="Exit Games GmbH">
 //   PhotonNetwork Framework for Unity - Copyright (C) 2018 Exit Games GmbH
+=======
+// ----------------------------------------------------------------------------
+// <copyright file="PhotonPing.cs" company="Exit Games GmbH">
+// Photon Realtime API - Copyright (C) 2022 Exit Games GmbH
+>>>>>>> Stashed changes
 // </copyright>
 // <summary>
 // This file includes various PhotonPing implementations for different APIs,
@@ -11,6 +17,13 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
+<<<<<<< Updated upstream
+=======
+#if UNITY_2017_4_OR_NEWER
+#define SUPPORTED_UNITY
+#endif
+
+>>>>>>> Stashed changes
 
 namespace Photon.Realtime
 {
@@ -18,6 +31,7 @@ namespace Photon.Realtime
     using System.Collections;
     using System.Threading;
 
+<<<<<<< Updated upstream
     #if NETFX_CORE
     using System.Diagnostics;
     using Windows.Foundation;
@@ -27,6 +41,9 @@ namespace Photon.Realtime
     #endif
 
     #if !NO_SOCKET && !NETFX_CORE
+=======
+    #if !NO_SOCKET
+>>>>>>> Stashed changes
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Net.Sockets;
@@ -63,6 +80,7 @@ namespace Photon.Realtime
         private static readonly System.Random RandomIdProvider = new System.Random();
 
         /// <summary>Begins sending a ping.</summary>
+<<<<<<< Updated upstream
         public virtual bool StartPing(string ip)
         {
             throw new NotImplementedException();
@@ -79,6 +97,15 @@ namespace Photon.Realtime
         {
             throw new NotImplementedException();
         }
+=======
+        public abstract bool StartPing(string ip);
+
+        /// <summary>Check if done.</summary>
+        public abstract bool Done();
+
+        /// <summary>Dispose of this ping.</summary>
+        public abstract void Dispose();
+>>>>>>> Stashed changes
 
         /// <summary>Initialize this ping (GotResult, Successful, PingId).</summary>
         protected internal void Init()
@@ -90,7 +117,11 @@ namespace Photon.Realtime
     }
 
 
+<<<<<<< Updated upstream
     #if !NETFX_CORE && !NO_SOCKET
+=======
+    #if !NO_SOCKET
+>>>>>>> Stashed changes
     /// <summary>Uses C# Socket class from System.Net.Sockets (as Unity usually does).</summary>
     /// <remarks>Incompatible with Windows 8 Store/Phone API.</remarks>
     public class PingMono : PhotonPing
@@ -120,8 +151,12 @@ namespace Photon.Realtime
                     }
 
                     this.sock.ReceiveTimeout = 5000;
+<<<<<<< Updated upstream
                     int port = (RegionHandler.PortToPingOverride != 0) ? RegionHandler.PortToPingOverride : 5055;
                     this.sock.Connect(ip, port);
+=======
+                    this.sock.Connect(ip, RegionHandler.UdpPortToPing);
+>>>>>>> Stashed changes
                 }
 
 
@@ -202,6 +237,7 @@ namespace Photon.Realtime
     #endif
 
 
+<<<<<<< Updated upstream
     #if NETFX_CORE
     /// <summary>Windows store API implementation of PhotonPing, based on DatagramSocket for UDP.</summary>
     public class PingWindowsStore : PhotonPing
@@ -302,6 +338,8 @@ namespace Photon.Realtime
     #endif
 
 
+=======
+>>>>>>> Stashed changes
     #if NATIVE_SOCKETS
     /// <summary>Abstract base class to provide proper resource management for the below native ping implementations</summary>
     public abstract class PingNative : PhotonPing
@@ -474,8 +512,18 @@ namespace Photon.Realtime
         {
             base.Init();
 
+<<<<<<< Updated upstream
             // to work around an issue with UnityWebRequest in Editor (2021 at least), use http to ping in-Editor
             string scheme = UnityEngine.Application.isEditor ? "http://" : "https://";
+=======
+            #if UNITY_EDITOR && !UNITY_6000_0_OR_NEWER
+            // to work around an issue with UnityWebRequest in Editor (2021 at least), use http to ping in-Editor
+            string scheme = "http://";
+            #else
+            string scheme = "https://";
+            #endif
+
+>>>>>>> Stashed changes
             address = $"{scheme}{address}/photon/m/?ping&r={UnityEngine.Random.Range(0, 10000)}";
 
             this.webRequest = UnityWebRequest.Get(address);

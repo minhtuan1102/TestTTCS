@@ -1,15 +1,26 @@
 // ----------------------------------------------------------------------------
 // <copyright file="RegionHandler.cs" company="Exit Games GmbH">
+<<<<<<< Updated upstream
 //   Loadbalancing Framework for Photon - Copyright (C) 2018 Exit Games GmbH
 // </copyright>
 // <summary>
 //   The RegionHandler class provides methods to ping a list of regions,
 //   to find the one with best ping.
+=======
+// Photon Realtime API - Copyright (C) 2022 Exit Games GmbH
+// </copyright>
+// <summary>
+// Provides methods to ping Photon Cloud regions.
+>>>>>>> Stashed changes
 // </summary>
 // <author>developer@photonengine.com</author>
 // ----------------------------------------------------------------------------
 
+<<<<<<< Updated upstream
 #if UNITY_4_7 || UNITY_5 || UNITY_5_3_OR_NEWER
+=======
+#if UNITY_2017_4_OR_NEWER
+>>>>>>> Stashed changes
 #define SUPPORTED_UNITY
 #endif
 
@@ -17,7 +28,10 @@
 #define PING_VIA_COROUTINE
 #endif
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 namespace Photon.Realtime
 {
     using System;
@@ -27,16 +41,24 @@ namespace Photon.Realtime
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+<<<<<<< Updated upstream
     using ExitGames.Client.Photon;
+=======
+    using Photon.Client;
+>>>>>>> Stashed changes
     using System.Linq;
 
     #if SUPPORTED_UNITY
     using UnityEngine;
     using Debug = UnityEngine.Debug;
+<<<<<<< Updated upstream
     #endif
     #if SUPPORTED_UNITY || NETFX_CORE
     using Hashtable = ExitGames.Client.Photon.Hashtable;
     using SupportClass = ExitGames.Client.Photon.SupportClass;
+=======
+    using SupportClass = Photon.Client.SupportClass;
+>>>>>>> Stashed changes
     #endif
 
 
@@ -44,7 +66,11 @@ namespace Photon.Realtime
     /// Provides methods to work with Photon's regions (Photon Cloud) and can be use to find the one with best ping.
     /// </summary>
     /// <remarks>
+<<<<<<< Updated upstream
     /// When a client uses a Name Server to fetch the list of available regions, the LoadBalancingClient will create a RegionHandler
+=======
+    /// When a client uses a Name Server to fetch the list of available regions, the RealtimeClient will create a RegionHandler
+>>>>>>> Stashed changes
     /// and provide it via the OnRegionListReceived callback, as soon as the list is available. No pings were sent for Best Region selection yet.
     ///
     /// Your logic can decide to either connect to one of those regional servers, or it may use PingMinimumOfRegions to test
@@ -71,12 +97,26 @@ namespace Photon.Realtime
 
         /// <summary>A list of region names for the Photon Cloud. Set by the result of OpGetRegions().</summary>
         /// <remarks>
+<<<<<<< Updated upstream
         /// Implement ILoadBalancingCallbacks and register for the callbacks to get OnRegionListReceived(RegionHandler regionHandler).
+=======
+        /// Implement IConnectionCallbacks and register for the callbacks to get OnRegionListReceived callbacks.
+>>>>>>> Stashed changes
         /// You can also put a "case OperationCode.GetRegions:" into your OnOperationResponse method to notice when the result is available.
         /// </remarks>
         public List<Region> EnabledRegions { get; protected internal set; }
 
+<<<<<<< Updated upstream
         private string availableRegionCodes;
+=======
+
+        /// <summary>Comma separated string of regions available to this client.</summary>
+        public string AvailableRegionCodes
+        {
+            private set;
+            get;
+        }
+>>>>>>> Stashed changes
 
         private Region bestRegionCache;
 
@@ -129,10 +169,17 @@ namespace Photon.Realtime
             {
                 if (this.BestRegion != null && this.BestRegion.Ping < RegionPinger.MaxMillisecondsPerPing)
                 {
+<<<<<<< Updated upstream
                     return this.BestRegion.Code + ";" + this.BestRegion.Ping + ";" + this.availableRegionCodes;
                 }
 
                 return this.availableRegionCodes;
+=======
+                    return $"{this.BestRegion.Code};{this.BestRegion.Ping};{this.AvailableRegionCodes}";
+                }
+
+                return this.AvailableRegionCodes;
+>>>>>>> Stashed changes
             }
         }
 
@@ -141,19 +188,32 @@ namespace Photon.Realtime
         {
             StringBuilder sb = new StringBuilder();
 
+<<<<<<< Updated upstream
             sb.AppendFormat("Region Pinging Result: {0}\n", this.BestRegion.ToString());
+=======
+            sb.AppendFormat("Summary: {0}\n", this.SummaryToCache);
+>>>>>>> Stashed changes
             foreach (RegionPinger region in this.pingerList)
             {
                 sb.AppendLine(region.GetResults());
             }
 
+<<<<<<< Updated upstream
             sb.AppendFormat("Previous summary: {0}", this.previousSummaryProvided);
+=======
+            string summaryString = this.previousSummaryProvided ?? "N/A";
+            sb.AppendFormat("Previous summary: {0}", summaryString);
+>>>>>>> Stashed changes
 
             return sb.ToString();
         }
 
         /// <summary>Initializes the regions of this RegionHandler with values provided from the Name Server (as OperationResponse for OpGetRegions).</summary>
+<<<<<<< Updated upstream
         public void SetRegions(OperationResponse opGetRegions, LoadBalancingClient loadBalancingClient = null)
+=======
+        public void SetRegions(OperationResponse opGetRegions, RealtimeClient client = null)
+>>>>>>> Stashed changes
         {
             if (opGetRegions.OperationCode != OperationCode.GetRegions)
             {
@@ -169,9 +229,15 @@ namespace Photon.Realtime
             string[] servers = opGetRegions[ParameterCode.Address] as string[];
             if (regions == null || servers == null || regions.Length != servers.Length)
             {
+<<<<<<< Updated upstream
                 if (loadBalancingClient != null)
                 {
                     loadBalancingClient.DebugReturn(DebugLevel.ERROR, "RegionHandler.SetRegions() failed. Received regions and servers must be non null and of equal length. Could not read regions.");
+=======
+                if (client != null)
+                {
+                    Log.Error("RegionHandler.SetRegions() failed. Received regions and servers must be non null and of equal length. Could not read regions.", client.LogLevel, client.LogPrefix);
+>>>>>>> Stashed changes
                 }
                 return;
             }
@@ -182,6 +248,7 @@ namespace Photon.Realtime
             for (int i = 0; i < regions.Length; i++)
             {
                 string server = servers[i];
+<<<<<<< Updated upstream
                 if (PortToPingOverride != 0)
                 {
                     server = LoadBalancingClient.ReplacePortWithAlternative(servers[i], PortToPingOverride);
@@ -190,6 +257,11 @@ namespace Photon.Realtime
                 if (loadBalancingClient != null && loadBalancingClient.AddressRewriter != null)
                 {
                     server = loadBalancingClient.AddressRewriter(server, ServerConnection.MasterServer);
+=======
+                if (client != null && client.AddressRewriter != null)
+                {
+                    server = client.AddressRewriter(server, ServerConnection.MasterServer);
+>>>>>>> Stashed changes
                 }
 
                 Region tmp = new Region(regions[i], server);
@@ -202,7 +274,11 @@ namespace Photon.Realtime
             }
 
             Array.Sort(regions);
+<<<<<<< Updated upstream
             this.availableRegionCodes = string.Join(",", regions);
+=======
+            this.AvailableRegionCodes = string.Join(",", regions);
+>>>>>>> Stashed changes
         }
 
         private readonly List<RegionPinger> pingerList = new List<RegionPinger>();
@@ -210,9 +286,12 @@ namespace Photon.Realtime
         private int previousPing;
         private string previousSummaryProvided;
 
+<<<<<<< Updated upstream
         /// <summary>If non-zero, this port will be used to ping Master Servers on.</summary>
         protected internal static ushort PortToPingOverride;
 
+=======
+>>>>>>> Stashed changes
         /// <summary>If the previous Best Region's ping is now higher by this much, ping all regions and find a new Best Region.</summary>
         private float rePingFactor = 1.2f;
 
@@ -228,16 +307,27 @@ namespace Photon.Realtime
         public int BestRegionSummaryPingLimit = 90;
 
 
+<<<<<<< Updated upstream
+=======
+        /// <summary>If non-zero, this port will be used to ping Master Servers on.</summary>
+        protected internal static ushort UdpPortToPing;
+
+>>>>>>> Stashed changes
         /// <summary>True if the available regions are being pinged currently.</summary>
         public bool IsPinging { get; private set; }
 
         /// <summary>True if the pinging of regions is being aborted.</summary>
         /// <see cref="Abort"/>
         public bool Aborted { get; private set; }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         #if SUPPORTED_UNITY
         private MonoBehaviourEmpty emptyMonoBehavior;
         #endif
 
+<<<<<<< Updated upstream
         #if PHOTON_LOCATION
         internal Location Location = new Location();
         #endif
@@ -251,6 +341,26 @@ namespace Photon.Realtime
 
 
         /// <summary>Starts the process of pinging of all available regions.</summary>
+=======
+        /// <summary>Creates a new RegionHandler.</summary>
+        /// <param name="masterServerUdpPort">If non-zero, this port will be used to ping Master Servers on.</param>
+        public RegionHandler(ushort masterServerUdpPort = 0)
+        {
+            UdpPortToPing = masterServerUdpPort;
+        }
+
+
+        /// <summary>Starts the process of pinging the available regions.</summary>
+        /// <remarks>Uses PingMinimumOfRegions without a summary.</remarks>
+        /// <param name="onCompleteCallback">Provide a method to call when all ping results are available. Aborting the pings will also cancel the callback.</param>
+        /// <returns>If pining the regions gets started now. False if the current state prevent this.</returns>
+        public bool PingAvailableRegions(Action<RegionHandler> onCompleteCallback)
+        {
+            return this.PingMinimumOfRegions(onCompleteCallback, null);
+        }
+
+        /// <summary>Starts the process of pinging a subset of the available regions.</summary>
+>>>>>>> Stashed changes
         /// <param name="onCompleteCallback">Provide a method to call when all ping results are available. Aborting the pings will also cancel the callback.</param>
         /// <param name="previousSummary">A BestRegionSummary from an earlier RegionHandler run. This makes a selected best region "sticky" and keeps ping times lower.</param>
         /// <returns>If pining the regions gets started now. False if the current state prevent this.</returns>
@@ -286,6 +396,7 @@ namespace Photon.Realtime
             this.onCompleteCall = onCompleteCallback;
             #endif
 
+<<<<<<< Updated upstream
             #if PHOTON_LOCATION
             #if SUPPORTED_UNITY
             this.Location.FetchLocation(this.emptyMonoBehavior, null);
@@ -295,6 +406,8 @@ namespace Photon.Realtime
             #endif
 
 
+=======
+>>>>>>> Stashed changes
             if (string.IsNullOrEmpty(previousSummary))
             {
                 return this.PingEnabledRegions();
@@ -325,7 +438,11 @@ namespace Photon.Realtime
             {
                 return this.PingEnabledRegions();
             }
+<<<<<<< Updated upstream
             if (!this.availableRegionCodes.Equals(prevAvailableRegionCodes) || !this.availableRegionCodes.Contains(prevBestRegionCode))
+=======
+            if (!this.AvailableRegionCodes.Equals(prevAvailableRegionCodes) || !this.AvailableRegionCodes.Contains(prevBestRegionCode))
+>>>>>>> Stashed changes
             {
                 return this.PingEnabledRegions();
             }
@@ -486,12 +603,16 @@ namespace Photon.Realtime
 
             // using each type explicitly in the conditional code, makes sure Unity doesn't strip the class / constructor.
 
+<<<<<<< Updated upstream
             #if !UNITY_EDITOR && NETFX_CORE
             if (RegionHandler.PingImplementation == null || RegionHandler.PingImplementation == typeof(PingWindowsStore))
             {
                 ping = new PingWindowsStore();
             }
             #elif NATIVE_SOCKETS || NO_SOCKET
+=======
+            #if NATIVE_SOCKETS || NO_SOCKET
+>>>>>>> Stashed changes
             if (RegionHandler.PingImplementation == null || RegionHandler.PingImplementation == typeof(PingNativeDynamic))
             {
                 ping = new PingNativeDynamic();
@@ -530,6 +651,7 @@ namespace Photon.Realtime
         /// <returns>True unless Aborted.</returns>
         public bool Start()
         {
+<<<<<<< Updated upstream
             // all addresses for Photon region servers will contain a :port ending. this needs to be removed first.
             // PhotonPing.StartPing() requires a plain (IP) address without port or protocol-prefix (on all but Windows 8.1 and WebGL platforms).
             string address = this.region.HostAndPort;
@@ -544,6 +666,10 @@ namespace Photon.Realtime
             this.ping = this.GetPingImplementation();
 
 
+=======
+            this.ping = this.GetPingImplementation();
+
+>>>>>>> Stashed changes
             this.Done = false;
             this.CurrentAttempt = 0;
             this.rttResults = new List<int>(Attempts);
@@ -557,7 +683,10 @@ namespace Photon.Realtime
             MonoBehaviourEmpty.BuildInstance("RegionPing_" + this.region.Code).StartCoroutineAndDestroy(this.RegionPingCoroutine());
             #else
             bool queued = false;
+<<<<<<< Updated upstream
             #if !NETFX_CORE
+=======
+>>>>>>> Stashed changes
             try
             {
                 queued = ThreadPool.QueueUserWorkItem(o => this.RegionPingThreaded());
@@ -566,6 +695,7 @@ namespace Photon.Realtime
             {
                 queued = false;
             }
+<<<<<<< Updated upstream
             #endif
             if (!queued)
             {
@@ -574,6 +704,16 @@ namespace Photon.Realtime
             #endif
 
 
+=======
+
+            if (!queued)
+            {
+                Log.Error("RegionPinger.Start() failed. Could not queue region pinging. Please contact us.");
+                return false;
+            }
+            #endif
+
+>>>>>>> Stashed changes
             return true;
         }
 
@@ -594,9 +734,39 @@ namespace Photon.Realtime
 
             int rttSum = 0;
             int replyCount = 0;
+<<<<<<< Updated upstream
 
 
             Stopwatch sw = new Stopwatch();
+=======
+            Stopwatch sw = new Stopwatch();
+
+            try
+            {
+                // all addresses for Photon region servers will contain a :port ending. this needs to be removed first.
+                // PhotonPing.StartPing() requires a plain (IP) address without port or protocol-prefix (on all but Windows 8.1 and WebGL platforms).
+                string address = this.region.HostAndPort;
+                int indexOfColon = address.LastIndexOf(':');
+                if (indexOfColon > 1)
+                {
+                    address = address.Substring(0, indexOfColon);
+                }
+
+                sw.Start();
+                this.regionAddress = ResolveHost(address);
+                sw.Stop();
+                if (sw.ElapsedMilliseconds > 100)
+                {
+                    Log.Info($"RegionPingThreaded.ResolveHost() took: {sw.ElapsedMilliseconds}ms");
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Info($"RegionPingThreaded ResolveHost failed for {this.region}. Caught: {e}");
+                this.Aborted = true;
+            }
+
+>>>>>>> Stashed changes
             for (this.CurrentAttempt = 0; this.CurrentAttempt < Attempts; this.CurrentAttempt++)
             {
                 if (this.Aborted)
@@ -613,7 +783,11 @@ namespace Photon.Realtime
                 }
                 catch (Exception e)
                 {
+<<<<<<< Updated upstream
                     System.Diagnostics.Debug.WriteLine("RegionPinger.RegionPingThreaded() caught exception for ping.StartPing(). Exception: " + e + " Source: " + e.Source + " Message: " + e.Message);
+=======
+                    Log.Info("RegionPinger.RegionPingThreaded() caught exception for ping.StartPing(). Exception: " + e + " Source: " + e.Source + " Message: " + e.Message);
+>>>>>>> Stashed changes
                     break;
                 }
 
@@ -625,9 +799,14 @@ namespace Photon.Realtime
                         // if ping.Done() did not become true in MaxMillisecondsPerPing, ping.Successful is false and we apply MaxMillisecondsPerPing as rtt below
                         break;
                     }
+<<<<<<< Updated upstream
                     #if !NETFX_CORE
                     System.Threading.Thread.Sleep(1);
                     #endif
+=======
+
+                    System.Threading.Thread.Sleep(1);
+>>>>>>> Stashed changes
                 }
 
 
@@ -639,7 +818,10 @@ namespace Photon.Realtime
                 replyCount++;
                 this.region.Ping = (int)((rttSum) / replyCount);
 
+<<<<<<< Updated upstream
                 #if !NETFX_CORE
+=======
+>>>>>>> Stashed changes
                 int i = 4;
                 while (!this.ping.Done() && i > 0)
                 {
@@ -647,7 +829,10 @@ namespace Photon.Realtime
                     System.Threading.Thread.Sleep(100);
                 }
                 System.Threading.Thread.Sleep(10);
+<<<<<<< Updated upstream
                 #endif
+=======
+>>>>>>> Stashed changes
             }
 
 
@@ -679,9 +864,39 @@ namespace Photon.Realtime
 
             int rttSum = 0;
             int replyCount = 0;
+<<<<<<< Updated upstream
 
 
             Stopwatch sw = new Stopwatch();
+=======
+            Stopwatch sw = new Stopwatch();
+
+            try
+            {
+                // all addresses for Photon region servers will contain a :port ending. this needs to be removed first.
+                // PhotonPing.StartPing() requires a plain (IP) address without port or protocol-prefix (on all but Windows 8.1 and WebGL platforms).
+                string address = this.region.HostAndPort;
+                int indexOfColon = address.LastIndexOf(':');
+                if (indexOfColon > 1)
+                {
+                    address = address.Substring(0, indexOfColon);
+                }
+
+                sw.Start();
+                this.regionAddress = ResolveHost(address);
+                sw.Stop();
+                if (sw.ElapsedMilliseconds > 100)
+                {
+                    Log.Info($"RegionPingCoroutine.ResolveHost() took: {sw.ElapsedMilliseconds}ms");
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Info($"RegionPingCoroutine ResolveHost failed for {this.region}. Caught: {e}");
+                this.Aborted = true;
+            }
+
+>>>>>>> Stashed changes
             for (this.CurrentAttempt = 0; this.CurrentAttempt < Attempts; this.CurrentAttempt++)
             {
                 if (this.Aborted)
@@ -698,7 +913,11 @@ namespace Photon.Realtime
                 }
                 catch (Exception e)
                 {
+<<<<<<< Updated upstream
                     Debug.Log("RegionPinger.RegionPingCoroutine() caught exception for ping.StartPing(). Exception: " + e + " Source: " + e.Source + " Message: " + e.Message);
+=======
+                    Log.Info("RegionPinger.RegionPingCoroutine() caught exception for ping.StartPing(). Exception: " + e + " Source: " + e.Source + " Message: " + e.Message);
+>>>>>>> Stashed changes
                     break;
                 }
 

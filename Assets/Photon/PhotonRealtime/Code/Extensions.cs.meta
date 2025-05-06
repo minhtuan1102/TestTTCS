@@ -5,6 +5,7 @@ MonoImporter:
   defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
+<<<<<<< Updated upstream
 AssetOrigin:
   serializedVersion: 1
   productId: 119922
@@ -12,3 +13,5 @@ AssetOrigin:
   packageVersion: 2.49
   assetPath: Assets/Photon/PhotonRealtime/Code/Extensions.cs
   uploadId: 722643
+=======
+>>>>>>> Stashed changes

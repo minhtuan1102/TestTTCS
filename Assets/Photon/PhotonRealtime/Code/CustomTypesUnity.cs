@@ -1,4 +1,5 @@
 // ----------------------------------------------------------------------------
+<<<<<<< Updated upstream
 // <copyright file="CustomTypes.cs" company="Exit Games GmbH">
 //   PhotonNetwork Framework for Unity - Copyright (C) 2018 Exit Games GmbH
 // </copyright>
@@ -12,11 +13,29 @@
 #define SUPPORTED_UNITY
 #endif
 
+=======
+// <copyright file="CustomTypesUnity.cs" company="Exit Games GmbH">
+// Photon Realtime API - Copyright (C) 2022 Exit Games GmbH
+// </copyright>
+// <summary>Sets up support for Unity-specific types.</summary>
+// <author>developer@exitgames.com</author>
+// ----------------------------------------------------------------------------
+
+#if UNITY_2017_4_OR_NEWER
+#define SUPPORTED_UNITY
+#endif
+
+
+>>>>>>> Stashed changes
 #if SUPPORTED_UNITY
 namespace Photon.Realtime
 {
     using Photon.Realtime;
+<<<<<<< Updated upstream
     using ExitGames.Client.Photon;
+=======
+    using Photon.Client;
+>>>>>>> Stashed changes
     using UnityEngine;
     using Debug = UnityEngine.Debug;
 
@@ -53,9 +72,15 @@ namespace Photon.Realtime
             lock (memVector3)
             {
                 byte[] bytes = memVector3;
+<<<<<<< Updated upstream
                 Protocol.Serialize(vo.x, bytes, ref index);
                 Protocol.Serialize(vo.y, bytes, ref index);
                 Protocol.Serialize(vo.z, bytes, ref index);
+=======
+                MessageProtocol.Serialize(vo.x, bytes, ref index);
+                MessageProtocol.Serialize(vo.y, bytes, ref index);
+                MessageProtocol.Serialize(vo.z, bytes, ref index);
+>>>>>>> Stashed changes
                 outStream.Write(bytes, 0, SizeV3);
             }
 
@@ -74,9 +99,15 @@ namespace Photon.Realtime
             {
                 inStream.Read(memVector3, 0, SizeV3);
                 int index = 0;
+<<<<<<< Updated upstream
                 Protocol.Deserialize(out vo.x, memVector3, ref index);
                 Protocol.Deserialize(out vo.y, memVector3, ref index);
                 Protocol.Deserialize(out vo.z, memVector3, ref index);
+=======
+                MessageProtocol.Deserialize(out vo.x, memVector3, ref index);
+                MessageProtocol.Deserialize(out vo.y, memVector3, ref index);
+                MessageProtocol.Deserialize(out vo.z, memVector3, ref index);
+>>>>>>> Stashed changes
             }
 
             return vo;
@@ -92,8 +123,13 @@ namespace Photon.Realtime
             {
                 byte[] bytes = memVector2;
                 int index = 0;
+<<<<<<< Updated upstream
                 Protocol.Serialize(vo.x, bytes, ref index);
                 Protocol.Serialize(vo.y, bytes, ref index);
+=======
+                MessageProtocol.Serialize(vo.x, bytes, ref index);
+                MessageProtocol.Serialize(vo.y, bytes, ref index);
+>>>>>>> Stashed changes
                 outStream.Write(bytes, 0, SizeV2);
             }
 
@@ -112,8 +148,13 @@ namespace Photon.Realtime
             {
                 inStream.Read(memVector2, 0, SizeV2);
                 int index = 0;
+<<<<<<< Updated upstream
                 Protocol.Deserialize(out vo.x, memVector2, ref index);
                 Protocol.Deserialize(out vo.y, memVector2, ref index);
+=======
+                MessageProtocol.Deserialize(out vo.x, memVector2, ref index);
+                MessageProtocol.Deserialize(out vo.y, memVector2, ref index);
+>>>>>>> Stashed changes
             }
 
             return vo;
@@ -130,10 +171,17 @@ namespace Photon.Realtime
             {
                 byte[] bytes = memQuarternion;
                 int index = 0;
+<<<<<<< Updated upstream
                 Protocol.Serialize(o.w, bytes, ref index);
                 Protocol.Serialize(o.x, bytes, ref index);
                 Protocol.Serialize(o.y, bytes, ref index);
                 Protocol.Serialize(o.z, bytes, ref index);
+=======
+                MessageProtocol.Serialize(o.w, bytes, ref index);
+                MessageProtocol.Serialize(o.x, bytes, ref index);
+                MessageProtocol.Serialize(o.y, bytes, ref index);
+                MessageProtocol.Serialize(o.z, bytes, ref index);
+>>>>>>> Stashed changes
                 outStream.Write(bytes, 0, SizeQuat);
             }
 
@@ -152,10 +200,17 @@ namespace Photon.Realtime
             {
                 inStream.Read(memQuarternion, 0, SizeQuat);
                 int index = 0;
+<<<<<<< Updated upstream
                 Protocol.Deserialize(out o.w, memQuarternion, ref index);
                 Protocol.Deserialize(out o.x, memQuarternion, ref index);
                 Protocol.Deserialize(out o.y, memQuarternion, ref index);
                 Protocol.Deserialize(out o.z, memQuarternion, ref index);
+=======
+                MessageProtocol.Deserialize(out o.w, memQuarternion, ref index);
+                MessageProtocol.Deserialize(out o.x, memQuarternion, ref index);
+                MessageProtocol.Deserialize(out o.y, memQuarternion, ref index);
+                MessageProtocol.Deserialize(out o.z, memQuarternion, ref index);
+>>>>>>> Stashed changes
             }
 
             return o;

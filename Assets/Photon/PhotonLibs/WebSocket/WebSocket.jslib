@@ -1,12 +1,17 @@
 var LibraryWebSockets = {
 $webSocketInstances: [],
 
+<<<<<<< Updated upstream
 SocketCreate: function(url, protocols)
+=======
+SocketCreate: function(url, protocols, openCallback, recvCallback, errorCallback, closeCallback)
+>>>>>>> Stashed changes
 {
     var str = UTF8ToString(url);
     var prot = UTF8ToString(protocols);
     var socket = {
         socket: new WebSocket(str, [prot]),
+<<<<<<< Updated upstream
         buffer: new Uint8Array(0),
         error: null,
         messages: [],
@@ -74,6 +79,54 @@ SocketCreate: function(url, protocols)
         }
     }
     var instance = webSocketInstances.push(socket) - 1;
+=======
+        error: null,
+        sendBufForShared: null,
+        send: typeof(SharedArrayBuffer) == "function" ? // SharedArrayBuffer is available and will not crash in 'isinstance' check
+    		function (socketInstance, ptr, length) {
+                if (HEAPU8.buffer instanceof SharedArrayBuffer) {
+                    if (!this.sendBufForShared || this.sendBufForShared.byteLength < length) {
+                        this.sendBufForShared = new ArrayBuffer(length);
+                    }
+                    var u8arr = new Uint8Array(this.sendBufForShared, 0, length);
+                    u8arr.set(new Uint8Array(HEAPU8.buffer, ptr, length));
+                    this.socket.send(u8arr);
+                }  else {
+                    this.socket.send(new Uint8Array(HEAPU8.buffer, ptr, length));
+                }
+            }
+            :
+            function (socketInstance, ptr, length) { // SharedArrayBuffer is not defined, ptr type is always ArrayBuffer
+                this.socket.send(new Uint8Array(HEAPU8.buffer, ptr, length));
+            }
+    }
+    var instance = webSocketInstances.push(socket) - 1;
+    socket.socket.binaryType = 'arraybuffer';
+    
+    socket.socket.onopen = function () {
+        {{{ makeDynCall('vi', 'openCallback') }}}(instance);
+    }
+    socket.socket.onmessage = function (e) {
+        if (e.data instanceof ArrayBuffer)
+        {
+            const b = e.data;
+            const ptr = _malloc(b.byteLength);
+            const dataHeap = new Int8Array(HEAPU8.buffer, ptr, b.byteLength);
+            dataHeap.set(new Int8Array(b));
+            {{{ makeDynCall('viii', 'recvCallback') }}}(instance, ptr, b.byteLength);
+            _free(ptr);
+        }
+    };
+    socket.socket.onerror = function (e) {
+        {{{ makeDynCall('vii', 'errorCallback') }}}(instance, e.code);
+    }
+    socket.socket.onclose = function (e) {
+        if (e.code != 1000)
+        {
+            {{{ makeDynCall('vii', 'closeCallback') }}}(instance, e.code);
+        }
+    }
+>>>>>>> Stashed changes
     return instance;
 },
 
@@ -98,6 +151,7 @@ SocketSend: function (socketInstance, ptr, bufsize)
     socket.send(socketInstance, ptr, bufsize);
 },
 
+<<<<<<< Updated upstream
 SocketRecvLength: function(socketInstance)
 {
     var socket = webSocketInstances[socketInstance];
@@ -117,6 +171,8 @@ SocketRecv: function (socketInstance, ptr, length)
     socket.messages = socket.messages.slice(1);
 },
 
+=======
+>>>>>>> Stashed changes
 SocketClose: function (socketInstance)
 {
     var socket = webSocketInstances[socketInstance];

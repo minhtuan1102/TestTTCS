@@ -13,13 +13,26 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   itemName: Axe
-  itemIcon: {fileID: 0}
+  icon: {fileID: 0}
   itemID: 0
-  description: 
-  weight: 5
-  ranged: 0
-  damage: 100
-  cooldown: 2
+  itemDescription: 
+  Prefab: {fileID: 0}
+  weight: 0
+  value: 0
+  isConsumable: 0
+  effectDescription: 
+  effectsModules: []
+  canAttack: 1
   swing: -240
   recoil: 0
   swingOffset: 0
+  damage: 100
+  cooldown: 2
+  canMelee: 0
+  hitbox: {fileID: 0}
+  canShoot: 0
+  fireAmount: 1
+  spread: 0
+  projectile: {fileID: 0}
+  options:
+  - {fileID: 0}

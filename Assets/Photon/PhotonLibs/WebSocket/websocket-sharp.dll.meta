@@ -45,7 +45,11 @@ PluginImporter:
       settings:
         CPU: AnyCPU
         DontProcess: False
+<<<<<<< Updated upstream
         PlaceholderPath: 
+=======
+        PlaceholderPath:
+>>>>>>> Stashed changes
   - first:
       Android: Android
     second:
@@ -53,7 +57,11 @@ PluginImporter:
       settings:
         CPU: ARMv7
   - first:
+<<<<<<< Updated upstream
       Any: 
+=======
+      Any:
+>>>>>>> Stashed changes
     second:
       enabled: 1
       settings: {}
@@ -120,7 +128,11 @@ PluginImporter:
       settings:
         CPU: AnyCPU
         DontProcess: False
+<<<<<<< Updated upstream
         PlaceholderPath: 
+=======
+        PlaceholderPath:
+>>>>>>> Stashed changes
         SDK: AnySDK
         ScriptingBackend: AnyScriptingBackend
   - first:
@@ -133,6 +145,7 @@ PluginImporter:
     second:
       enabled: 0
       settings:
+<<<<<<< Updated upstream
         CompileFlags: 
         FrameworkDependencies: 
   userData: 
@@ -145,3 +158,10 @@ AssetOrigin:
   packageVersion: 2.49
   assetPath: Assets/Photon/PhotonLibs/WebSocket/websocket-sharp.dll
   uploadId: 722643
+=======
+        CompileFlags:
+        FrameworkDependencies:
+  userData:
+  assetBundleName:
+  assetBundleVariant:
+>>>>>>> Stashed changes

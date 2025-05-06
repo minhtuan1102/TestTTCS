@@ -1,5 +1,13 @@
+<<<<<<< Updated upstream
 ﻿using UnityEngine;
 using Photon.Pun;
+=======
+using JetBrains.Annotations;
+using System;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.EventSystems;
+>>>>>>> Stashed changes
 using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,12 +15,36 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(PlayerStamina))]
 public class Player : MonoBehaviourPunCallbacks, IPunObservable
 {
+<<<<<<< Updated upstream
     public float range = 5f;
     private float vision = 5f;
     public float minVision = -2f;
     public float maxVision = 2f;
     public float zoomSpeed = 5f;
     public float moveZoomDecrease = 2f;
+=======
+
+    // Basic stats
+
+    public float _currentMana = 100f;
+    public float MaxMana = 100f;
+
+    public int cash = 0;
+
+    public float CurrentMana => _currentMana;
+
+    // Vision Stats
+
+    public float range = 5f; // Player range
+
+    private float vision = 5f; // Player vision
+    public float minVision = -2f; // limit zoom in
+    public float maxVision = 2f; // limit zoom out
+    public float zoomSpeed = 5f;  // Zoom speed
+    public float moveZoomDecrease = 2f; // Vison reduce when moving
+>>>>>>> Stashed changes
+
+    // Movement Stats
 
     public float moveSpeed = 5f;
     public float maxSpeed = 10f;
@@ -21,8 +53,10 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     public float linearDrag = 4f;
     private Vector3 moveDirrection;
 
-    public Vector2 minBounds;
-    public Vector2 maxBounds;
+    public Vector2 minBounds = new Vector2(-999999,999999);
+    public Vector2 maxBounds = new Vector2(-999999, 999999);
+
+    // Dash
 
     public float dashSpeed = 10f;
     public float dashDuration = 0.2f;
@@ -30,6 +64,10 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     private bool isDashing = false;
     private float dashTime;
     private float dashCooldownTimer;
+
+    private float dashCooldownTimer = 0f;
+    public float dashCooldown = 1f;
+    public float dashManaConsume = 5f;
 
     private Rigidbody2D rb;
     private Camera cam;
@@ -43,6 +81,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     public float Hand_Radius = 0.5f;
     private float rotationSpeed = 10f;
 
+<<<<<<< Updated upstream
     public float recoilForce = 2f;
     public float recoilRecoverySpeed = 5f;
     public float dampingFactor = 0.1f;
@@ -55,6 +94,36 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
     private float currentSwing = 0f;
     private float targetSwing = 0f;
     private float inverse = 1f;
+=======
+    [HideInInspector] public float recoilForce = 2f;  // Base recoil force
+    [HideInInspector] public float recoilRecoverySpeed = 5f; // How fast recoil returns to normal
+    [HideInInspector] public float dampingFactor = 0.1f; // Smooth damping factor
+    [HideInInspector] private float recoilOffset = 0f; // Recoil displacement (single float)
+    [HideInInspector] private float recoilVelocity = 0f; // Smooth recoil movement
+
+    [HideInInspector] public float swingSpeed = 10f; // Speed of swing increasing
+    [HideInInspector] public float swingOffset = 30f;
+    [HideInInspector] public float swingRecoil = -90f;
+    [HideInInspector] private float currentSwing = 0f; // Current swing value
+    [HideInInspector] private bool isSwinging = false; // Whether swinging is happening
+
+    [HideInInspector] private float targetSwing = 0f; // The target swing angle (can be set dynamically)
+    [HideInInspector] private float inverse = 1f;
+
+    [HideInInspector] private Transform model;
+
+    private bool isMoving = false;
+    private float legProgresion = 0f;
+
+    private Transform leg_R;
+    private Transform leg_L;
+    private Transform body;
+
+    private float leg_R_swing = 0f;
+    private float leg_L_swing = 0f;
+
+    private float body_swing = 0f;
+>>>>>>> Stashed changes
 
     private Collider2D player_collider;
     private HealthSystem healthSystem;
@@ -73,6 +142,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         healthSystem = GetComponent<HealthSystem>();
         staminaSystem = GetComponent < PlayerStamina>();
 
+<<<<<<< Updated upstream
         // Kiểm tra các component cần thiết
         if (rb == null)
         {
@@ -101,6 +171,14 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
 
         // Kiểm tra Tilemap
         Tilemap tilemap = FindObjectOfType<Tilemap>();
+=======
+        model = transform.Find("Model").transform;
+
+        leg_L = model.Find("LegL").transform;
+        leg_R = model.Find("LegR").transform;
+
+        Tilemap tilemap = GetComponent<Tilemap>();
+>>>>>>> Stashed changes
         if (tilemap != null)
         {
             cellSize = tilemap.layoutGrid.cellSize.x;
@@ -125,6 +203,7 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
 
+<<<<<<< Updated upstream
         // Xử lý input dash
         dashCooldownTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.Q) && !isDashing && dashCooldownTimer <= 0f && staminaSystem.CanDash())
@@ -134,6 +213,27 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
             photonView.RPC("RPC_StartDash", RpcTarget.All);
             dashCooldownTimer = dashCooldown;
             staminaSystem.ResetDash(); // Đảm bảo canDash được đặt lại sau cooldown
+=======
+        // If the player presses Q and is not already dashing, start the dash
+
+        dashCooldownTimer += Time.fixedDeltaTime;
+
+        if (Input.GetKeyDown(KeyCode.Q) && !isDashing && dashCooldownTimer>0f)
+        {
+            if (ConsumeMana(dashManaConsume))
+            {
+                // Set the dash direction to the movement direction
+                if (rb.linearVelocity.magnitude > 0)
+                {
+                    moveDirrection = rb.linearVelocity.normalized;
+                }
+
+                // Start dashing
+                isDashing = true;
+                dashCooldownTimer = -dashCooldown;
+                dashTime = 0;
+            }
+>>>>>>> Stashed changes
         }
 
         // Xử lý input tấn công
@@ -239,6 +339,21 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
         isDashing = false;
     }
 
+    public bool ConsumeMana(float value)
+    {
+        if (_currentMana >= value)
+        {
+            _currentMana -= value;
+            return true;
+        }
+        return false;
+    }
+
+    public void GainMana(float value)
+    {
+        _currentMana = Mathf.Min(MaxMana, _currentMana + value);
+    }
+
     void FixedUpdate()
     {
         if (photonView.IsMine)
@@ -311,6 +426,93 @@ public class Player : MonoBehaviourPunCallbacks, IPunObservable
             main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, networkHandRotation, Time.deltaTime * 10);
             main_hand.transform.localScale = networkScale;
         }
+<<<<<<< Updated upstream
+=======
+
+        Boolean lastMovingState = isMoving;
+        isMoving = (rb.linearVelocity.magnitude > 0.2f);
+
+        if (isMoving)
+        {
+            if (lastMovingState == false)
+            {
+                legProgresion = 0f;
+                body_swing = 0f;
+            }
+
+            legProgresion += rb.linearVelocity.magnitude * 0.04f;
+            body_swing = 0.05f * Mathf.Sin(legProgresion);
+            leg_L_swing = Mathf.MoveTowards(leg_L_swing, 60 * Mathf.Cos(legProgresion), Time.fixedDeltaTime * 1000);
+            leg_R_swing = Mathf.MoveTowards(leg_R_swing, 60 * Mathf.Cos(legProgresion + Mathf.PI), Time.fixedDeltaTime * 1000);
+        }
+        else
+        {
+            body_swing = Mathf.MoveTowards(body_swing, 0, Time.fixedDeltaTime * 100);
+            leg_L_swing = Mathf.MoveTowards(leg_L_swing, 0, Time.fixedDeltaTime * 250);
+            leg_R_swing = Mathf.MoveTowards(leg_R_swing, 0, Time.fixedDeltaTime * 250);
+        }
+
+        Quaternion legLRotation = Quaternion.Euler(
+            new Vector3(0, 0, leg_L_swing)
+            );
+        leg_L.localRotation = legLRotation;
+
+        Quaternion legRRotation = Quaternion.Euler(
+            new Vector3(0, 0, leg_R_swing)
+            );
+        leg_R.localRotation = legRRotation;
+
+        model.localPosition = new Vector3(0, body_swing, 0);
+
+        // Keep player inside bounds
+        rb.position = new Vector2(
+                Mathf.Clamp(rb.position.x, minBounds.x, maxBounds.x),
+                Mathf.Clamp(rb.position.y, minBounds.y, maxBounds.y)
+            );
+
+        // Update Rendering
+        Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition); // Mouse pos
+        Vector3 localScale = main_hand.transform.localScale;
+
+        Vector3 scale = model.localScale;
+
+        if (mousePosition.x > transform.position.x)
+        {
+            scale.x = Math.Abs(scale.x);
+            inverse = 1f;
+            localScale.y = Mathf.Abs(localScale.y);
+        }
+        else
+        {
+            scale.x = -Math.Abs(scale.x);
+            inverse = -1f;
+            localScale.y = -Mathf.Abs(localScale.y);
+        }
+
+        model.localScale = scale;
+
+        main_hand.transform.localScale = localScale;
+
+        // Hand movement
+
+        // Smoothly interpolate recoil
+        recoilOffset = Mathf.SmoothDamp(recoilOffset, 0f, ref recoilVelocity, recoilRecoverySpeed * Time.deltaTime);
+        currentSwing = Mathf.MoveTowards(currentSwing, targetSwing, swingSpeed * Time.deltaTime);
+
+        // If we reached the target swing angle, stop swinging and reset to 0
+        if (currentSwing == targetSwing)
+        {
+            targetSwing = 0f;
+        }
+
+        Vector3 direction = mousePosition - main_hand.transform.position;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Hand Update
+        main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
+        main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset)  * Hand_Radius;
+>>>>>>> Stashed changes
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

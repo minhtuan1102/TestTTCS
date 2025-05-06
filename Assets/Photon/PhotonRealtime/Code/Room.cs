@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿// ----------------------------------------------------------------------------
 // <copyright file="Room.cs" company="Exit Games GmbH">
 //   Loadbalancing Framework for Photon - Copyright (C) 2018 Exit Games GmbH
@@ -5,11 +6,23 @@
 // <summary>
 //   The Room class resembles the properties known about the room in which
 //   a game/match happens.
+=======
+// ----------------------------------------------------------------------------
+// <copyright file="Room.cs" company="Exit Games GmbH">
+// Photon Realtime API - Copyright (C) 2022 Exit Games GmbH
+// </copyright>
+// <summary>
+// Resembles the properties and operations for a room.
+>>>>>>> Stashed changes
 // </summary>
 // <author>developer@photonengine.com</author>
 // ----------------------------------------------------------------------------
 
+<<<<<<< Updated upstream
 #if UNITY_4_7 || UNITY_5 || UNITY_5_3_OR_NEWER
+=======
+#if UNITY_2017_4_OR_NEWER
+>>>>>>> Stashed changes
 #define SUPPORTED_UNITY
 #endif
 
@@ -19,11 +32,18 @@ namespace Photon.Realtime
     using System;
     using System.Collections;
     using System.Collections.Generic;
+<<<<<<< Updated upstream
     using ExitGames.Client.Photon;
 
     #if SUPPORTED_UNITY || NETFX_CORE
     using Hashtable = ExitGames.Client.Photon.Hashtable;
     using SupportClass = ExitGames.Client.Photon.SupportClass;
+=======
+    using Photon.Client;
+
+    #if SUPPORTED_UNITY
+    using SupportClass = Photon.Client.SupportClass;
+>>>>>>> Stashed changes
     #endif
 
 
@@ -40,9 +60,15 @@ namespace Photon.Realtime
     public class Room : RoomInfo
     {
         /// <summary>
+<<<<<<< Updated upstream
         /// A reference to the LoadBalancingClient which is currently keeping the connection and state.
         /// </summary>
         public LoadBalancingClient LoadBalancingClient { get; set; }
+=======
+        /// A reference to the RealtimeClient which is currently keeping the connection and state.
+        /// </summary>
+        public RealtimeClient RealtimeClient { get; set; }
+>>>>>>> Stashed changes
 
         /// <summary>The name of a room. Unique identifier (per region and virtual appid) for a room/match.</summary>
         /// <remarks>The name can't be changed once it's set by the server.</remarks>
@@ -61,6 +87,10 @@ namespace Photon.Realtime
 
         private bool isOffline;
 
+<<<<<<< Updated upstream
+=======
+        /// <summary>True if this is an offline room (special case for PUN).</summary>
+>>>>>>> Stashed changes
         public bool IsOffline
         {
             get
@@ -100,7 +130,11 @@ namespace Photon.Realtime
                 {
                     if (!this.isOffline)
                     {
+<<<<<<< Updated upstream
                         this.LoadBalancingClient.OpSetPropertiesOfRoom(new Hashtable() { { GamePropertyKey.IsOpen, value } });
+=======
+                        this.RealtimeClient.OpSetPropertiesOfRoom(new PhotonHashtable() { { GamePropertyKey.IsOpen, value } });
+>>>>>>> Stashed changes
                     }
                 }
 
@@ -131,7 +165,11 @@ namespace Photon.Realtime
                 {
                     if (!this.isOffline)
                     {
+<<<<<<< Updated upstream
                         this.LoadBalancingClient.OpSetPropertiesOfRoom(new Hashtable() { { GamePropertyKey.IsVisible, value } });
+=======
+                        this.RealtimeClient.OpSetPropertiesOfRoom(new PhotonHashtable() { { GamePropertyKey.IsVisible, value } });
+>>>>>>> Stashed changes
                     }
                 }
 
@@ -164,7 +202,11 @@ namespace Photon.Realtime
                     byte maxPlayersAsByte = value <= byte.MaxValue ? (byte)value : (byte)0;
                     if (!this.isOffline)
                     {
+<<<<<<< Updated upstream
                         this.LoadBalancingClient.OpSetPropertiesOfRoom(new Hashtable() { { GamePropertyKey.MaxPlayers, maxPlayersAsByte }, { GamePropertyKey.MaxPlayersInt, this.maxPlayers } });
+=======
+                        this.RealtimeClient.OpSetPropertiesOfRoom(new PhotonHashtable() { { GamePropertyKey.MaxPlayers, maxPlayersAsByte }, { GamePropertyKey.MaxPlayersInt, this.maxPlayers } });
+>>>>>>> Stashed changes
                     }
                 }
             }
@@ -206,14 +248,23 @@ namespace Photon.Realtime
         /// </summary>
         /// <remarks>
         /// The corresponding feature in Photon is called "Slot Reservation" and can be found in the doc pages.
+<<<<<<< Updated upstream
         /// Define expected players in the methods: <see cref="LoadBalancingClient.OpCreateRoom"/>, <see cref="LoadBalancingClient.OpJoinRoom"/> and <see cref="LoadBalancingClient.OpJoinRandomRoom"/>.
+=======
+        /// Define expected players in the methods: <see cref="RealtimeClient.OpCreateRoom"/>, <see cref="RealtimeClient.OpJoinRoom"/> and <see cref="RealtimeClient.OpJoinRandomRoom"/>.
+>>>>>>> Stashed changes
         /// </remarks>
         public string[] ExpectedUsers
         {
             get { return this.expectedUsers; }
         }
 
+<<<<<<< Updated upstream
         /// <summary>Player Time To Live. How long any player can be inactive (due to disconnect or leave) before the user gets removed from the playerlist (freeing a slot).</summary>
+=======
+        /// <summary>Player Time To Live. How long any player can be inactive (due to disconnect or leave) before the user gets removed from the player list (freeing a slot).</summary>
+        /// /// <remarks>If room.isOffline is true, no property will be set and there is no property-changed callback.</remarks>
+>>>>>>> Stashed changes
         public int PlayerTtl
         {
             get { return this.playerTtl; }
@@ -224,7 +275,11 @@ namespace Photon.Realtime
                 {
                     if (!this.isOffline)
                     {
+<<<<<<< Updated upstream
                         this.LoadBalancingClient.OpSetPropertyOfRoom(GamePropertyKey.PlayerTtl, value);  // TODO: implement Offline Mode
+=======
+                        this.RealtimeClient.OpSetPropertyOfRoom(GamePropertyKey.PlayerTtl, value);
+>>>>>>> Stashed changes
                     }
                 }
 
@@ -233,6 +288,10 @@ namespace Photon.Realtime
         }
 
         /// <summary>Room Time To Live. How long a room stays available (and in server-memory), after the last player becomes inactive. After this time, the room gets persisted or destroyed.</summary>
+<<<<<<< Updated upstream
+=======
+        /// <remarks>If room.isOffline is true, no property will be set and there is no property-changed callback.</remarks>
+>>>>>>> Stashed changes
         public int EmptyRoomTtl
         {
             get { return this.emptyRoomTtl; }
@@ -243,7 +302,11 @@ namespace Photon.Realtime
                 {
                     if (!this.isOffline)
                     {
+<<<<<<< Updated upstream
                         this.LoadBalancingClient.OpSetPropertyOfRoom(GamePropertyKey.EmptyRoomTtl, value);  // TODO: implement Offline Mode
+=======
+                        this.RealtimeClient.OpSetPropertyOfRoom(GamePropertyKey.EmptyRoomTtl, value);
+>>>>>>> Stashed changes
                     }
                 }
 
@@ -255,6 +318,7 @@ namespace Photon.Realtime
         /// The ID (actorNumber, actorNumber) of the player who's the master of this Room.
         /// Note: This changes when the current master leaves the room.
         /// </summary>
+<<<<<<< Updated upstream
         public int MasterClientId { get { return this.masterClientId; } }
 
         /// <summary>
@@ -263,6 +327,19 @@ namespace Photon.Realtime
         /// </summary>
         /// <remarks>You could name properties that are not set from the beginning. Those will be synced with the lobby when added later on.</remarks>
         public string[] PropertiesListedInLobby
+=======
+        public int MasterClientId {
+            get { return this.masterClientId; }
+            protected internal set { this.masterClientId = value; }
+        }
+
+        /// <summary>
+        /// Gets a list of custom properties that are in the RoomInfo of the Lobby.
+        /// This list is defined when creating the room and can't be changed afterwards. Compare: RealtimeClient.OpCreateRoom()
+        /// </summary>
+        /// <remarks>You could name properties that are not set from the beginning. Those will be synced with the lobby when added later on.</remarks>
+        public object[] PropertiesListedInLobby
+>>>>>>> Stashed changes
         {
             get
             {
@@ -303,6 +380,11 @@ namespace Photon.Realtime
         public bool PublishUserId { get; private set; }
         /// <summary>Define if actor or room properties with null values are removed on the server or kept.</summary>
         public bool DeleteNullProperties { get; private set; }
+<<<<<<< Updated upstream
+=======
+        /// <summary>The room's lobby (derived/tracked by the parameters of join, join random and create room operations).</summary>
+        public TypedLobby Lobby { get; internal set; }
+>>>>>>> Stashed changes
 
         #if SERVERSDK
         /// <summary>Define if rooms should have unique UserId per actor and that UserIds are used instead of actor number in rejoin.</summary>
@@ -313,7 +395,11 @@ namespace Photon.Realtime
         /// <summary>Creates a Room (representation) with given name and properties and the "listing options" as provided by parameters.</summary>
         /// <param name="roomName">Name of the room (can be null until it's actually created on server).</param>
         /// <param name="options">Room options.</param>
+<<<<<<< Updated upstream
         /// <param name="isOffline">Signal if this room is only used locally.</param>
+=======
+        /// <param name="isOffline">True when using the special case for offline rooms in PUN.</param>
+>>>>>>> Stashed changes
         public Room(string roomName, RoomOptions options, bool isOffline = false) : base(roomName, options != null ? options.CustomRoomProperties : null)
         {
             // base() sets name and (custom)properties. here we set "well known" properties
@@ -347,7 +433,13 @@ namespace Photon.Realtime
             this.autoCleanUp = (roomFlags & (int)RoomOptionBit.DeleteCacheOnLeave) != 0;
         }
 
+<<<<<<< Updated upstream
         protected internal override void InternalCacheProperties(Hashtable propertiesToCache)
+=======
+        /// <summary>Internal method to read properties from a PhotonHashtable to individual fields of the room (e.g. isOpen, maxPlayers etc.).</summary>
+        /// <param name="propertiesToCache">Set of properties to read and apply to fields.</param>
+        protected internal override void InternalCacheProperties(PhotonHashtable propertiesToCache)
+>>>>>>> Stashed changes
         {
             int oldMasterId = this.masterClientId;
 
@@ -355,7 +447,11 @@ namespace Photon.Realtime
 
             if (oldMasterId != 0 && this.masterClientId != oldMasterId)
             {
+<<<<<<< Updated upstream
                 this.LoadBalancingClient.InRoomCallbackTargets.OnMasterClientSwitched(this.GetPlayer(this.masterClientId));
+=======
+                this.RealtimeClient.InRoomCallbackTargets.OnMasterClientSwitched(this.GetPlayer(this.masterClientId));
+>>>>>>> Stashed changes
             }
         }
 
@@ -397,6 +493,7 @@ namespace Photon.Realtime
         ///
         /// Properties get saved with the game state for Turnbased games (which use IsPersistent = true).
         /// </remarks>
+<<<<<<< Updated upstream
         /// <param name="propertiesToSet">Hashtable of Custom Properties that changes.</param>
         /// <param name="expectedProperties">Provide some keys/values to use as condition for setting the new values. Client must be in room.</param>
         /// <param name="webFlags">Defines if this SetCustomProperties-operation gets forwarded to your WebHooks. Client must be in room.</param>
@@ -426,11 +523,46 @@ namespace Photon.Realtime
                 // invoking callbacks
                 this.LoadBalancingClient.InRoomCallbackTargets.OnRoomPropertiesUpdate(propertiesToSet);
 
+=======
+        /// <param name="propertiesToSet">PhotonHashtable of Custom Properties that changes.</param>
+        /// <param name="expectedValues">Provide some keys/values to use as condition for setting the new values. Client must be in room.</param>
+        /// <returns>
+        /// False if propertiesToSet is null or empty or have no keys (of allowed types).
+        /// True in offline mode even if expectedProperties are used.
+        /// Otherwise, returns if this operation could be sent to the server.
+        /// </returns>
+        public virtual bool SetCustomProperties(PhotonHashtable propertiesToSet, PhotonHashtable expectedValues = null)
+        {
+            if (!propertiesToSet.CustomPropKeyTypesValid())
+            {
+                Log.Error("Room.SetCustomProperties() failed. Parameter propertiesToSet must be non-null, not empty and contain only int or string keys.", this.RealtimeClient.LogLevel);
+                return false;
+            }
+
+            if (expectedValues != null && !expectedValues.CustomPropKeyTypesValid())
+            {
+                Log.Error("Room.SetCustomProperties() failed. Parameter expectedValues  must contain only int or string keys if it is not null.", this.RealtimeClient.LogLevel);
+                return false;
+            }
+
+            if (this.isOffline)
+            {
+                // Merge and delete values.
+                this.CustomProperties.Merge(propertiesToSet);
+                this.CustomProperties.StripKeysWithNullValues();
+
+                // invoking callbacks
+                this.RealtimeClient.InRoomCallbackTargets.OnRoomPropertiesUpdate(propertiesToSet);
+>>>>>>> Stashed changes
             }
             else
             {
                 // send (sync) these new values if in online room
+<<<<<<< Updated upstream
                 return this.LoadBalancingClient.OpSetPropertiesOfRoom(customProps, expectedProperties, webFlags);
+=======
+                return this.RealtimeClient.OpSetPropertiesOfRoom(propertiesToSet, expectedValues);
+>>>>>>> Stashed changes
             }
 
             return true;
@@ -444,12 +576,17 @@ namespace Photon.Realtime
         /// </remarks>
         /// <param name="lobbyProps">An array of custom room property names to forward to the lobby.</param>
         /// <returns>If the operation could be sent to the server.</returns>
+<<<<<<< Updated upstream
         public bool SetPropertiesListedInLobby(string[] lobbyProps)
+=======
+        public bool SetPropertiesListedInLobby(object[] lobbyProps)
+>>>>>>> Stashed changes
         {
             if (this.isOffline)
             {
                 return false;
             }
+<<<<<<< Updated upstream
             Hashtable customProps = new Hashtable();
             customProps[GamePropertyKey.PropsListedInLobby] = lobbyProps;
             return this.LoadBalancingClient.OpSetPropertiesOfRoom(customProps);
@@ -461,6 +598,26 @@ namespace Photon.Realtime
         /// This is internally used by the LoadBalancing API. There is usually no need to remove players yourself.
         /// This is not a way to "kick" players.
         /// </summary>
+=======
+
+            if (!lobbyProps.CustomPropKeyTypesValid(true))
+            {
+                Log.Error("Room.SetPropertiesListedInLobby() failed. Parameter lobbyProps can be null, have zero items or all items must be int or string.", this.RealtimeClient.LogLevel);
+                return false;
+            }
+
+            PhotonHashtable customProps = new PhotonHashtable();
+            customProps[GamePropertyKey.PropsListedInLobby] = lobbyProps;
+            return this.RealtimeClient.OpSetPropertiesOfRoom(customProps);
+        }
+
+
+        /// <summary>Removes a player from this room's Players Dictionary.</summary>
+        /// <remarks>
+        /// This is internally used by the Realtime API. There is usually no need to remove players yourself.
+        /// This is not a way to "kick" players.
+        /// </remarks>
+>>>>>>> Stashed changes
         protected internal virtual void RemovePlayer(Player player)
         {
             this.Players.Remove(player.ActorNumber);
@@ -499,9 +656,15 @@ namespace Photon.Realtime
             {
                 return false;
             }
+<<<<<<< Updated upstream
             Hashtable newProps = new Hashtable() { { GamePropertyKey.MasterClientId, masterClientPlayer.ActorNumber } };
             Hashtable prevProps = new Hashtable() { { GamePropertyKey.MasterClientId, this.MasterClientId } };
             return this.LoadBalancingClient.OpSetPropertiesOfRoom(newProps, prevProps);
+=======
+            PhotonHashtable newProps = new PhotonHashtable() { { GamePropertyKey.MasterClientId, masterClientPlayer.ActorNumber } };
+            PhotonHashtable prevProps = new PhotonHashtable() { { GamePropertyKey.MasterClientId, this.MasterClientId } };
+            return this.RealtimeClient.OpSetPropertiesOfRoom(newProps, prevProps);
+>>>>>>> Stashed changes
         }
 
         /// <summary>
@@ -593,18 +756,27 @@ namespace Photon.Realtime
         {
             if (newExpectedUsers == null || newExpectedUsers.Length == 0)
             {
+<<<<<<< Updated upstream
                 this.LoadBalancingClient.DebugReturn(DebugLevel.ERROR, "newExpectedUsers array is null or empty, call Room.ClearExpectedUsers() instead if this is what you want.");
+=======
+                Log.Error("SetExpectedUsers() failed. Parameter newExpectedUsers array is null or empty. To set no expected users, call Room.ClearExpectedUsers() instead.", this.RealtimeClient.LogLevel);
+>>>>>>> Stashed changes
                 return false;
             }
             return this.SetExpectedUsers(newExpectedUsers, this.ExpectedUsers);
         }
 
+<<<<<<< Updated upstream
         private bool SetExpectedUsers(string[] newExpectedUsers, string[] oldExpectedUsers)
+=======
+        private bool SetExpectedUsers(string[] newExpectedUsers, string[] currentKnownExpectedUsers)
+>>>>>>> Stashed changes
         {
             if (this.isOffline)
             {
                 return false;
             }
+<<<<<<< Updated upstream
             Hashtable gameProperties = new Hashtable(1);
             gameProperties.Add(GamePropertyKey.ExpectedUsers, newExpectedUsers);
             Hashtable expectedProperties = null;
@@ -614,20 +786,37 @@ namespace Photon.Realtime
                 expectedProperties.Add(GamePropertyKey.ExpectedUsers, oldExpectedUsers);
             }
             return this.LoadBalancingClient.OpSetPropertiesOfRoom(gameProperties, expectedProperties);
+=======
+            PhotonHashtable gameProperties = new PhotonHashtable(1);
+            gameProperties.Add(GamePropertyKey.ExpectedUsers, newExpectedUsers);
+
+            PhotonHashtable expectedProperties = new PhotonHashtable(1);
+            expectedProperties.Add(GamePropertyKey.ExpectedUsers, currentKnownExpectedUsers);
+
+            return this.RealtimeClient.OpSetPropertiesOfRoom(gameProperties, expectedProperties);
+>>>>>>> Stashed changes
         }
 
         /// <summary>Returns a summary of this Room instance as string.</summary>
         /// <returns>Summary of this Room instance.</returns>
         public override string ToString()
         {
+<<<<<<< Updated upstream
             return string.Format("Room: '{0}' {1},{2} {4}/{3} players.", this.name, this.isVisible ? "visible" : "hidden", this.isOpen ? "open" : "closed", this.maxPlayers, this.PlayerCount);
+=======
+            return $"Room: '{this.name}' {(this.isVisible ? "visible" : "hidden")},{(this.isOpen ? "open" : "closed")} {this.PlayerCount}/{this.maxPlayers} players {(this.Lobby == null ? "DefaultLobby" : this.Lobby.ToString())}.";
+>>>>>>> Stashed changes
         }
 
         /// <summary>Returns a summary of this Room instance as longer string, including Custom Properties.</summary>
         /// <returns>Summary of this Room instance.</returns>
         public new string ToStringFull()
         {
+<<<<<<< Updated upstream
             return string.Format("Room: '{0}' {1},{2} {4}/{3} players.\ncustomProps: {5}", this.name, this.isVisible ? "visible" : "hidden", this.isOpen ? "open" : "closed", this.maxPlayers, this.PlayerCount, this.CustomProperties.ToStringFull());
+=======
+            return $"Room: '{this.name}' {(this.isVisible ? "visible" : "hidden")},{(this.isOpen ? "open" : "closed")} {this.PlayerCount}/{this.maxPlayers} players {(this.Lobby == null ? "DefaultLobby" : this.Lobby.ToString())}.\n  customProps: {this.CustomProperties.ToStringFull()}";
+>>>>>>> Stashed changes
         }
     }
 }
