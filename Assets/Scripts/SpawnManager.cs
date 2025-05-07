@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using Photon.Pun;
+//using Photon.Pun;
 using System.Collections.Generic;
 
-public class SpawnManager : MonoBehaviourPunCallbacks
+public class SpawnManager : MonoBehaviour
 {
+    /*
     [Header("Cài đặt kẻ thù")]
     public GameObject[] enemyPrefabs;
     public int maxEnemies = 10;
@@ -132,4 +133,5 @@ public class SpawnManager : MonoBehaviourPunCallbacks
                 SpawnItem();
         }
     }
+    */
 }

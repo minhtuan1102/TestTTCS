@@ -10,9 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6261956343841089754}
   - component: {fileID: 3349553715473418759}
-  - component: {fileID: 7486527144364062939}
   - component: {fileID: 1088480764909035179}
-  - component: {fileID: -5822333879769634300}
   m_Layer: 0
   m_Name: Coke_0
   m_TagString: Untagged
@@ -90,20 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7486527144364062939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2149437736035512379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cebdb7d260d9b4d4da84b3f79a5d0e81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  staminaAmount: 30
-  pickupEffect: {fileID: 0}
 --- !u!70 &1088480764909035179
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -141,25 +125,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.16, y: 0.28}
   m_Direction: 0
---- !u!114 &-5822333879769634300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2149437736035512379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 1
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
+//using Photon.Pun;
+//using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
-public class NetworkManager : MonoBehaviourPunCallbacks
+public class NetworkManager : MonoBehaviour
 {
+    /*
     [SerializeField] private GameObject playerPrefab; // Prefab của nhân vật
     [SerializeField] private Vector3 spawnPosition = new Vector3(0, 1, 0); // Vị trí spawn mặc định
     private bool hasSpawnedPlayer = false; // Biến kiểm tra xem đã spawn nhân vật chưa
@@ -18,6 +19,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
 
         // Kiểm tra trạng thái kết nối Photon
+        /*
         if (!PhotonNetwork.IsConnected)
         {
             // Nếu chưa kết nối, kết nối tới Photon
@@ -141,6 +143,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void SpawnNhanVat()
     {
         // Kiểm tra xem Prefab có hợp lệ không
+
         if (playerPrefab == null)
         {
             Debug.Log("Lỗi: Prefab nhân vật chưa được thiết lập trong NetworkManager!");
@@ -175,6 +178,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.JoinLobby();
         }
+
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -187,9 +191,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log($"Tham gia phòng thất bại với mã lỗi: {returnCode}, thông báo: {message}");
     }
 
-    public override void OnDisconnected(DisconnectCause cause)
+    /*public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.Log($"Ngắt kết nối khỏi Photon với lý do: {cause}");
         hasSpawnedPlayer = false; // Reset để có thể spawn lại nếu kết nối lại
     }
+    */
 }

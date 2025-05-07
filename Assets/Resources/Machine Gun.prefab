@@ -91,7 +91,6 @@ GameObject:
   - component: {fileID: 4723898010756005520}
   - component: {fileID: 656238628637718740}
   - component: {fileID: 9163952780577008203}
-  - component: {fileID: 6679292752014433249}
   m_Layer: 3
   m_Name: Machine Gun
   m_TagString: Item
@@ -243,25 +242,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7678188043908235547, guid: c5b57f23da9c7f247aa723ba80609c70, type: 3}
---- !u!114 &6679292752014433249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2438224008938638320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0

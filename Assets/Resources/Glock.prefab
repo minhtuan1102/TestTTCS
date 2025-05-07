@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 922257489603546280}
   - component: {fileID: 6865868584898399079}
   - component: {fileID: 3883257792348497531}
-  - component: {fileID: -619273852354808661}
   m_Layer: 0
   m_Name: Glock
   m_TagString: Item
@@ -165,28 +164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3125827532256581459, guid: 14bbb6dead94572478528c1b2d6c396f, type: 3}
---- !u!114 &-619273852354808661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2242471609804291242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 1
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &6367915441958645764
 GameObject:
   m_ObjectHideFlags: 0

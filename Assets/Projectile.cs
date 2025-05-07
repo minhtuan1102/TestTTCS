@@ -1,49 +1,43 @@
 ﻿using UnityEngine;
-using Photon.Pun;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class Projectile : MonoBehaviourPun
+public class Projectile : MonoBehaviour
 {
     private Rigidbody2D rb;
+
     [SerializeField] public ProjectileItem itemData;
+
     public float damage = 0f;
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = transform.right * itemData.speed;
-        if (photonView.IsMine)
-        {
-            Invoke("DestroyProjectile", itemData.lifeTime);
-        }
-    }
-
-    void DestroyProjectile()
-    {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.Destroy(gameObject);
-        }
+        rb.linearVelocity = transform.right * itemData.speed; // bắn theo hướng mặt phải
+        Destroy(gameObject, itemData.lifeTime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!photonView.IsMine) return;
-
+        // Gây sát thương nếu cần
         if (other.CompareTag("Enemy"))
         {
             Debug.Log("Trúng địch!");
-            HealthSystem enemyHealth = other.GetComponent<HealthSystem>();
-            if (enemyHealth != null)
+            Enemy enemyData = other.GetComponent<Enemy>();
+
+            if (enemyData != null)
             {
-                enemyHealth.TakeDamage((int)damage);
-                PhotonNetwork.Destroy(gameObject);
+                if (enemyData.health > 0f)
+                {
+                    enemyData.TakeDamage(damage);
+                    Destroy(gameObject);
+                }
             }
         }
 
+        // Chạm tường xoá đạn
         if (other.CompareTag("Barrier"))
         {
-            PhotonNetwork.Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

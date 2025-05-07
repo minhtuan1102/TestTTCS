@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using Photon.Pun;
 
-public class FireBullet : MonoBehaviourPun
+public class FireBullet : MonoBehaviour
 {
     private Transform muzzle;
     [SerializeField] private GameObject bulletPrefab;
@@ -18,7 +17,7 @@ public class FireBullet : MonoBehaviourPun
     {
         for (int i = 0; i < fireAmount; i++)
         {
-            GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, muzzle.position, Quaternion.Euler(0, 0, muzzle.transform.eulerAngles.z + Random.Range(-spread, spread)), 0);
+            GameObject bullet = Instantiate(bulletPrefab, muzzle.position, Quaternion.Euler(0, 0, muzzle.transform.eulerAngles.z + Random.Range(-spread, spread)));
             bullet.transform.SetParent(projectileHolder.transform);
             Projectile bullet_Projectile = bullet.GetComponent<Projectile>();
             bullet_Projectile.damage = damage;

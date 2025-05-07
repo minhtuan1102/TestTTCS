@@ -1,8 +1,8 @@
 using UnityEngine;
-using Photon.Pun;
+//using Photon.Pun;
 using TMPro;
 
-public class NotificationUI : MonoBehaviourPunCallbacks
+public class NotificationUI : MonoBehaviour
 {
     public TMP_Text notificationText;
     private float displayTime = 3f;
@@ -23,8 +23,10 @@ public class NotificationUI : MonoBehaviourPunCallbacks
         timer = displayTime;
     }
 
-    public override void OnJoinedRoom()
+   /*
+    * public override void OnJoinedRoom()
     {
         ShowNotification("Joined Room: " + PhotonNetwork.CurrentRoom.Name);
     }
+   */
 }

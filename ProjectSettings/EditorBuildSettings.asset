@@ -4,25 +4,6 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-<<<<<<< Updated upstream
-  - enabled: 0
-    path: Assets/Login.unity
-    guid: fe361833f4a93d04eb94d357057803e2
-=======
-  - enabled: 1
-    path: Assets/QuantumUser/Scenes/QuantumGameScene.unity
-    guid: 15aa117260eb1de4b8c418f053e303da
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
->>>>>>> Stashed changes
-  - enabled: 1
-    path: Assets/Menu.unity
-    guid: be442e0205b2b9c498ca0c4094505062
-  - enabled: 1
-    path: Assets/Game.unity
-    guid: b0ccf7dc0fdc16747b8fe74f84998c95
-  m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_Scenes: []
+  m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
