@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Axe
   m_EditorClassIdentifier: 
   itemName: Axe
-  icon: {fileID: 0}
+  itemType: Weapon
+  _itemType: 0
+  icon: {fileID: -4261161032346744600, guid: ae4798baef4e3074fa90dd622e6809d9, type: 3}
   itemID: 0
   itemDescription: 
   Prefab: {fileID: 0}
@@ -22,6 +24,7 @@ MonoBehaviour:
   isConsumable: 0
   effectDescription: 
   effectsModules: []
+  isWeapon: 1
   canAttack: 1
   swing: -240
   recoil: 0
@@ -32,6 +35,7 @@ MonoBehaviour:
   hitbox: {fileID: 0}
   canShoot: 0
   fireAmount: 1
+  maxAmmo: 1
   spread: 0
   projectile: {fileID: 0}
   options:

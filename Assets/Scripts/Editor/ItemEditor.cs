@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -41,8 +42,14 @@ public class ItemEditor : Editor
             EditorGUI.indentLevel++;
             item.itemName = EditorGUILayout.TextField("Item Name", item.itemName);
             item.itemID = EditorGUILayout.IntField("Item ID", item.itemID);
+            item._itemType = (ItemType)EditorGUILayout.EnumPopup("Item Type", item._itemType);
+            item.itemType = item._itemType.ToString();
+            //item.itemType = EditorGUILayout.TextField("<Item Type>", item.itemType);
             EditorGUILayout.Space();
             item.itemDescription = EditorGUILayout.TextField("Item Description", item.itemDescription);
+            item.isWeapon = EditorGUILayout.Toggle("Weapon", item.isWeapon);
+            EditorGUILayout.Space();
+            item.icon = (Sprite)EditorGUILayout.ObjectField("Icon", item.icon, typeof(Sprite), false);
             EditorGUI.indentLevel--;
         }
 

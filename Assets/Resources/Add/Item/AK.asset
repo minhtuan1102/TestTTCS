@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: AK
   m_EditorClassIdentifier: 
   itemName: AK-Rifle
-  icon: {fileID: 0}
+  itemType: Weapon
+  _itemType: 0
+  icon: {fileID: 1585974835397443309, guid: 052c33c8b90327941b09e72c52fff60f, type: 3}
   itemID: 0
   itemDescription: 
   Prefab: {fileID: 0}
@@ -23,6 +25,7 @@ MonoBehaviour:
   effectDescription: 
   effectsModules:
   - {fileID: 0}
+  isWeapon: 1
   canAttack: 1
   swing: 0
   recoil: -0.2
@@ -33,6 +36,7 @@ MonoBehaviour:
   hitbox: {fileID: 0}
   canShoot: 0
   fireAmount: 1
+  maxAmmo: 1
   spread: 0.2
   projectile: {fileID: 0}
   options:

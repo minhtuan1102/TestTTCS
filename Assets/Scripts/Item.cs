@@ -10,15 +10,25 @@ public class AttackScript
     public Collider2D Collider;
 }
 
+public enum ItemType
+{
+    Weapon,
+    Armor,
+    Consumable,
+    QuestItem
+}
+
 [CreateAssetMenu]
 public class Item : ScriptableObject
 {
 
     
-    public string itemName;      // Name
-    public Sprite icon;      // Icon
-    public int itemID;           // ID của vật phẩm
-    public string itemDescription;   // Mô tả của vật phẩm
+    public string itemName;
+    public string itemType;
+    public ItemType _itemType;
+    public Sprite icon;
+    public int itemID;          
+    public string itemDescription;
 
     public GameObject Prefab;
 
@@ -35,7 +45,7 @@ public class Item : ScriptableObject
     public List<MonoScript> effectsModules = new List<MonoScript>();
 
     // Attack Stats
-
+    public bool isWeapon = false;
     public bool canAttack = false;
 
         // Animation
@@ -57,6 +67,7 @@ public class Item : ScriptableObject
 
         public bool canShoot = false;
         public int fireAmount = 1;
+        public int maxAmmo = 1;
         public float spread = 0f;
 
         public Transform projectile;

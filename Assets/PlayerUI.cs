@@ -6,9 +6,18 @@ using UnityEngine;
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] GameObject Current_Player;
+
+    [Header("UI Bar")]
+
     [SerializeField] GameObject HP_UI;
     [SerializeField] GameObject MP_UI;
     [SerializeField] GameObject AP_UI;
+
+    [Header("UI Inventory")]
+
+    [SerializeField] GameObject Storage;
+    [SerializeField] GameObject Button;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     HealthSystem health;
