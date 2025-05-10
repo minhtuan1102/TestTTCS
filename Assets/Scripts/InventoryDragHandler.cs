@@ -41,7 +41,7 @@ public class SimpleDrag : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 public static class DragPayload
 {
     public static GameObject CurrentDraggedIcon;
-    public static object ItemData;
+    public static ItemInstance ItemData;
     public static Sprite icon;
 
     public static string dragType = "";

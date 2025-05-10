@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
   m_Name: Knife
   m_EditorClassIdentifier: 
-  itemName: Sword
+  itemName: Knife
   itemType: Weapon
   _itemType: 0
   icon: {fileID: 5151419490667711304, guid: 131d21822916c474ea4ad833b248a6b4, type: 3}
-  itemID: 0
+  itemID: Knife
   itemDescription: 
   Prefab: {fileID: 0}
   weight: 1
@@ -31,11 +31,14 @@ MonoBehaviour:
   swingOffset: -15
   damage: 1
   cooldown: 0.25
-  canMelee: 0
+  manaConsume: 0
+  canMelee: 1
   hitbox: {fileID: 0}
   canShoot: 0
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  clipSize: 0
+  reload: 0
   projectile: {fileID: 0}
   options: []

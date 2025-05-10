@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
   m_Name: Glock
   m_EditorClassIdentifier: 
-  itemName: AK-Rifle
+  itemName: Glock
   itemType: Weapon
   _itemType: 0
   icon: {fileID: 2025432562616822404, guid: 54ef006a8796e024ea29add8cfd68137, type: 3}
-  itemID: 0
+  itemID: Glock
   itemDescription: 
   Prefab: {fileID: 0}
   weight: 3
@@ -31,11 +31,14 @@ MonoBehaviour:
   swingOffset: 0
   damage: 2
   cooldown: 0.5
+  manaConsume: 0
   canMelee: 0
   hitbox: {fileID: 0}
-  canShoot: 0
+  canShoot: 1
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  clipSize: 10
+  reload: 2
   projectile: {fileID: 0}
   options: []

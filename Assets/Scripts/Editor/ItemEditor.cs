@@ -41,7 +41,7 @@ public class ItemEditor : Editor
         {
             EditorGUI.indentLevel++;
             item.itemName = EditorGUILayout.TextField("Item Name", item.itemName);
-            item.itemID = EditorGUILayout.IntField("Item ID", item.itemID);
+            item.itemID = EditorGUILayout.TextField("Item ID", item.itemID);
             item._itemType = (ItemType)EditorGUILayout.EnumPopup("Item Type", item._itemType);
             item.itemType = item._itemType.ToString();
             //item.itemType = EditorGUILayout.TextField("<Item Type>", item.itemType);
@@ -114,6 +114,7 @@ public class ItemEditor : Editor
                     EditorGUI.indentLevel++;
                     item.damage = EditorGUILayout.FloatField("Damage", item.damage);
                     item.cooldown = EditorGUILayout.FloatField("Cooldown", item.cooldown);
+                    item.manaConsume = EditorGUILayout.FloatField("Mana Cost", item.manaConsume);
                     EditorGUI.indentLevel--;
                 }
 
@@ -134,7 +135,7 @@ public class ItemEditor : Editor
                 if (showMeleeStats)
                 {
                     EditorGUI.indentLevel++;
-                    item.canShoot = EditorGUILayout.Toggle("Can Melee", item.canShoot);
+                    item.canMelee = EditorGUILayout.Toggle("Can Melee", item.canMelee);
                     if (item.canShoot)
                     {
                         item.hitbox = (Transform)EditorGUILayout.ObjectField("Hitbox", item.hitbox, typeof(Transform), false);
@@ -150,6 +151,8 @@ public class ItemEditor : Editor
                     item.canShoot = EditorGUILayout.Toggle("Can Shoot", item.canShoot);
                     if (item.canShoot)
                     {
+                        item.reload = EditorGUILayout.FloatField("Reload Time", item.reload);
+                        item.clipSize = EditorGUILayout.IntField("Clip Size", item.clipSize);
                         item.fireAmount = EditorGUILayout.IntField("Amount", item.fireAmount);
                         item.spread = EditorGUILayout.FloatField("Spread", item.spread);
                         EditorGUILayout.Space();

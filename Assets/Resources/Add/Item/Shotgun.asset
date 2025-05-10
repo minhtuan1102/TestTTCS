@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  itemName: AK-Rifle
+  itemName: Shotgun
   itemType: Weapon
   _itemType: 0
   icon: {fileID: -2408530018317867212, guid: cad1f0e53515ac64b8c0c6c3b491e435, type: 3}
-  itemID: 0
+  itemID: Shotgun
   itemDescription: 
   Prefab: {fileID: 0}
   weight: 3
@@ -31,11 +31,14 @@ MonoBehaviour:
   swingOffset: 0
   damage: 2
   cooldown: 2
+  manaConsume: 0
   canMelee: 0
   hitbox: {fileID: 0}
-  canShoot: 0
+  canShoot: 1
   fireAmount: 8
   maxAmmo: 1
   spread: 2
+  clipSize: 6
+  reload: 3
   projectile: {fileID: 0}
   options: []

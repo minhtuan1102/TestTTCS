@@ -1,0 +1,73 @@
+using NUnit.Framework;
+using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
+
+public class Admin : MonoBehaviour
+{
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    public List<Transform> buttons = new List<Transform>();
+
+    private bool loaded = false;
+
+    void OnEnable()
+    {
+
+        if (!loaded)
+        {
+            try
+            {
+                Transform SpawmItem = buttons[0];
+                UnityEngine.UI.Button spawnButton = SpawmItem.Find("Button").GetComponent<UnityEngine.UI.Button>();
+                TMP_Dropdown selections = SpawmItem.Find("Dropdown").GetComponent<TMP_Dropdown>();
+                TMP_InputField amount = SpawmItem.Find("Amount").GetComponent<TMP_InputField>();
+                //Debug.Log(spawnButton);
+                //Debug.Log(selections);
+                //Debug.Log(amount);
+                spawnButton.onClick.AddListener(() => GameManager.SpawnItem(
+                    selections.options[selections.value].text,
+                    (int.TryParse(amount.text, out int result))?result:1,
+                    Game.localPlayer.transform.position,
+                    new Quaternion(0,0,0,0))
+                );
+
+                loaded = true;
+            }
+            catch
+            {
+
+            }
+        }
+
+        Debug.Log(Game.items.Length);
+
+        List<string> itemList = new List<string>();
+        foreach (var obj in Game.items)
+        {
+            itemList.Add(obj.name);
+        }
+
+        // Spawn Item
+        TMP_Dropdown itemID = buttons[1].Find("Dropdown").GetComponent<TMP_Dropdown>();
+        itemID.ClearOptions();
+        itemID.AddOptions(itemList);
+    }
+
+    void Start()
+    {
+        // Spawn Item
+        
+    }
+
+    void Update()
+    {
+        
+    }
+
+    // Function
+}

@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     public float dashCooldown = 1f;
     public float dashManaConsume = 5f;
 
-
+    public Transform HandItem;
 
     private Rigidbody2D rb;
     private Camera cam;
@@ -100,6 +100,8 @@ public class Player : MonoBehaviour
         skin = GetComponent<SpriteRenderer>();
         player_collider = GetComponent<BoxCollider2D>();
         main_hand = transform.Find("Main").gameObject;
+
+        HandItem = main_hand.transform.Find("Item").transform;
 
         model = transform.Find("Model").transform;
 
@@ -247,7 +249,11 @@ public class Player : MonoBehaviour
 
         Boolean lastMovingState = isMoving;
         isMoving = (rb.linearVelocity.magnitude > 0.2f);
-
+        float forward = 1f;
+        if (rb.linearVelocity.x<0)
+        {
+            forward = -1f;
+        }
         if (isMoving)
         {
             if (lastMovingState == false)
@@ -256,7 +262,7 @@ public class Player : MonoBehaviour
                 body_swing = 0f;
             }
 
-            legProgresion += rb.linearVelocity.magnitude * 0.04f;
+            legProgresion += rb.linearVelocity.magnitude * forward * inverse * 0.04f;
             body_swing = 0.05f * Mathf.Sin(legProgresion);
             leg_L_swing = Mathf.MoveTowards(leg_L_swing, 60 * Mathf.Cos(legProgresion), Time.fixedDeltaTime * 1000);
             leg_R_swing = Mathf.MoveTowards(leg_R_swing, 60 * Mathf.Cos(legProgresion + Mathf.PI), Time.fixedDeltaTime * 1000);
@@ -327,6 +333,6 @@ public class Player : MonoBehaviour
 
         // Hand Update
         main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
-        main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
+        main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
     }
 }

@@ -27,7 +27,7 @@ public class Item : ScriptableObject
     public string itemType;
     public ItemType _itemType;
     public Sprite icon;
-    public int itemID;          
+    public string itemID;          
     public string itemDescription;
 
     public GameObject Prefab;
@@ -58,6 +58,7 @@ public class Item : ScriptableObject
 
         public float damage = 0f;
         public float cooldown = 0f;
+        public float manaConsume = 0f;   
 
         // Melee
         public bool canMelee = false;
@@ -69,6 +70,9 @@ public class Item : ScriptableObject
         public int fireAmount = 1;
         public int maxAmmo = 1;
         public float spread = 0f;
+
+        public int clipSize = 0;
+        public float reload = 0f;
 
         public Transform projectile;
 

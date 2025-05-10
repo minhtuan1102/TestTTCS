@@ -17,6 +17,8 @@ public class PlayerEditor : Editor
 
     bool showDashStats = true;
 
+    bool showSkinStats = true;
+
     public override void OnInspectorGUI()
     {
         Player player = (Player)target;
@@ -67,18 +69,7 @@ public class PlayerEditor : Editor
             EditorGUI.indentLevel--;
         }
 
-        showMovementStats = EditorGUILayout.Foldout(showMovementStats, "Movement");
-        if (showMovementStats)
-        {
-            EditorGUI.indentLevel++;
-
-            player.moveSpeed = EditorGUILayout.FloatField("Mov Speed", player.moveSpeed);
-            player.maxSpeed = EditorGUILayout.FloatField("Max Speed", player.maxSpeed);
-
-            EditorGUI.indentLevel--;
-        }
-
-        showDashStats = EditorGUILayout.Foldout(showDashStats, "Movement");
+        showDashStats = EditorGUILayout.Foldout(showDashStats, "Dash");
         if (showDashStats)
         {
             EditorGUI.indentLevel++;
@@ -91,5 +82,12 @@ public class PlayerEditor : Editor
             EditorGUI.indentLevel--;
         }
 
+        showSkinStats = EditorGUILayout.Foldout(showSkinStats, "Skin");
+        if (showSkinStats)
+        {
+            EditorGUI.indentLevel++;
+
+            EditorGUI.indentLevel--;
+        }
     }
 }

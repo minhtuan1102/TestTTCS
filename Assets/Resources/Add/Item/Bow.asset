@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: Weapon
   _itemType: 0
   icon: {fileID: 1020468522976622029, guid: f244471d2edaa8142a9d684f62a7da63, type: 3}
-  itemID: 0
+  itemID: Bow
   itemDescription: 
   Prefab: {fileID: 0}
   weight: 3
@@ -31,11 +31,14 @@ MonoBehaviour:
   swingOffset: 0
   damage: 5
   cooldown: 1.5
+  manaConsume: 0
   canMelee: 0
   hitbox: {fileID: 0}
-  canShoot: 0
+  canShoot: 1
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  clipSize: 1
+  reload: 2
   projectile: {fileID: 0}
   options: []

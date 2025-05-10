@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: Consumable
   _itemType: 2
   icon: {fileID: -7832214784768987486, guid: 089d323e0e334d34ebc141662da45554, type: 3}
-  itemID: 0
+  itemID: Apple
   itemDescription: Heal player 20 HP
   Prefab: {fileID: 0}
   weight: 0
@@ -31,11 +31,14 @@ MonoBehaviour:
   swingOffset: 0
   damage: 1
   cooldown: 1
-  canMelee: 0
+  manaConsume: 0
+  canMelee: 1
   hitbox: {fileID: 0}
   canShoot: 0
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  clipSize: 0
+  reload: 0
   projectile: {fileID: 0}
   options: []

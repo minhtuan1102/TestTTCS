@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
   m_Name: Machine Gun
   m_EditorClassIdentifier: 
-  itemName: AK-Rifle
+  itemName: Machine Gun
   itemType: Weapon
   _itemType: 0
   icon: {fileID: 1130123410398433707, guid: 705ab60ffeb3e2846bff2a30e7d3bdb2, type: 3}
-  itemID: 0
+  itemID: Machine Gun
   itemDescription: 
   Prefab: {fileID: 0}
   weight: 0
@@ -31,11 +31,14 @@ MonoBehaviour:
   swingOffset: 15
   damage: 1
   cooldown: 0.1
+  manaConsume: 0
   canMelee: 0
   hitbox: {fileID: 0}
-  canShoot: 0
+  canShoot: 1
   fireAmount: 1
   maxAmmo: 1
   spread: 1
+  clipSize: 50
+  reload: 5
   projectile: {fileID: 0}
   options: []

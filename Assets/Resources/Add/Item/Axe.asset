@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: Weapon
   _itemType: 0
   icon: {fileID: -4261161032346744600, guid: ae4798baef4e3074fa90dd622e6809d9, type: 3}
-  itemID: 0
+  itemID: Axe
   itemDescription: 
   Prefab: {fileID: 0}
   weight: 0
@@ -31,12 +31,15 @@ MonoBehaviour:
   swingOffset: 0
   damage: 100
   cooldown: 2
-  canMelee: 0
+  manaConsume: 0
+  canMelee: 1
   hitbox: {fileID: 0}
   canShoot: 0
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  clipSize: 0
+  reload: 0
   projectile: {fileID: 0}
   options:
   - {fileID: 0}
