@@ -18,6 +18,8 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
     [SerializeField] public GameObject _roomListWindow;
     [SerializeField] public GameObject _playerListWindow;
     [SerializeField] public GameObject _createRoomWindow;
+    [SerializeField] public GameObject LobbyPanel;
+    [SerializeField] public GameObject RoomPanel;
 
     [SerializeField] public TMP_Text statusText;
     [SerializeField] public Button _leaveRoomBtn;
@@ -30,6 +32,7 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
     {
         _leaveRoomBtn.interactable = false;
         _startGameBtn.interactable = false;
+        ShowWindow(true);
     }
     private void Start()
     {
@@ -66,7 +69,7 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
     }
     public override void OnJoinedRoom()
     {
-        statusText.text = "Joined Room: " + PhotonNetwork.CurrentRoom.Name;
+        statusText.text = "Joined " + PhotonNetwork.CurrentRoom.Name;
         _currentLocationText.text = PhotonNetwork.CurrentRoom.Name;
         Debug.Log("Joined Room: " + PhotonNetwork.CurrentRoom.Name);
         _leaveRoomBtn.interactable = true;
@@ -133,7 +136,7 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
             }
             RoomEntryUI newRoomEntry = Instantiate(_roomEntryUIPrefab);
             newRoomEntry.LobbyNetworkParent = this;
-            newRoomEntry.setName("Room " + list[i].Name);
+            newRoomEntry.setName(list[i].Name);
             newRoomEntry.transform.SetParent(_roomListParent,false);
 
             _roomList.Add(newRoomEntry);
@@ -162,10 +165,10 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
     }
     private void ShowWindow(bool isRoomList)
     {
-        _roomListWindow.SetActive(isRoomList);
-        _playerListWindow.SetActive(!isRoomList);
-        _createRoomWindow.SetActive(isRoomList);
+        LobbyPanel.SetActive(isRoomList);
+        RoomPanel.SetActive(!isRoomList);
     }
+
 
     public void JoinRoom(string roomName)
     {
