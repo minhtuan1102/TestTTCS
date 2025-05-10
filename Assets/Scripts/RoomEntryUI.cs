@@ -1,19 +1,28 @@
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class RoomEntryUI : MonoBehaviour
 {
-    public LobbyNetworkManager LobbyNetworkParent;
-    [SerializeField] private TMP_Text _roomName;
+    [SerializeField] private TMP_Text roomNameText;
+    [SerializeField] private TMP_Text playerCountText;
 
-    public void setName(string roomName)
+    public LobbyNetworkManager LobbyNetworkParent;
+
+    private string roomName;
+
+    public void setName(string name)
     {
-        _roomName.text = roomName;
+        roomName = name;
+        roomNameText.text = name;
     }
 
-    public void OnJoinPressed()
+    public void SetPlayerCount(int current, int max)
     {
-        LobbyNetworkParent.JoinRoom(_roomName.text);
+        playerCountText.text = $"{current}/{max}";
+    }
+
+    public void OnJoinClicked()
+    {
+        LobbyNetworkParent.JoinRoom(roomName);
     }
 }

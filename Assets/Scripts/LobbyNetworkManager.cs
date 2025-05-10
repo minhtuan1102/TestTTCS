@@ -134,12 +134,13 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
             {
                 continue;
             }
-            RoomEntryUI newRoomEntry = Instantiate(_roomEntryUIPrefab);
+            RoomEntryUI newRoomEntry = Instantiate(_roomEntryUIPrefab, _roomListParent);
             newRoomEntry.LobbyNetworkParent = this;
             newRoomEntry.setName(list[i].Name);
-            newRoomEntry.transform.SetParent(_roomListParent,false);
+            newRoomEntry.SetPlayerCount(list[i].PlayerCount, list[i].MaxPlayers);
 
             _roomList.Add(newRoomEntry);
+
         }
     }
     private void UpdatePlayerList()
