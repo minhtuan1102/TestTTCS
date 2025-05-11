@@ -18,11 +18,12 @@ MonoBehaviour:
   icon: {fileID: -2408530018317867212, guid: cad1f0e53515ac64b8c0c6c3b491e435, type: 3}
   itemID: Shotgun
   itemDescription: 
-  Prefab: {fileID: 0}
+  model: {fileID: 7712177893306523388, guid: 9b05f05c7acfaab4b980039e03ea386d, type: 3}
   weight: 3
   value: 0
   isConsumable: 0
   effectDescription: 
+  consumeEffect: []
   effectsModules: []
   isWeapon: 1
   canAttack: 1
@@ -31,14 +32,18 @@ MonoBehaviour:
   swingOffset: 0
   damage: 2
   cooldown: 2
-  manaConsume: 0
   canMelee: 0
   hitbox: {fileID: 0}
+  mele_manaConsume: 0
   canShoot: 1
   fireAmount: 8
   maxAmmo: 1
   spread: 2
+  bulletSpeed: 30
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 15
   clipSize: 6
   reload: 3
-  projectile: {fileID: 0}
+  projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
   options: []

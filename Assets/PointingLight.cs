@@ -16,11 +16,7 @@ public class PointingLight : MonoBehaviour
     {
         if (transform.parent.parent != null)
         {
-            Vector3 euler = transform.parent.eulerAngles;
-
-            // Thêm offset (bằng độ luôn, không cần radian)
-
-            // Gán rotation mới
+            Vector3 euler = transform.parent.parent.parent.eulerAngles;
             euler.z += OffsetRotation;
 
             transform.rotation = Quaternion.Euler(euler);

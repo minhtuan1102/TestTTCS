@@ -12,6 +12,8 @@ public class EnemyData : ScriptableObject
     [SerializeReference] public float Range = 5f;
     [SerializeReference] public float Attack_Rate = 1f;
 
+    [SerializeReference] public GameObject Attack_Hitbox;
+
     [SerializeReference] public float WaitTime = 0.5f;
 
     [SerializeReference] public GameObject EnemyModel;

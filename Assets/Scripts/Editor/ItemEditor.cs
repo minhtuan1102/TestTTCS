@@ -11,6 +11,7 @@ public class ItemEditor : Editor
     bool showBasicInfo = true;
     bool showStats = true;
     bool showEffect = true;
+    bool showAttack = true;
 
     bool showAttackStats = true;
     bool showAttackAnimStats = true;
@@ -50,8 +51,12 @@ public class ItemEditor : Editor
             item.isWeapon = EditorGUILayout.Toggle("Weapon", item.isWeapon);
             EditorGUILayout.Space();
             item.icon = (Sprite)EditorGUILayout.ObjectField("Icon", item.icon, typeof(Sprite), false);
+            EditorGUILayout.Space();
+            item.model = (GameObject)EditorGUILayout.ObjectField("Model", item.model, typeof(GameObject), false);
             EditorGUI.indentLevel--;
         }
+
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
         // Stats Group
         showStats = EditorGUILayout.Foldout(showStats, "Stats");
@@ -62,6 +67,8 @@ public class ItemEditor : Editor
             item.weight = EditorGUILayout.FloatField("Weight", item.weight);
             EditorGUI.indentLevel--;
         }
+
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
 
         // Effect Group
         showEffect = EditorGUILayout.Foldout(showEffect, "Effect");
@@ -75,11 +82,61 @@ public class ItemEditor : Editor
 
                 EditorGUILayout.Space();
 
+                EditorGUILayout.LabelField("Effect", EditorStyles.boldLabel);
+
+                EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+                    EditorGUILayout.Space();
+
+                EditorGUI.indentLevel++;
+
+                for (int i = 0; i < item.consumeEffect.Count; i++)
+                {
+                    item.consumeEffect[i].modify_ID = EditorGUILayout.TextField("Key", item.consumeEffect[i].modify_ID);
+                    item.consumeEffect[i].modify_Type = (ValueType)EditorGUILayout.EnumPopup("Type", item.consumeEffect[i].modify_Type);
+                    switch (item.consumeEffect[i].modify_Type)
+                    {
+                        case ValueType.Int:
+                            item.consumeEffect[i].modify_IntValue = EditorGUILayout.IntField("Value", item.consumeEffect[i].modify_IntValue);
+                            break;
+                        case ValueType.Float:
+                            item.consumeEffect[i].modify_FloatValue = EditorGUILayout.FloatField("Value", item.consumeEffect[i].modify_FloatValue);
+                            break;
+                        case ValueType.Bool:
+                            item.consumeEffect[i].modify_BoolValue = EditorGUILayout.Toggle("Value", item.consumeEffect[i].modify_BoolValue);
+                            break;
+                        default:
+                            item.consumeEffect[i].modify_StringValue = EditorGUILayout.TextField("Value", item.consumeEffect[i].modify_StringValue);
+                            break;
+                    }
+                    item.consumeEffect[i].modify_Des = EditorGUILayout.TextField("Des", item.consumeEffect[i].modify_Des);
+
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+                    EditorGUILayout.Space();
+                }
+
+                EditorGUI.indentLevel--;
+
+                if (GUILayout.Button("Add Effect"))
+                {
+                    item.consumeEffect.Add(new Modify());
+                }
+
+                if (GUILayout.Button("Remove Last"))
+                {
+                    if (item.consumeEffect.Count > 0)
+                        item.consumeEffect.RemoveAt(item.consumeEffect.Count - 1);
+                }
+
+                EditorGUILayout.Space();
+
                 EditorGUILayout.LabelField("Script", EditorStyles.boldLabel);
 
                 for (int i = 0; i < item.effectsModules.Count; i++)
                 {
                     item.effectsModules[i] = (MonoScript)EditorGUILayout.ObjectField($"Script {i + 1}", item.effectsModules[i], typeof(MonoScript), false);
+                    EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
                 }
 
                 EditorGUILayout.Space();
@@ -98,9 +155,11 @@ public class ItemEditor : Editor
             EditorGUI.indentLevel--;
         }
 
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
         // Melee Attack Group
-        showEffect = EditorGUILayout.Foldout(showEffect, "Melee");
-        if (showEffect)
+        showAttack = EditorGUILayout.Foldout(showAttack, "Attack");
+        if (showAttack)
         {
             EditorGUI.indentLevel++;
             item.canAttack = EditorGUILayout.Toggle("Can Attack", item.canAttack);
@@ -114,7 +173,6 @@ public class ItemEditor : Editor
                     EditorGUI.indentLevel++;
                     item.damage = EditorGUILayout.FloatField("Damage", item.damage);
                     item.cooldown = EditorGUILayout.FloatField("Cooldown", item.cooldown);
-                    item.manaConsume = EditorGUILayout.FloatField("Mana Cost", item.manaConsume);
                     EditorGUI.indentLevel--;
                 }
 
@@ -136,9 +194,10 @@ public class ItemEditor : Editor
                 {
                     EditorGUI.indentLevel++;
                     item.canMelee = EditorGUILayout.Toggle("Can Melee", item.canMelee);
-                    if (item.canShoot)
+                    if (item.canMelee)
                     {
-                        item.hitbox = (Transform)EditorGUILayout.ObjectField("Hitbox", item.hitbox, typeof(Transform), false);
+                        item.hitbox = (GameObject)EditorGUILayout.ObjectField("Hitbox", item.hitbox, typeof(GameObject), false);
+                        item.mele_manaConsume = EditorGUILayout.FloatField("Mana Cost", item.mele_manaConsume);
                     }
                     EditorGUI.indentLevel--;
                 }
@@ -151,12 +210,19 @@ public class ItemEditor : Editor
                     item.canShoot = EditorGUILayout.Toggle("Can Shoot", item.canShoot);
                     if (item.canShoot)
                     {
+                        item.bulletSpeed = EditorGUILayout.FloatField("Bullet Speed", item.bulletSpeed);
+                        item.bulletLifetime = EditorGUILayout.FloatField("Bullet Lifetime", item.bulletLifetime);
+                        EditorGUILayout.Space();
+                        item.spread = EditorGUILayout.FloatField("Bullet Spread", item.spread);
+                        item.shooting_manaConsume = EditorGUILayout.FloatField("Mana Cost", item.shooting_manaConsume);
+                        EditorGUILayout.Space();
                         item.reload = EditorGUILayout.FloatField("Reload Time", item.reload);
+                        item.reload_manaConsume = EditorGUILayout.FloatField("Mana Cost", item.reload_manaConsume);
+                        EditorGUILayout.Space();
                         item.clipSize = EditorGUILayout.IntField("Clip Size", item.clipSize);
                         item.fireAmount = EditorGUILayout.IntField("Amount", item.fireAmount);
-                        item.spread = EditorGUILayout.FloatField("Spread", item.spread);
                         EditorGUILayout.Space();
-                        item.projectile = (Transform)EditorGUILayout.ObjectField("Projectile", item.hitbox, typeof(Transform), false);
+                        item.projectile = (GameObject)EditorGUILayout.ObjectField("Projectile", item.projectile, typeof(GameObject), false);
                     }
                     EditorGUI.indentLevel--;
                 }

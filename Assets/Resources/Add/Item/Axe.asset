@@ -18,11 +18,12 @@ MonoBehaviour:
   icon: {fileID: -4261161032346744600, guid: ae4798baef4e3074fa90dd622e6809d9, type: 3}
   itemID: Axe
   itemDescription: 
-  Prefab: {fileID: 0}
+  model: {fileID: 2449047747417268984, guid: 10bf109700fa49148aae9af36dad4a91, type: 3}
   weight: 0
   value: 0
   isConsumable: 0
   effectDescription: 
+  consumeEffect: []
   effectsModules: []
   isWeapon: 1
   canAttack: 1
@@ -31,13 +32,17 @@ MonoBehaviour:
   swingOffset: 0
   damage: 100
   cooldown: 2
-  manaConsume: 0
   canMelee: 1
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+  mele_manaConsume: 0
   canShoot: 0
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  bulletSpeed: 5
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 0
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}

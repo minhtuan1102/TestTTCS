@@ -57,6 +57,7 @@ public class Player : MonoBehaviour
     private float targetVision;
 
     private SpriteRenderer skin;
+    public float lookDir;
 
     private float cellSize = 1f;
 
@@ -93,12 +94,16 @@ public class Player : MonoBehaviour
 
     private float body_swing = 0f;
 
+    private PlayerInventory inventory;
+
     private Collider2D player_collider;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
         player_collider = GetComponent<BoxCollider2D>();
+        inventory = GetComponent<PlayerInventory>();
+
         main_hand = transform.Find("Main").gameObject;
 
         HandItem = main_hand.transform.Find("Item").transform;
@@ -154,9 +159,6 @@ public class Player : MonoBehaviour
 
             // Example: Charged shot with **double recoil**
             // TriggerRecoil(fireDirection, 2f);
-
-
-
         }
 
         // Normalize diagonal movement
@@ -207,6 +209,18 @@ public class Player : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void SetHealth(float amount)
+    {
+        HealthSystem healthSystem = transform.GetComponent<HealthSystem>();
+        healthSystem.SetHealth((int)amount);
+    }
+
+    public void SetArmor(float amount)
+    {
+        HealthSystem healthSystem = transform.GetComponent<HealthSystem>();
+        healthSystem.SetArmor((int)amount);
     }
 
     public void GainMana(float value)
@@ -330,7 +344,7 @@ public class Player : MonoBehaviour
         Vector3 direction = mousePosition - main_hand.transform.position;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
+        lookDir = angle;
         // Hand Update
         main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
         main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;

@@ -18,11 +18,12 @@ MonoBehaviour:
   icon: {fileID: 2025432562616822404, guid: 54ef006a8796e024ea29add8cfd68137, type: 3}
   itemID: Glock
   itemDescription: 
-  Prefab: {fileID: 0}
+  model: {fileID: 8472142361449280045, guid: 6461a13b782bbac4d852848c9c54a111, type: 3}
   weight: 3
   value: 0
   isConsumable: 0
   effectDescription: 
+  consumeEffect: []
   effectsModules: []
   isWeapon: 1
   canAttack: 1
@@ -31,14 +32,18 @@ MonoBehaviour:
   swingOffset: 0
   damage: 2
   cooldown: 0.5
-  manaConsume: 0
   canMelee: 0
   hitbox: {fileID: 0}
+  mele_manaConsume: 0
   canShoot: 1
   fireAmount: 1
   maxAmmo: 1
-  spread: 0
+  spread: 0.1
+  bulletSpeed: 40
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 10
   clipSize: 10
   reload: 2
-  projectile: {fileID: 0}
+  projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
   options: []

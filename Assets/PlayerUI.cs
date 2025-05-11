@@ -1,8 +1,11 @@
+using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using UnityEngine.WSA;
 using static UnityEditor.Progress;
 
 public class PlayerUI : MonoBehaviour
@@ -27,8 +30,9 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] GameObject Button;
 
     [SerializeField] GameObject Loadout_UI;
-
+    [SerializeField] GameObject Iventory_UI;
     [SerializeField] GameObject ItemStats_UI;
+    [SerializeField] GameObject Admin_UI;
 
     [SerializeField] public List<GameObject> Weapon_Slot = new List<GameObject>();
     [SerializeField] public List<GameObject> Consumer_Slot = new List<GameObject>();
@@ -48,6 +52,11 @@ public class PlayerUI : MonoBehaviour
     HealthSystem health;
     Player player;
 
+    // Item Interaction
+
+    private float timer = 0f;
+    private float atkCooldown = 0f;
+
     void Start()
     {
         Game.localPlayer = Current_Player;
@@ -62,6 +71,8 @@ public class PlayerUI : MonoBehaviour
         Loadout_UI = transform.parent.Find("Loadout").gameObject;
 
         ItemStats_UI = transform.parent.Find("ItemStats").gameObject;
+
+        Admin_UI = transform.parent.Find("AdminPanel").gameObject;
 
         wp_loadout = Loadout_UI.transform.Find("Weapon").Find("Icon").gameObject;
         LoadInventory();
@@ -120,35 +131,175 @@ public class PlayerUI : MonoBehaviour
             TextMeshProUGUI itemName = ItemStats_UI.transform.Find("Name").Find("Text").GetComponent<TextMeshProUGUI>();
             itemName.SetText(usingWP.itemRef.itemName);
 
+            RectTransform scale = ItemStats_UI.transform.Find("Amount").Find("Scale").GetComponent<RectTransform>();
+
             TextMeshProUGUI reserve = ItemStats_UI.transform.Find("Amount").Find("Text").GetComponent<TextMeshProUGUI>();
+
             if (usingWP.itemRef.canShoot)
             {
                 reserve.SetText($"{usingWP.ammo}/{usingWP.itemRef.clipSize}");
+                scale.localScale = new Vector3(Mathf.Lerp(scale.localScale.x, (float)usingWP.ammo/(float)usingWP.itemRef.clipSize, Time.deltaTime * 10), 1f, 1f);
             }
             else
             {
+                scale.localScale = new Vector3(1f, 1f, 1f);
                 reserve.SetText("N/A");
             }
 
 
             ItemStats_UI.SetActive(true);
-        } else
+        }
+        else
         {
             ItemStats_UI.SetActive(false);
         }
+
+        if (SelectedItem.ItemData != null && SelectedItem.ItemData.itemRef)
+        {
+            Selected_UI.SetActive(true);
+        }
+        else
+        {
+            Selected_UI.SetActive(false);
+        }
+
+        timer += Time.deltaTime;
+        atkCooldown -= Time.deltaTime;
+
+        if (usingWP != null && usingWP.itemRef)
+        {
+            if (Input.GetMouseButton(0) && !Iventory_UI.activeSelf && !Admin_UI.activeSelf)
+            {
+                if (atkCooldown <= 0f)
+                {
+                    atkCooldown = usingWP.itemRef.cooldown;
+                    Inventory.Attack();
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            UseItem(Consumer_Slot[0].GetComponent<ItemHolder>());
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UseItem(Consumer_Slot[1].GetComponent<ItemHolder>());
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UseItem(Consumer_Slot[2].GetComponent<ItemHolder>());
+        }
+    }
+    // Inventory
+
+    public void DropItem(int amount)
+    {
+        if (SelectedItem.ItemData != null && SelectedItem.ItemData.itemRef)
+        {
+            bool removed = false;
+            Transform holder = SelectedItem.ItemData.holder;
+            if (SelectedItem.ItemData.amount - amount <= 0)
+            {
+                if (holder != null)
+                {
+                    ItemHolder itemholder = holder.GetComponent<ItemHolder>();
+                    itemholder.Unequip(true);
+                }
+                removed = true;
+            }
+            Inventory.DropItem(SelectedItem.ItemData, amount);
+            UpdateInventory();
+
+            if (removed)
+            {
+                SelectedItem.ItemData = null;
+            }
+        }
     }
 
-    // Inventory
+    public void ToggleInventory()
+    {
+        Iventory_UI.SetActive(!Iventory_UI.activeSelf);
+        if (Iventory_UI.activeSelf)
+        {
+            Admin_UI.SetActive(false);
+        }
+    }
+
+    public void UpdateInventory()
+    {
+        LoadInventory();
+    }
+
+    public void UseSelectItem()
+    {
+        if (SelectedItem.ItemData != null && SelectedItem.ItemData.itemRef)
+        {
+            bool ranOut = false;
+            Transform holder = SelectedItem.ItemData.holder;
+            if (SelectedItem.ItemData.amount <= 1)
+            {
+                ranOut = true;
+            }
+            Inventory.UseItem(SelectedItem.ItemData);
+            if (ranOut)
+            {
+               if (holder != null) holder.GetComponent<ItemHolder>().Unequip(true);
+            }
+        }
+    }
+
+    public void UseItem(ItemHolder holder)
+    {
+        if (holder.item != null && holder.item.itemRef)
+        {
+            bool ranOut = false;
+            if (holder.item.amount <= 1)
+            {
+                ranOut = true;
+            }
+            Inventory.UseItem(holder.item);
+
+            if (ranOut) holder.Unequip(true);
+        }
+    }
 
     void LoadInventory()
     {
-        foreach (var item in Inventory.Items)
+        foreach (Transform item in Storage.transform)
         {
-            if (item.storage == null)
+            item.gameObject.SetActive(false);
+        }
+
+        for (int index = 0; index < Inventory.Items.Count; index++)
+        {
+            ItemInstance item = Inventory.Items[index];
+
+            Transform storageItem = null;
+            if (index < Storage.transform.childCount)
+            {
+                storageItem = Storage.transform.GetChild(index);
+            }
+            if (storageItem == null)
             {
                 AddInventoryButton(item);
             }
+            else
+            {
+                item.storage = storageItem;
+            }
+
+            ItemInstanceButton itemButton = item.storage.GetComponent<ItemInstanceButton>();
+            itemButton.item = item;
+            itemButton.itemReference = item.itemRef;
+
+            item.storage.gameObject.SetActive(true);
         }
+
+        UpdateLoadOut();
     }
 
     public void AddInventoryButton(ItemInstance item)
@@ -156,6 +307,7 @@ public class PlayerUI : MonoBehaviour
         if (item.storage == null)
         {
             item.storage = Instantiate(Button.transform, Vector3.zero, Quaternion.Euler(0f, 0f, 0f), Storage.transform);
+            item.storage.gameObject.transform.SetAsLastSibling();
 
             ItemInstanceButton itemButton = item.storage.GetComponent<ItemInstanceButton>();
             itemButton.item = item;

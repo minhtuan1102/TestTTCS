@@ -36,6 +36,36 @@ public class Admin : MonoBehaviour
                     new Quaternion(0,0,0,0))
                 );
 
+                Transform SetHealth = buttons[1];
+                UnityEngine.UI.Button setHealthButton = SetHealth.Find("Button").GetComponent<UnityEngine.UI.Button>();
+                TMP_InputField setHealthAmount = SetHealth.Find("Amount").GetComponent<TMP_InputField>();
+                setHealthButton.onClick.AddListener(() => GameManager.SetHealth(
+                    Game.localPlayer.gameObject,
+                    (float.TryParse(setHealthAmount.text, out float result)) ? result : 1f
+                    )
+                );
+
+                Transform SetMana = buttons[2];
+                UnityEngine.UI.Button setManaButton = SetMana.Find("Button").GetComponent<UnityEngine.UI.Button>();
+                TMP_InputField setManaAmount = SetMana.Find("Amount").GetComponent<TMP_InputField>();
+                setManaButton.onClick.AddListener(() => GameManager.SetMana(
+                    Game.localPlayer.gameObject,
+                    (float.TryParse(setManaAmount.text, out float result)) ? result : 1f
+                    )
+                );
+
+                Transform SpawmEnemy = buttons[3];
+                UnityEngine.UI.Button spawnEnemyButton = SpawmEnemy.Find("Button").GetComponent<UnityEngine.UI.Button>();
+                TMP_Dropdown e_selections = SpawmEnemy.Find("Dropdown").GetComponent<TMP_Dropdown>();
+                TMP_InputField e_amount = SpawmEnemy.Find("Amount").GetComponent<TMP_InputField>();
+
+                spawnEnemyButton.onClick.AddListener(() => GameManager.SpawnItem(
+                    e_selections.options[selections.value].text,
+                    (int.TryParse(e_amount.text, out int result)) ? result : 1,
+                    Game.localPlayer.transform.position,
+                    new Quaternion(0, 0, 0, 0))
+                );
+
                 loaded = true;
             }
             catch
@@ -44,7 +74,7 @@ public class Admin : MonoBehaviour
             }
         }
 
-        Debug.Log(Game.items.Length);
+        //Debug.Log(Game.items.Length);
 
         List<string> itemList = new List<string>();
         foreach (var obj in Game.items)
@@ -53,7 +83,19 @@ public class Admin : MonoBehaviour
         }
 
         // Spawn Item
-        TMP_Dropdown itemID = buttons[1].Find("Dropdown").GetComponent<TMP_Dropdown>();
+        TMP_Dropdown itemID = buttons[0].Find("Dropdown").GetComponent<TMP_Dropdown>();
+        itemID.ClearOptions();
+        itemID.AddOptions(itemList);
+
+        // Spawn Enemy
+
+        itemList = new List<string>();
+        foreach (var obj in Game.enemies)
+        {
+            itemList.Add(obj.name);
+        }
+
+        itemID = buttons[3].Find("Dropdown").GetComponent<TMP_Dropdown>();
         itemID.ClearOptions();
         itemID.AddOptions(itemList);
     }

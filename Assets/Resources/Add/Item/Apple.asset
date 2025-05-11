@@ -15,14 +15,29 @@ MonoBehaviour:
   itemName: Apple
   itemType: Consumable
   _itemType: 2
-  icon: {fileID: -7832214784768987486, guid: 089d323e0e334d34ebc141662da45554, type: 3}
+  icon: {fileID: 1161488873043119445, guid: df2c05795e8a12947872b01e2919b0e9, type: 3}
   itemID: Apple
-  itemDescription: Heal player 20 HP
-  Prefab: {fileID: 0}
+  itemDescription: Very fresh apple
+  model: {fileID: 1281956672415766616, guid: d0d61e8b8d0a6c8468fc71fbf74d2e9a, type: 3}
   weight: 0
   value: 0
   isConsumable: 1
-  effectDescription: 
+  effectDescription: Heal HP and MP
+  consumeEffect:
+  - modify_ID: HP
+    modify_Type: 0
+    modify_Des: + 10 HP
+    modify_IntValue: 10
+    modify_FloatValue: 0
+    modify_BoolValue: 0
+    modify_StringValue: 
+  - modify_ID: MP
+    modify_Type: 0
+    modify_Des: + 10 MP
+    modify_IntValue: 10
+    modify_FloatValue: 0
+    modify_BoolValue: 0
+    modify_StringValue: 
   effectsModules: []
   isWeapon: 0
   canAttack: 1
@@ -31,13 +46,17 @@ MonoBehaviour:
   swingOffset: 0
   damage: 1
   cooldown: 1
-  manaConsume: 0
   canMelee: 1
   hitbox: {fileID: 0}
+  mele_manaConsume: 0
   canShoot: 0
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  bulletSpeed: 5
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 0
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}

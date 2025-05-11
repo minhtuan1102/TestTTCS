@@ -18,11 +18,12 @@ MonoBehaviour:
   icon: {fileID: 1020468522976622029, guid: f244471d2edaa8142a9d684f62a7da63, type: 3}
   itemID: Bow
   itemDescription: 
-  Prefab: {fileID: 0}
+  model: {fileID: 7896927009034923347, guid: f0fda1a8beafa8a4abd954e253748fac, type: 3}
   weight: 3
   value: 0
   isConsumable: 0
   effectDescription: 
+  consumeEffect: []
   effectsModules: []
   isWeapon: 1
   canAttack: 1
@@ -31,14 +32,18 @@ MonoBehaviour:
   swingOffset: 0
   damage: 5
   cooldown: 1.5
-  manaConsume: 0
   canMelee: 0
   hitbox: {fileID: 0}
+  mele_manaConsume: 0
   canShoot: 1
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  bulletSpeed: 20
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 5
   clipSize: 1
   reload: 2
-  projectile: {fileID: 0}
+  projectile: {fileID: 3125827532256581459, guid: 14bbb6dead94572478528c1b2d6c396f, type: 3}
   options: []

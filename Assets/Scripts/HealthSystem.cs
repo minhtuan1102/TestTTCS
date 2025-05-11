@@ -61,7 +61,7 @@ public class HealthSystem : MonoBehaviour
 
         if (_currentHealth <= 0) return;
 
-        _currentHealth = Mathf.Max(0, _currentHealth - damage);
+        _currentHealth = Mathf.Max(0, _currentHealth - damageDeal);
         StartCoroutine(FlashEffect());
     }
 
@@ -73,6 +73,16 @@ public class HealthSystem : MonoBehaviour
     public void AddArmor(int amount)
     {
         _currentArmor = Mathf.Min(_maxArmor, _currentArmor + amount);
+    }
+
+    public void SetHealth(int amount)
+    {
+        _currentHealth = amount;
+    }
+
+    public void SetArmor(int amount)
+    {
+        _currentArmor = amount;
     }
 
     private IEnumerator FlashEffect()

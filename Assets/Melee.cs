@@ -36,10 +36,11 @@ public class Melee : MonoBehaviour
 
         for (int i = 0; i < hitCount; i++)
         {
+            
             Enemy enemy = results[i].GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage);
+                //enemy.TakeDamage(damage);
                 Debug.Log("Enemy hit: " + enemy.name);
             }
         }

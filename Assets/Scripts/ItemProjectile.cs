@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewItem", menuName = "Items/ProjectileItem")]
+[CreateAssetMenu(fileName = "ProjectileData", menuName = "Items/ProjectileItem")]
 public class ProjectileItem : ScriptableObject
 {
-    public float speed;         // Trọng lượng của vật phẩm
+    public float speed;
     public float damage = 0f;
     public float lifeTime = 2f;
 
+    public GameObject player;
 }

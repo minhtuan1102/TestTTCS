@@ -13,7 +13,7 @@ public class ItemInstance
 
     // Firearm
     public int ammo = 0;
-
+    public bool reloading = false;
     // Modify
     public List<string> attachments;
 

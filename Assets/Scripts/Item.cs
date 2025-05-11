@@ -18,6 +18,14 @@ public enum ItemType
     QuestItem
 }
 
+public enum ValueType
+{
+    Int,
+    Float,
+    Bool,
+    String
+}
+
 [CreateAssetMenu]
 public class Item : ScriptableObject
 {
@@ -30,7 +38,7 @@ public class Item : ScriptableObject
     public string itemID;          
     public string itemDescription;
 
-    public GameObject Prefab;
+    public GameObject model;
 
     // Storage Stats
 
@@ -41,6 +49,8 @@ public class Item : ScriptableObject
 
     public bool isConsumable = false;
     public string effectDescription = "";
+
+    public List<Modify> consumeEffect = new List<Modify>();
 
     public List<MonoScript> effectsModules = new List<MonoScript>();
 
@@ -58,23 +68,27 @@ public class Item : ScriptableObject
 
         public float damage = 0f;
         public float cooldown = 0f;
-        public float manaConsume = 0f;   
+        
 
         // Melee
         public bool canMelee = false;
-        public Transform hitbox;
-
+        public GameObject hitbox;
+        public float mele_manaConsume = 0f;
         // Shooting
 
         public bool canShoot = false;
         public int fireAmount = 1;
         public int maxAmmo = 1;
         public float spread = 0f;
+        public float bulletSpeed = 5f;
+        public float bulletLifetime = 5f;
+        public float shooting_manaConsume = 0f;
+        public float reload_manaConsume = 0f;
 
         public int clipSize = 0;
         public float reload = 0f;
 
-        public Transform projectile;
+        public GameObject projectile;
 
         // Other
         public List<MonoBehaviour> options;

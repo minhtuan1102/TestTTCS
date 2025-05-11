@@ -18,11 +18,12 @@ MonoBehaviour:
   icon: {fileID: -3944723101261518829, guid: aa654356a0196e5428b1f67d63080965, type: 3}
   itemID: Sword
   itemDescription: 
-  Prefab: {fileID: 0}
+  model: {fileID: 6994442434215011227, guid: 64eb925160bd0ae458585fa97940ce16, type: 3}
   weight: 1
   value: 0
   isConsumable: 0
   effectDescription: 
+  consumeEffect: []
   effectsModules: []
   isWeapon: 1
   canAttack: 1
@@ -31,13 +32,17 @@ MonoBehaviour:
   swingOffset: 15
   damage: 5
   cooldown: 0.75
-  manaConsume: 0
   canMelee: 1
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+  mele_manaConsume: 0
   canShoot: 0
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  bulletSpeed: 5
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 0
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}

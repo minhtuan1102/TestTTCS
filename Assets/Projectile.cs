@@ -1,13 +1,35 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class ProjectileData
+{
+    // Basic Stats
+    public float speed;
+    public float damage;
+    public float lifeTime = 2f;
+
+    public ProjectileData(float speed, float damage, float lifeTime)
+    {
+        this.speed = speed;
+        this.damage = damage;
+        this.lifeTime = lifeTime;
+    }
+
+    public ProjectileData(ProjectileData item)
+    {
+        this.speed = item.speed;
+        this.damage = item.damage;
+        this.lifeTime = item.lifeTime;
+    }
+}
+
 
 public class Projectile : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    [SerializeField] public ProjectileItem itemData;
-
-    public float damage = 0f;
-
+    [SerializeField] public ProjectileData itemData;
 
     void Start()
     {
@@ -21,14 +43,13 @@ public class Projectile : MonoBehaviour
         // Gây sát thương nếu cần
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("Trúng địch!");
-            Enemy enemyData = other.GetComponent<Enemy>();
+            HealthSystem health = other.GetComponent<HealthSystem>();
 
-            if (enemyData != null)
+            if (health != null)
             {
-                if (enemyData.health > 0f)
+                if (health.CurrentHealth > 0f)
                 {
-                    enemyData.TakeDamage(damage);
+                    health.TakeDamage((int)itemData.damage);
                     Destroy(gameObject);
                 }
             }

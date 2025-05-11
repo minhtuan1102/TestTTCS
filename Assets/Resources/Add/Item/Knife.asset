@@ -18,11 +18,12 @@ MonoBehaviour:
   icon: {fileID: 5151419490667711304, guid: 131d21822916c474ea4ad833b248a6b4, type: 3}
   itemID: Knife
   itemDescription: 
-  Prefab: {fileID: 0}
+  model: {fileID: 5688164655049515616, guid: 8f575885ef349bc458f0cb8e057c9a9f, type: 3}
   weight: 1
   value: 0
   isConsumable: 0
   effectDescription: 
+  consumeEffect: []
   effectsModules: []
   isWeapon: 1
   canAttack: 1
@@ -31,13 +32,17 @@ MonoBehaviour:
   swingOffset: -15
   damage: 1
   cooldown: 0.25
-  manaConsume: 0
   canMelee: 1
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+  mele_manaConsume: 0
   canShoot: 0
   fireAmount: 1
   maxAmmo: 1
   spread: 0
+  bulletSpeed: 5
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 0
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}

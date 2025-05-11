@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: c1546e819c1d64d439d68c1e98c76a52, type: 2}
-  damage: 5
 --- !u!50 &9088128556085243630
 Rigidbody2D:
   serializedVersion: 5
