@@ -186,7 +186,7 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = string.IsNullOrWhiteSpace(playerNameInput.text)
             ? "Player " + Random.Range(0, 5000)
             : playerNameInput.text;
-            PhotonNetwork.CreateRoom("Room " + roomNameInput.text, new RoomOptions() { MaxPlayers = 4 }, null);
+            PhotonNetwork.CreateRoom("Room " + roomNameInput.text, new RoomOptions() { MaxPlayers = 4, BroadcastPropsChangeToAll = true });
         }
     }
     public void LeaveRoom()

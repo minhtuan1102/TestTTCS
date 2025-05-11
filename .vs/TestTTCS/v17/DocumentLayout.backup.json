@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|c:\\users\\nitro\\ideaprojects\\test\\testttcs\\assets\\scripts\\lobbynetworkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|c:\\users\\nitro\\ideaprojects\\test\\testttcs\\assets\\scripts\\playerentryui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\playerentryui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\assets\\scripts\\lobbynetworkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lobbynetworkmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\assets\\scripts\\roomentryui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\roomentryui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|c:\\users\\nitro\\ideaprojects\\test\\testttcs\\assets\\scripts\\characterswitcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\characterswitcher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{43311F21-0D6A-E6D2-10A4-0F037FE4E415}|Assembly-CSharp-Editor.csproj|C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\assets\\spriter2unitydx\\editor\\s2usettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{43311F21-0D6A-E6D2-10A4-0F037FE4E415}|Assembly-CSharp-Editor.csproj|solutionrelative:assets\\spriter2unitydx\\editor\\s2usettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,20 +30,33 @@
       "DocumentGroups": [
         {
           "DockedWidth": 162,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "RoomEntryUI.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Scripts\\RoomEntryUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\RoomEntryUI.cs",
               "ToolTip": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Scripts\\RoomEntryUI.cs",
               "RelativeToolTip": "Assets\\Scripts\\RoomEntryUI.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAIwA8AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-10T02:54:05.398Z",
               "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PlayerEntryUI.cs",
+              "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Scripts\\PlayerEntryUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerEntryUI.cs",
+              "ToolTip": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Scripts\\PlayerEntryUI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PlayerEntryUI.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAowEwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-11T02:05:32.757Z",
               "EditorCaption": ""
             },
             {
@@ -40,13 +65,38 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
+              "Title": "CharacterSwitcher.cs",
+              "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Scripts\\CharacterSwitcher.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\CharacterSwitcher.cs",
+              "ToolTip": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Scripts\\CharacterSwitcher.cs",
+              "RelativeToolTip": "Assets\\Scripts\\CharacterSwitcher.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwCMAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-10T18:46:33.015Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "S2USettings.cs",
+              "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Spriter2UnityDX\\Editor\\S2USettings.cs",
+              "RelativeDocumentMoniker": "Assets\\Spriter2UnityDX\\Editor\\S2USettings.cs",
+              "ToolTip": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Spriter2UnityDX\\Editor\\S2USettings.cs",
+              "RelativeToolTip": "Assets\\Spriter2UnityDX\\Editor\\S2USettings.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAowB8AAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-10T17:36:32.677Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "LobbyNetworkManager.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Scripts\\LobbyNetworkManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LobbyNetworkManager.cs",
               "ToolTip": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Scripts\\LobbyNetworkManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\LobbyNetworkManager.cs",
-              "ViewState": "AgIAAK8AAAAAAAAAAAAYwMgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAALIAAAAAAAAAAAAUwMIAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-10T02:31:26.978Z",
               "EditorCaption": ""
