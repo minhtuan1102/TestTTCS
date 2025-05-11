@@ -5,6 +5,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class LobbyNetworkManager :MonoBehaviourPunCallbacks
 {
@@ -197,5 +198,8 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel("Game");
     }
-
+    public void OnPressBackMenu()
+    {
+        SceneManager.LoadScene("Start");
+    }
 }
