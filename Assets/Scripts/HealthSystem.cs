@@ -2,120 +2,101 @@
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.VersionControl;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class HealthSystem : MonoBehaviour
 {
     [Header("Health Settings")]
-    [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private float _maxHealth = 100;
     [SerializeField] private bool _destroyOnDeath = true;
+
+    [Header("Armor Settings")]
+    [SerializeField] private float _maxArmor = 100;
+    [SerializeField] private float _currentArmor = 0f;
+    public float CurrentArmor => _currentArmor;
 
     [Header("Visual Feedback")]
     [SerializeField] private Color _damageColor = Color.red;
-    [SerializeField] private float _flashDuration = 0.1f;
-    [SerializeField] private GameObject _deathEffect;
 
-    [Header("UI References (Set in Editor)")]
-    [SerializeField] private Slider _healthSlider;
-    [SerializeField] private TMP_Text _healthText;
-    [SerializeField] private Canvas _healthCanvas;
+    private List<Transform> renderedPart = new List<Transform>();
+    private List<Color> partOriginalColor = new List<Color>();
 
-    private int _currentHealth;
+    private float _currentHealth;
     private SpriteRenderer _spriteRenderer;
     private Color _originalColor;
 
-    public int CurrentHealth => _currentHealth;
-    public int MaxHealth => _maxHealth;
+    public float CurrentHealth => _currentHealth;
+    public float MaxHealth => _maxHealth;
+    public float MaxArmor => _maxArmor;
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _originalColor = _spriteRenderer.color;
+        foreach (Transform i in transform.Find("Model").transform)
+        {
+            renderedPart.Add(i);
+            partOriginalColor.Add(i.GetComponent<SpriteRenderer>().color);
+        }
         _currentHealth = _maxHealth;
-
-        InitializeUI();
     }
 
     public void TakeDamage(int damage)
     {
+        float damageDeal = (float)damage;
+
+        if (_currentArmor > 0)
+        {
+            if (_currentArmor > damageDeal)
+            {
+                _currentArmor -= damageDeal;
+                return;
+            }
+            else
+            {
+                damageDeal -= _currentArmor;
+                _currentArmor = 0f;
+            }
+        }
+
         if (_currentHealth <= 0) return;
 
-        _currentHealth = Mathf.Max(0, _currentHealth - damage);
-        UpdateUI();
+        _currentHealth = Mathf.Max(0, _currentHealth - damageDeal);
         StartCoroutine(FlashEffect());
-
-        if (_currentHealth <= 0)
-        {
-            Die();
-        }
     }
 
     public void Heal(int amount)
     {
         _currentHealth = Mathf.Min(_maxHealth, _currentHealth + amount);
-        UpdateUI();
     }
 
-    private void Die()
+    public void AddArmor(int amount)
     {
-        if (_deathEffect != null)
-        {
-            Instantiate(_deathEffect, transform.position, Quaternion.identity);
-        }
+        _currentArmor = Mathf.Min(_maxArmor, _currentArmor + amount);
+    }
 
-        if (_destroyOnDeath)
-        {
-            Destroy(_healthCanvas?.gameObject);
-            Destroy(gameObject);
-        }
-        else
-        {
-            gameObject.SetActive(false);
-        }
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.ShowGameOver();
-        }
+    public void SetHealth(int amount)
+    {
+        _currentHealth = amount;
+    }
+
+    public void SetArmor(int amount)
+    {
+        _currentArmor = amount;
     }
 
     private IEnumerator FlashEffect()
     {
-        _spriteRenderer.color = _damageColor;
-        yield return new WaitForSeconds(_flashDuration);
-        _spriteRenderer.color = _originalColor;
-    }
-
-    private void InitializeUI()
-    {
-        if (_healthSlider != null)
+        foreach (Transform i in renderedPart)
         {
-            _healthSlider.minValue = 0;
-            _healthSlider.maxValue = _maxHealth;
-            _healthSlider.value = _currentHealth;
+            i.GetComponent<SpriteRenderer>().color = _damageColor;
         }
 
-        UpdateUI();
-    }
+        yield return new WaitForSeconds(0.25f);
 
-    private void UpdateUI()
-    {
-        if (_healthSlider != null)
+        for (int i=0; i<renderedPart.Count; i++)
         {
-            _healthSlider.value = _currentHealth;
-        }
-
-        if (_healthText != null)
-        {
-            _healthText.text = $"{_currentHealth}/{_maxHealth}";
-        }
-    }
-
-    private void LateUpdate()
-    {
-        if (_healthCanvas != null)
-        {
-            // Giữ thanh máu luôn hướng về camera
-            _healthCanvas.transform.rotation = Camera.main.transform.rotation;
+            renderedPart[i].GetComponent<SpriteRenderer>().color = partOriginalColor[i];
         }
     }
 }

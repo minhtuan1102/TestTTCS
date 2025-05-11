@@ -8,6 +8,17 @@ using UnityEngine.XR;
 
 public class Player : MonoBehaviour
 {
+    // Basic stats
+
+    public float _currentMana = 100f;
+    public float MaxMana = 100f;
+
+    public int cash = 0;
+
+    public float CurrentMana => _currentMana;
+
+    // Vision Stats
+
     public float range = 5f; // Player range
 
     private float vision = 5f; // Player vision
@@ -16,20 +27,29 @@ public class Player : MonoBehaviour
     public float zoomSpeed = 5f;  // Zoom speed
     public float moveZoomDecrease = 2f; // Vison reduce when moving
 
+    // Movement Stats
+
     public float moveSpeed = 5f;
     public float maxSpeed = 10f;
     public float acceleration = 15f; // Speed up smoothly
     public float deceleration = 10f; // Slow down smoothly
     public float linearDrag = 4f; // Adjust for natural movement
+
     private Vector3 moveDirrection;
 
-    public Vector2 minBounds;
-    public Vector2 maxBounds;
+    public Vector2 minBounds = new Vector2(-999999, 999999);
+    public Vector2 maxBounds = new Vector2(-999999, 999999);
 
     public float dashSpeed = 10f; // Dash speed
     public float dashDuration = 0.2f; // Dash time
     private bool isDashing = false;
     private float dashTime;
+
+    private float dashCooldownTimer = 0f;
+    public float dashCooldown = 1f;
+    public float dashManaConsume = 5f;
+
+    public Transform HandItem;
 
     private Rigidbody2D rb;
     private Camera cam;
@@ -37,6 +57,7 @@ public class Player : MonoBehaviour
     private float targetVision;
 
     private SpriteRenderer skin;
+    public float lookDir;
 
     private float cellSize = 1f;
 
@@ -44,20 +65,36 @@ public class Player : MonoBehaviour
     public float Hand_Radius = 0.5f;
     private float rotationSpeed = 10f;
 
-    public float recoilForce = 2f;  // Base recoil force
-    public float recoilRecoverySpeed = 5f; // How fast recoil returns to normal
-    public float dampingFactor = 0.1f; // Smooth damping factor
-    private float recoilOffset = 0f; // Recoil displacement (single float)
-    private float recoilVelocity = 0f; // Smooth recoil movement
+    [HideInInspector] public float recoilForce = 2f;  // Base recoil force
+    [HideInInspector] public float recoilRecoverySpeed = 5f; // How fast recoil returns to normal
+    [HideInInspector] public float dampingFactor = 0.1f; // Smooth damping factor
+    [HideInInspector] private float recoilOffset = 0f; // Recoil displacement (single float)
+    [HideInInspector] private float recoilVelocity = 0f; // Smooth recoil movement
 
-    public float swingSpeed = 10f; // Speed of swing increasing
-    public float swingOffset = 30f;
-    public float swingRecoil = -90f;
-    private float currentSwing = 0f; // Current swing value
-    private bool isSwinging = false; // Whether swinging is happening
+    [HideInInspector] public float swingSpeed = 10f; // Speed of swing increasing
+    [HideInInspector] public float swingOffset = 30f;
+    [HideInInspector] public float swingRecoil = -90f;
+    [HideInInspector] private float currentSwing = 0f; // Current swing value
+    [HideInInspector] private bool isSwinging = false; // Whether swinging is happening
 
-    private float targetSwing = 0f; // The target swing angle (can be set dynamically)
-    private float inverse = 1f;
+    [HideInInspector] private float targetSwing = 0f; // The target swing angle (can be set dynamically)
+    [HideInInspector] private float inverse = 1f;
+
+    [HideInInspector] private Transform model;
+
+    private bool isMoving = false;
+    private float legProgresion = 0f;
+
+    private Transform leg_R;
+    private Transform leg_L;
+    private Transform body;
+
+    private float leg_R_swing = 0f;
+    private float leg_L_swing = 0f;
+
+    private float body_swing = 0f;
+
+    private PlayerInventory inventory;
 
     private Collider2D player_collider;
     void Start()
@@ -65,7 +102,16 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
         player_collider = GetComponent<BoxCollider2D>();
+        inventory = GetComponent<PlayerInventory>();
+
         main_hand = transform.Find("Main").gameObject;
+
+        HandItem = main_hand.transform.Find("Item").transform;
+
+        model = transform.Find("Model").transform;
+
+        leg_L = model.Find("LegL").transform;
+        leg_R = model.Find("LegR").transform;
 
         Tilemap tilemap = GetComponent<Tilemap>();
         if (tilemap != null)
@@ -87,29 +133,32 @@ public class Player : MonoBehaviour
         movement.y = Input.GetAxis("Vertical");
 
         // If the player presses Q and is not already dashing, start the dash
-        if (Input.GetKeyDown(KeyCode.Q) && !isDashing)
-        {
-            // Set the dash direction to the movement direction
-            if (rb.linearVelocity.magnitude > 0)
-            {
-                moveDirrection = rb.linearVelocity.normalized;
-            }
+        dashCooldownTimer += Time.fixedDeltaTime;
 
-            // Start dashing
-            isDashing = true;
-            dashTime = 0;
+        if (Input.GetKeyDown(KeyCode.Q) && !isDashing && dashCooldownTimer > 0f)
+        {
+            if (ConsumeMana(dashManaConsume))
+            {
+                // Set the dash direction to the movement direction
+                if (rb.linearVelocity.magnitude > 0)
+                {
+                    moveDirrection = rb.linearVelocity.normalized;
+                }
+
+                // Start dashing
+                isDashing = true;
+                dashCooldownTimer = -dashCooldown;
+                dashTime = 0;
+            }
         }
 
         if (Input.GetMouseButtonDown(0)) // Left mouse button (fire)
         {
             Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
             // Example: Normal shot with base recoil
-            
+
             // Example: Charged shot with **double recoil**
             // TriggerRecoil(fireDirection, 2f);
-
-            
-
         }
 
         // Normalize diagonal movement
@@ -152,6 +201,33 @@ public class Player : MonoBehaviour
         recoilOffset = recoilForce * intensity;
     }
 
+    public bool ConsumeMana(float value)
+    {
+        if (_currentMana >= value)
+        {
+            _currentMana -= value;
+            return true;
+        }
+        return false;
+    }
+
+    public void SetHealth(float amount)
+    {
+        HealthSystem healthSystem = transform.GetComponent<HealthSystem>();
+        healthSystem.SetHealth((int)amount);
+    }
+
+    public void SetArmor(float amount)
+    {
+        HealthSystem healthSystem = transform.GetComponent<HealthSystem>();
+        healthSystem.SetArmor((int)amount);
+    }
+
+    public void GainMana(float value)
+    {
+        _currentMana = Mathf.Min(MaxMana, _currentMana + value);
+    }
+
     void FixedUpdate()
     {
 
@@ -160,7 +236,7 @@ public class Player : MonoBehaviour
             // Move the player in the dash direction
             rb.linearVelocity = moveDirrection * dashSpeed;
 
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"),true);
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
 
             // Timer for the dash duration
             dashTime += Time.fixedDeltaTime;
@@ -168,7 +244,7 @@ public class Player : MonoBehaviour
             // Stop dashing after the duration
             if (dashTime >= dashDuration)
             {
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"),false);
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
                 isDashing = false;
                 rb.linearVelocity = Vector2.zero; // Stop player movement after dash
             }
@@ -185,27 +261,71 @@ public class Player : MonoBehaviour
             rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.fixedDeltaTime * deceleration);
         }
 
+        Boolean lastMovingState = isMoving;
+        isMoving = (rb.linearVelocity.magnitude > 0.2f);
+        float forward = 1f;
+        if (rb.linearVelocity.x<0)
+        {
+            forward = -1f;
+        }
+        if (isMoving)
+        {
+            if (lastMovingState == false)
+            {
+                legProgresion = 0f;
+                body_swing = 0f;
+            }
+
+            legProgresion += rb.linearVelocity.magnitude * forward * inverse * 0.04f;
+            body_swing = 0.05f * Mathf.Sin(legProgresion);
+            leg_L_swing = Mathf.MoveTowards(leg_L_swing, 60 * Mathf.Cos(legProgresion), Time.fixedDeltaTime * 1000);
+            leg_R_swing = Mathf.MoveTowards(leg_R_swing, 60 * Mathf.Cos(legProgresion + Mathf.PI), Time.fixedDeltaTime * 1000);
+        }
+        else
+        {
+            body_swing = Mathf.MoveTowards(body_swing, 0, Time.fixedDeltaTime * 100);
+            leg_L_swing = Mathf.MoveTowards(leg_L_swing, 0, Time.fixedDeltaTime * 250);
+            leg_R_swing = Mathf.MoveTowards(leg_R_swing, 0, Time.fixedDeltaTime * 250);
+        }
+
+        Quaternion legLRotation = Quaternion.Euler(
+            new Vector3(0, 0, leg_L_swing)
+            );
+        leg_L.localRotation = legLRotation;
+
+        Quaternion legRRotation = Quaternion.Euler(
+            new Vector3(0, 0, leg_R_swing)
+            );
+        leg_R.localRotation = legRRotation;
+
+        model.localPosition = new Vector3(0, body_swing, 0);
+
         // Keep player inside bounds
         rb.position = new Vector2(
-            Mathf.Clamp(rb.position.x, minBounds.x, maxBounds.x),
-            Mathf.Clamp(rb.position.y, minBounds.y, maxBounds.y)
-        );
+                Mathf.Clamp(rb.position.x, minBounds.x, maxBounds.x),
+                Mathf.Clamp(rb.position.y, minBounds.y, maxBounds.y)
+            );
 
         // Update Rendering
         Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition); // Mouse pos
         Vector3 localScale = main_hand.transform.localScale;
+
+        Vector3 scale = model.localScale;
+
         if (mousePosition.x > transform.position.x)
         {
-            skin.flipX = false; // Flip skin
+            scale.x = Math.Abs(scale.x);
             inverse = 1f;
             localScale.y = Mathf.Abs(localScale.y);
         }
         else
         {
-            skin.flipX = true;
+            scale.x = -Math.Abs(scale.x);
             inverse = -1f;
             localScale.y = -Mathf.Abs(localScale.y);
         }
+
+        model.localScale = scale;
 
         main_hand.transform.localScale = localScale;
 
@@ -224,9 +344,9 @@ public class Player : MonoBehaviour
         Vector3 direction = mousePosition - main_hand.transform.position;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
+        lookDir = angle;
         // Hand Update
         main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
-        main_hand.transform.position = rb.position + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset)  * Hand_Radius;
+        main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
     }
 }

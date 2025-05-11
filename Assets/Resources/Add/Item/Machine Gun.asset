@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
+  m_Name: Machine Gun
+  m_EditorClassIdentifier: 
+  itemName: Machine Gun
+  itemType: Weapon
+  _itemType: 0
+  icon: {fileID: 1130123410398433707, guid: 705ab60ffeb3e2846bff2a30e7d3bdb2, type: 3}
+  itemID: Machine Gun
+  itemDescription: 
+  model: {fileID: 218332431691062314, guid: 887f0b91dce231745a85ec47dab54163, type: 3}
+  weight: 0
+  value: 0
+  isConsumable: 0
+  effectDescription: 
+  consumeEffect: []
+  effectsModules: []
+  isWeapon: 1
+  canAttack: 1
+  swing: -15
+  recoil: -0.3
+  swingOffset: 15
+  damage: 1
+  cooldown: 0.1
+  canMelee: 0
+  hitbox: {fileID: 0}
+  mele_manaConsume: 0
+  canShoot: 1
+  fireAmount: 1
+  maxAmmo: 1
+  spread: 1
+  bulletSpeed: 25
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 50
+  clipSize: 50
+  reload: 5
+  projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
+  options: []

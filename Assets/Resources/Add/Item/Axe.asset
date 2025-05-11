@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
+  m_Name: Axe
+  m_EditorClassIdentifier: 
+  itemName: Axe
+  itemType: Weapon
+  _itemType: 0
+  icon: {fileID: -4261161032346744600, guid: ae4798baef4e3074fa90dd622e6809d9, type: 3}
+  itemID: Axe
+  itemDescription: 
+  model: {fileID: 2449047747417268984, guid: 10bf109700fa49148aae9af36dad4a91, type: 3}
+  weight: 0
+  value: 0
+  isConsumable: 0
+  effectDescription: 
+  consumeEffect: []
+  effectsModules: []
+  isWeapon: 1
+  canAttack: 1
+  swing: -240
+  recoil: 0
+  swingOffset: 0
+  damage: 100
+  cooldown: 2
+  canMelee: 1
+  hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+  mele_manaConsume: 0
+  canShoot: 0
+  fireAmount: 1
+  maxAmmo: 1
+  spread: 0
+  bulletSpeed: 5
+  bulletLifetime: 5
+  shooting_manaConsume: 0
+  reload_manaConsume: 0
+  clipSize: 0
+  reload: 0
+  projectile: {fileID: 0}
+  options:
+  - {fileID: 0}

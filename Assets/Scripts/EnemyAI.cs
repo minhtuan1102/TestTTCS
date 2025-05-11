@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(NavMeshAgent))]
 
@@ -12,10 +13,15 @@ public class EnemyAI : MonoBehaviour
     private UnityEngine.Vector3 targetPos;
     private Transform target;
 
-    NavMeshAgent agent;
-    public LayerMask obstacleMask;
-    public EnemyData data;
+    private Rigidbody2D rb;
 
+    NavMeshAgent agent;
+    private NavMeshPath path;
+
+    public LayerMask obstacleMask;
+    private EnemyData data;
+
+    private Enemy enemy;
     // Timer
 
     private float chaseTimer = 0f;
@@ -23,12 +29,23 @@ public class EnemyAI : MonoBehaviour
     private float attackTimer = 0f;
     private float waitingTimer = 0f;
 
+    public UnityEngine.Vector3 MoveDirection { get; private set; }
+    public float Speed { get; private set; }
+
+    private int currentCorner = 0;
+
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
+
+        enemy = GetComponent<Enemy>();
+        data = enemy.data;
+
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
 
+        path = new NavMeshPath();
         agent.speed = data.Speed;
     }
 
@@ -72,6 +89,19 @@ public class EnemyAI : MonoBehaviour
         chaseTimer += Time.fixedDeltaTime;
         waitingTimer += Time.fixedDeltaTime;
 
+        UnityEngine.Vector3 velocity = agent.velocity;
+
+        Speed = velocity.magnitude;
+
+        if (Speed > 0.01f)
+        {
+            MoveDirection = velocity.normalized;
+        }
+        else
+        {
+            MoveDirection = UnityEngine.Vector3.zero;
+        }
+
         // Nếu đang trong thời gian "chờ" sau tấn công thì không làm gì
         if (waitingTimer < 0f)
         {
@@ -105,12 +135,21 @@ public class EnemyAI : MonoBehaviour
             {
                 attackTimer = 0f; // Đặt lại thời gian tấn công (reset cooldown)
                 waitingTimer = -data.WaitTime; // Delay sau khi đánh
+
+                GameManager.SummonAttackArea(
+                        transform.position,
+                        UnityEngine.Quaternion.Euler(0, 0, enemy.lookDir),
+                        new AreaInstance(data.Damage, data.Attack_Hitbox, Game.g_players.transform)
+                        );
+
+                /*
                 EnemySwing swing_Attack = transform.Find("Attack").GetComponent<EnemySwing>();
                 if (swing_Attack != null)
                 {
                     swing_Attack.TriggerAttack(data.Damage);
                 }
                 agent.SetDestination(transform.position);
+                */
             }
         }
 
@@ -120,5 +159,10 @@ public class EnemyAI : MonoBehaviour
             agent.SetDestination(targetPos);
         }
 
+
+        enemy.lookAtPos = targetPos;
+
+        UnityEngine.Vector2 direction = (agent.steeringTarget - (UnityEngine.Vector3)rb.position);
+        rb.linearVelocity = direction.normalized * data.Speed;
     }
 }

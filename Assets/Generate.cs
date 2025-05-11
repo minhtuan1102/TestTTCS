@@ -1,7 +1,6 @@
 using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
 using Unity.Mathematics.Geometry;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,7 +65,7 @@ public class Generate : MonoBehaviour
                 Vector2 enemyScale = Vector2.Scale(spawnEnemy.EnemyModel.transform.GetComponent<BoxCollider2D>().size, spawnEnemy.EnemyModel.transform.localScale);
 
                 GameObject enemy = Instantiate(spawnEnemy.EnemyModel, GetRandomPositionInBarrier(location.GetComponent<BoxCollider2D>(), enemyScale), Quaternion.Euler(0, 0, 0), enemy_Folder.transform);
-                enemy.GetComponent<Enemy>().myDataRefer = spawnEnemy;           
+                //enemy.GetComponent<Enemy>().myDataRefer = spawnEnemy;           
             }
             
         }

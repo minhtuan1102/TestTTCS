@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FireBullet : MonoBehaviour
 {
@@ -17,9 +17,9 @@ public class FireBullet : MonoBehaviour
     {
         for (int i = 0; i < fireAmount; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab, muzzle.position, Quaternion.Euler(0, 0, muzzle.transform.eulerAngles.z + Random.Range(-spread, spread)), projectileHolder.transform);
+            GameObject bullet = Instantiate(bulletPrefab, muzzle.position, Quaternion.Euler(0, 0, muzzle.transform.eulerAngles.z + Random.Range(-spread, spread)));
+            bullet.transform.SetParent(projectileHolder.transform);
             Projectile bullet_Projectile = bullet.GetComponent<Projectile>();
-            bullet_Projectile.damage = damage;
         }
     }
 }
