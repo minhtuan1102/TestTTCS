@@ -34,7 +34,25 @@ public class Game : MonoBehaviour
 
         ItemObjectSample = Resources.Load<GameObject>("Add/ItemObject");
         AreaAtkSample = Resources.Load<GameObject>("Add/AreaAttack");
+
+        foreach (var obj in Game.enemies)
+        {
+            obj.ID = obj.name;
+        }
     }
+
+    public static EnemyData GetEnemyData(string name)
+    {
+        foreach (var obj in Game.enemies)
+        {
+            if (name == obj.name)
+            {
+                return obj;
+            }
+        }
+
+        return Game.enemies[0];
+    } 
 
     public static Item GetItemDataFromName(string name)
     {

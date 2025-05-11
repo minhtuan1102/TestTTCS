@@ -59,12 +59,10 @@ public class Admin : MonoBehaviour
                 TMP_Dropdown e_selections = SpawmEnemy.Find("Dropdown").GetComponent<TMP_Dropdown>();
                 TMP_InputField e_amount = SpawmEnemy.Find("Amount").GetComponent<TMP_InputField>();
 
-                spawnEnemyButton.onClick.AddListener(() => GameManager.SpawnItem(
-                    e_selections.options[selections.value].text,
-                    (int.TryParse(e_amount.text, out int result)) ? result : 1,
-                    Game.localPlayer.transform.position,
-                    new Quaternion(0, 0, 0, 0))
-                );
+                spawnEnemyButton.onClick.AddListener(() => GameManager.TrySpawnEnemy(
+                    Game.GetEnemyData(selections.options[selections.value].text),
+                    Game.localPlayer.transform.position
+                ));
 
                 loaded = true;
             }

@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Items/EnemyData")]
 public class EnemyData : ScriptableObject
 {
+    [SerializeReference] public string ID;
     [SerializeReference] public int Point = 100;
 
     [SerializeReference] public float Health = 80;

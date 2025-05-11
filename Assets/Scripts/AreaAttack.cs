@@ -12,7 +12,7 @@ public class AreaAttack : MonoBehaviour
 
     private LayerMask enemyLayer;
 
-    void OnEnable()
+    public void Initiate()
     {
         hitbox = Instantiate(data.collider, transform);
 
@@ -39,5 +39,7 @@ public class AreaAttack : MonoBehaviour
                 health.TakeDamage((int)data.damage);
             }
         }
+
+        Destroy(gameObject);
     }
 }

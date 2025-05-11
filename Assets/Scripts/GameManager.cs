@@ -1,5 +1,6 @@
 using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
 
         area.SetActive(true);
 
+        areaAttack.Initiate();
         areaAttack.Attack();
     }
 
@@ -85,6 +87,46 @@ public class GameManager : MonoBehaviour
     {
         Player player = target.transform.GetComponent<Player>();
         player._currentMana = Mathf.Min(player.MaxMana, mana);
+    }
+
+    public static void SpawnEnemy(EnemyData dat,Vector3 pos)
+    {
+        GameObject e_model = Instantiate(dat.EnemyModel, Game.g_enemies.transform);
+        Enemy enemy = e_model.GetComponent<Enemy>();
+        enemy.data = dat;
+    }
+
+    public static void TrySpawnEnemy(EnemyData dat, Vector3 pos)
+    {
+        float checkDistance = 6f;
+        float spawnOffset = 0.5f;
+
+        LayerMask obstacleMask;
+
+        obstacleMask = (1 << LayerMask.NameToLayer("Barrier"));
+
+        Vector3 origin = pos;
+
+        for (int angle = 0; angle < 360; angle += 10)
+        {
+            float rad = angle * Mathf.Deg2Rad;
+            Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+
+            RaycastHit2D hit = Physics2D.Raycast(origin, dir, checkDistance, obstacleMask);
+
+            if (hit.collider == null)
+            {
+                Vector3 pointToCheck = origin + (Vector3)(dir * (checkDistance - spawnOffset));
+                pointToCheck.z = 0f;
+
+                // Kiểm tra NavMesh
+                if (NavMesh.SamplePosition(pointToCheck, out NavMeshHit navHit, 1f, NavMesh.AllAreas))
+                {
+                    SpawnEnemy(dat, navHit.position);
+                    return;
+                }
+            }
+        }
     }
 
     public static void SpawnItem(string name, int amount, Vector3 pos, Quaternion rot) 
