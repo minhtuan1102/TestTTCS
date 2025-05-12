@@ -1,46 +1,42 @@
-using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
-using static UnityEditor.Progress;
 
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] public static Transform UI;
-    [SerializeField] GameObject Current_Player;
+    [SerializeField] public static Transform UI = null;
+    [SerializeField] public GameObject Current_Player = null;
 
     [Header("UI Bar")]
 
-    [SerializeField] GameObject HP_UI;
-    [SerializeField] GameObject MP_UI;
-    [SerializeField] GameObject AP_UI;
+    [SerializeField] GameObject HP_UI = null;
+    [SerializeField] GameObject MP_UI = null;
+    [SerializeField] GameObject AP_UI = null;
 
     [Header("UI Display")]
 
-    [SerializeField] GameObject Cash_UI;
-    [SerializeField] GameObject Selected_UI; 
+    [SerializeField] GameObject Cash_UI = null;
+    [SerializeField] GameObject Selected_UI = null; 
 
     [Header("UI Inventory")]
 
-    [SerializeField] GameObject Storage;
-    [SerializeField] GameObject Button;
+    [SerializeField] GameObject Storage = null;
+    [SerializeField] GameObject Button = null;
 
-    [SerializeField] GameObject Loadout_UI;
-    [SerializeField] GameObject Iventory_UI;
-    [SerializeField] GameObject ItemStats_UI;
-    [SerializeField] GameObject Admin_UI;
+    [SerializeField] GameObject Loadout_UI = null;
+    [SerializeField] GameObject Iventory_UI = null;
+    [SerializeField] GameObject ItemStats_UI = null;
+    [SerializeField] GameObject Admin_UI = null;
 
     [SerializeField] public List<GameObject> Weapon_Slot = new List<GameObject>();
     [SerializeField] public List<GameObject> Consumer_Slot = new List<GameObject>();
     [SerializeField] public List<GameObject> Armor_Slot = new List<GameObject>();
 
+    [SerializeField] public static List<Transform> Holder = new List<Transform>();
+
     [SerializeField] public List<GameObject> Loadout_Consumer = new List<GameObject>();
 
-    [SerializeField] private PlayerInventory Inventory;
+    [SerializeField] private PlayerInventory Inventory = null;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -49,8 +45,8 @@ public class PlayerUI : MonoBehaviour
     private GameObject wp_loadout;
     private ItemInstance usingWP = null;
 
-    HealthSystem health;
-    Player player;
+    HealthSystem health = null;
+    Player player = null;
 
     // Item Interaction
 
@@ -59,6 +55,21 @@ public class PlayerUI : MonoBehaviour
 
     void Start()
     {
+        foreach (GameObject item in Weapon_Slot)
+        {
+            Holder.Add(item.transform);
+        }
+
+        foreach (GameObject item in Consumer_Slot)
+        {
+            Holder.Add(item.transform);
+        }
+
+        foreach (GameObject item in Armor_Slot)
+        {
+            Holder.Add(item.transform);
+        }
+        
         Game.localPlayer = Current_Player;
 
         UI = transform;

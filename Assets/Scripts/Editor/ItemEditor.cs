@@ -131,26 +131,6 @@ public class ItemEditor : Editor
 
                 EditorGUILayout.Space();
 
-                EditorGUILayout.LabelField("Script", EditorStyles.boldLabel);
-
-                for (int i = 0; i < item.effectsModules.Count; i++)
-                {
-                    item.effectsModules[i] = (MonoScript)EditorGUILayout.ObjectField($"Script {i + 1}", item.effectsModules[i], typeof(MonoScript), false);
-                    EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-                }
-
-                EditorGUILayout.Space();
-
-                if (GUILayout.Button("Add Script Slot"))
-                {
-                    item.effectsModules.Add(null);
-                }
-
-                if (GUILayout.Button("Remove Last"))
-                {
-                    if (item.effectsModules.Count > 0)
-                        item.effectsModules.RemoveAt(item.effectsModules.Count - 1);
-                }
             }
             EditorGUI.indentLevel--;
         }

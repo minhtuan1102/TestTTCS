@@ -1,4 +1,6 @@
-using UnityEditor.PackageManager;
+using Photon.Pun;
+using Spine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -8,6 +10,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject gameOverUI;
+
+    private PhotonView photonView;
+
+    public static int item_Index = 0;
 
     private void Awake()
     {
@@ -25,6 +31,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // Đảm bảo ẩn UI khi bắt đầu
+        photonView = GetComponent<PhotonView>();
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(false);
@@ -89,87 +96,84 @@ public class GameManager : MonoBehaviour
         player._currentMana = Mathf.Min(player.MaxMana, mana);
     }
 
-    public static void SpawnEnemy(EnemyData dat,Vector3 pos)
+    public static void SpawnEnemy(string id, Vector3 pos)
     {
-        GameObject e_model = Instantiate(dat.EnemyModel, Game.g_enemies.transform);
+        EnemyData dat = Game.GetEnemyData(id);
+        GameObject e_model = PhotonNetwork.InstantiateRoomObject(dat.path, pos, Quaternion.identity);
         Enemy enemy = e_model.GetComponent<Enemy>();
         enemy.data = dat;
     }
 
-    public static void TrySpawnEnemy(EnemyData dat, Vector3 pos)
+    public void TrySpawnEnemy(EnemyData dat, Vector3 pos)
     {
-        float checkDistance = 6f;
-        float spawnOffset = 0.5f;
-
-        LayerMask obstacleMask;
-
-        obstacleMask = (1 << LayerMask.NameToLayer("Barrier"));
-
-        Vector3 origin = pos;
-
-        for (int angle = 0; angle < 360; angle += 10)
+        if (PhotonNetwork.IsMasterClient)
         {
-            float rad = angle * Mathf.Deg2Rad;
-            Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+            float checkDistance = 6f;
+            float spawnOffset = 0.5f;
 
-            RaycastHit2D hit = Physics2D.Raycast(origin, dir, checkDistance, obstacleMask);
+            LayerMask obstacleMask;
 
-            if (hit.collider == null)
+            obstacleMask = (1 << LayerMask.NameToLayer("Barrier"));
+
+            Vector3 origin = pos;
+
+            for (int angle = 0; angle < 360; angle += 10)
             {
-                Vector3 pointToCheck = origin + (Vector3)(dir * (checkDistance - spawnOffset));
-                pointToCheck.z = 0f;
+                float rad = angle * Mathf.Deg2Rad;
+                Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
 
-                // Kiểm tra NavMesh
-                if (NavMesh.SamplePosition(pointToCheck, out NavMeshHit navHit, 1f, NavMesh.AllAreas))
+                RaycastHit2D hit = Physics2D.Raycast(origin, dir, checkDistance, obstacleMask);
+
+                if (hit.collider == null)
                 {
-                    SpawnEnemy(dat, navHit.position);
-                    return;
+                    Vector3 pointToCheck = origin + (Vector3)(dir * (checkDistance - spawnOffset));
+                    pointToCheck.z = 0f;
+
+                    // Kiểm tra NavMesh
+                    if (NavMesh.SamplePosition(pointToCheck, out NavMeshHit navHit, 1f, NavMesh.AllAreas))
+                    {
+                        SpawnEnemy(dat.ID, navHit.position);
+                        return;
+                    }
                 }
             }
         }
     }
 
-    public static void SpawnItem(string name, int amount, Vector3 pos, Quaternion rot) 
-    {
-        Item itemRef = Game.GetItemDataFromName(name);
-        //Debug.Log(Game.ItemObjectSample);
-        //Debug.Log(name);
-        //Debug.Log(amount);
-        if (itemRef)
-        {
-            GameObject newItem = Instantiate(Game.ItemObjectSample, pos, rot, Game.g_items.transform);
-            ItemObject data = newItem.GetComponent<ItemObject>();
-            data.Data.itemRef = itemRef;
-            data.Data.amount = amount;
-            data.Data.ammo = itemRef.clipSize;
-
-            newItem.SetActive(true);
-        }
-    }
-
-    public static void SpawnItem(Item itemRef, int amount, Vector3 pos, Quaternion rot)
+    public void SpawnItem(Item itemRef, int amount, Vector3 pos, Quaternion rot)
     {
         if (itemRef != null)
         {
-            GameObject newItem = Instantiate(Game.ItemObjectSample, pos, rot, Game.g_items.transform);
-            ItemObject data = newItem.GetComponent<ItemObject>();
-            data.Data.itemRef = itemRef;
-            data.Data.amount = amount;
-            data.Data.ammo = itemRef.clipSize;
 
-            newItem.SetActive(true);
+            SpawnItem(new ItemInstance(item_Index++, itemRef, itemRef.clipSize, amount), pos, rot);
         }
     }
 
-    public static void SpawnItem(ItemInstance dat, Vector3 pos, Quaternion rot)
+    public void SpawnItem(string name, int amount, Vector3 pos, Quaternion rot)
+    {
+        Item itemRef = Game.GetItemDataFromName(name);
+        if (itemRef)
+        {
+            SpawnItem(itemRef, amount, pos, rot);
+        }
+    }
+
+    public void SpawnItem(ItemInstance dat, Vector3 pos, Quaternion rot)
     {
         if (dat != null)
         {
-            GameObject newItem = Instantiate(Game.ItemObjectSample, pos, rot, Game.g_items.transform);
-            ItemObject data = newItem.GetComponent<ItemObject>();
-            data.Data = new ItemInstance(dat);
+            string json = (new ItemInstanceSender(dat)).ToJson();
+            Debug.Log(json);
+            object[] data = new object[] { json };
+            PhotonNetwork.InstantiateRoomObject("ItemObject", pos, rot, 1, data);
+        }
+    }
 
-            newItem.SetActive(true);
+    public void RequestSpawnItem(ItemInstance dat, Vector3 pos, Quaternion rot)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("ReceiveSpawnItem", RpcTarget.All, new ItemInstanceSender(dat).ToJson());
         }
     }
 }

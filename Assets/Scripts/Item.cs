@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,6 +9,7 @@ public class AttackScript
     public Collider2D Collider;
 }
 
+[System.Serializable]
 public enum ItemType
 {
     Weapon,
@@ -18,6 +18,7 @@ public enum ItemType
     QuestItem
 }
 
+[System.Serializable]
 public enum ValueType
 {
     Int,
@@ -51,8 +52,6 @@ public class Item : ScriptableObject
     public string effectDescription = "";
 
     public List<Modify> consumeEffect = new List<Modify>();
-
-    public List<MonoScript> effectsModules = new List<MonoScript>();
 
     // Attack Stats
     public bool isWeapon = false;

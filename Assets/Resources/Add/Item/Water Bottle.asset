@@ -31,7 +31,6 @@ MonoBehaviour:
     modify_FloatValue: 0
     modify_BoolValue: 0
     modify_StringValue: 
-  effectsModules: []
   isWeapon: 0
   canAttack: 1
   swing: 40

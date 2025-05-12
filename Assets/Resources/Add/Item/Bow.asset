@@ -30,7 +30,7 @@ MonoBehaviour:
   swing: -30
   recoil: -0.2
   swingOffset: 0
-  damage: 5
+  damage: 60
   cooldown: 1.5
   canMelee: 0
   hitbox: {fileID: 0}
@@ -45,5 +45,5 @@ MonoBehaviour:
   reload_manaConsume: 5
   clipSize: 1
   reload: 2
-  projectile: {fileID: 3125827532256581459, guid: 14bbb6dead94572478528c1b2d6c396f, type: 3}
+  projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
   options: []

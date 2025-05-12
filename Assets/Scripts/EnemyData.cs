@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Items/EnemyData")]
@@ -24,4 +25,5 @@ public class EnemyData : ScriptableObject
 
     [SerializeReference] public float Chasing_Time_Threshold = 0.2f;
 
+    [SerializeReference] public string path = "";
 }

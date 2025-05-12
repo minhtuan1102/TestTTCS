@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -55,9 +56,15 @@ public class Enemy : MonoBehaviour
 
     private PlayerInventory inventory;
 
+    private Vector3 lastPos;
+
     private Collider2D enemy_collider;
+    private PhotonView view;
     void Start()
     {
+        transform.SetParent(Game.g_enemies.transform);
+
+        view = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
         enemy_collider = GetComponent<BoxCollider2D>();
@@ -75,11 +82,6 @@ public class Enemy : MonoBehaviour
 
         rb.gravityScale = 0;
         rb.freezeRotation = true;
-    }
-
-    void Update()
-    {
-        
     }
 
     // Function to set the target swing angle dynamically
@@ -105,10 +107,17 @@ public class Enemy : MonoBehaviour
         healthSystem.SetArmor((int)amount);
     }
 
-    void FixedUpdate()
+    void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            ai_movement.MoveDirection = (new Vector3(transform.position.x, transform.position.y, 0) - lastPos);
+            Debug.Log(ai_movement.MoveDirection.magnitude);
+        }
+
+        lastPos = Vector3.Lerp(lastPos, new Vector3(transform.position.x, transform.position.y, 0), 1f);
         Boolean lastMovingState = isMoving;
-        isMoving = (ai_movement.MoveDirection.magnitude > 0.2f);
+        isMoving = (ai_movement.MoveDirection.magnitude > 0.1f);
         float forward = 1f;
         if (ai_movement.MoveDirection.x < 0)
         {
@@ -181,17 +190,20 @@ public class Enemy : MonoBehaviour
             targetSwing = 0f;
         }
 
-        Vector3 direction = mousePosition - main_hand.transform.position;
+        Vector3 direction = (transform.position + ai_movement.MoveDirection.normalized * 10) - main_hand.transform.position;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         lookDir = angle;
         // Hand Update
         main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
         main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
-        
-        if (health.CurrentHealth <= 0)
+
+        if (PhotonNetwork.IsMasterClient)
         {
-            Destroy(gameObject);
+            if (health.CurrentHealth <= 0)
+            {
+                PhotonNetwork.Destroy(gameObject);
+            }
         }
     }
 }

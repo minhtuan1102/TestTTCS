@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 using UnityEngine.XR;
+using Photon.Pun;
 
 public class Player : MonoBehaviour
 {
@@ -97,8 +98,15 @@ public class Player : MonoBehaviour
     private PlayerInventory inventory;
 
     private Collider2D player_collider;
+
+    PhotonView view;
+
+    public Vector3 mousePosition;
+
     void Start()
     {
+        view = GetComponent<PhotonView>();
+
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
         player_collider = GetComponent<BoxCollider2D>();
@@ -124,70 +132,94 @@ public class Player : MonoBehaviour
         rb.linearDamping = linearDrag;
         cam = Camera.main;
         targetVision = vision;
+
+        transform.SetParent(Game.g_players.transform);
+
+        if (view.IsMine)
+        {
+            Transform UI = GameObject.Find("PlayerUI").transform;
+            Transform UICam = GameObject.Find("UICam").transform;
+
+            Transform Stats = UI.Find("PlayerStats");
+            Stats.GetComponent<PlayerUI>().Current_Player = gameObject;
+            Stats.gameObject.SetActive(true);
+
+            UI.Find("Loadout").GetComponent<LoadOut>().gameObject.SetActive(true);
+
+            UICam.Find("MinimapCam").GetComponent<FollowObject>().TargetObject = gameObject;
+            UICam.Find("PlayerTrackerCam").GetComponent<FollowObject>().TargetObject = gameObject;
+
+            Game.localPlayer = transform.gameObject;
+        }
     }
 
     void Update()
     {
-        // Get Input (WASD or Arrow Keys)
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
-
-        // If the player presses Q and is not already dashing, start the dash
-        dashCooldownTimer += Time.fixedDeltaTime;
-
-        if (Input.GetKeyDown(KeyCode.Q) && !isDashing && dashCooldownTimer > 0f)
+        if (view.IsMine)
         {
-            if (ConsumeMana(dashManaConsume))
+            // Get Input (WASD or Arrow Keys)
+            movement.x = Input.GetAxis("Horizontal");
+            movement.y = Input.GetAxis("Vertical");
+
+            // If the player presses Q and is not already dashing, start the dash
+            dashCooldownTimer += Time.fixedDeltaTime;
+
+            if (Input.GetKeyDown(KeyCode.Q) && !isDashing && dashCooldownTimer > 0f)
             {
-                // Set the dash direction to the movement direction
-                if (rb.linearVelocity.magnitude > 0)
+                if (ConsumeMana(dashManaConsume))
                 {
-                    moveDirrection = rb.linearVelocity.normalized;
+                    // Set the dash direction to the movement direction
+                    if (rb.linearVelocity.magnitude > 0)
+                    {
+                        moveDirrection = rb.linearVelocity.normalized;
+                    }
+
+                    // Start dashing
+                    isDashing = true;
+                    dashCooldownTimer = -dashCooldown;
+                    dashTime = 0;
                 }
-
-                // Start dashing
-                isDashing = true;
-                dashCooldownTimer = -dashCooldown;
-                dashTime = 0;
             }
+
+            if (Input.GetMouseButtonDown(0)) // Left mouse button (fire)
+            {
+                Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+                // Example: Normal shot with base recoil
+
+                // Example: Charged shot with **double recoil**
+                // TriggerRecoil(fireDirection, 2f);
+            }
+
+            // Normalize diagonal movement
+            if (movement.magnitude > 1)
+                movement.Normalize();
+
+            if (movement.magnitude > 0.1f)
+            {
+                // Reduce vision when moving
+                targetVision = Mathf.Max(range + minVision, range + maxVision - moveZoomDecrease);
+            }
+            else
+            {
+                // Icrease vision when idle
+                targetVision = range + maxVision;
+            }
+
+            // Smooth zoom
+            vision = Mathf.Lerp(vision, targetVision * cellSize, Time.deltaTime * zoomSpeed);
+
+            // Camera update
+            if (cam.orthographic)
+                cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, vision, Time.deltaTime * zoomSpeed);
+            else
+                cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, vision * zoomSpeed, Time.deltaTime * zoomSpeed);
+
+            // Smooth Camera Follow
+            Vector3 targetCamPos = new Vector3(rb.position.x, rb.position.y, -10);
+            cam.transform.position = Vector3.Lerp(cam.transform.position, targetCamPos, Time.deltaTime * 3f);
+
+            mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
         }
-
-        if (Input.GetMouseButtonDown(0)) // Left mouse button (fire)
-        {
-            Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-            // Example: Normal shot with base recoil
-
-            // Example: Charged shot with **double recoil**
-            // TriggerRecoil(fireDirection, 2f);
-        }
-
-        // Normalize diagonal movement
-        if (movement.magnitude > 1)
-            movement.Normalize();
-
-        if (movement.magnitude > 0.1f)
-        {
-            // Reduce vision when moving
-            targetVision = Mathf.Max(range + minVision, range + maxVision - moveZoomDecrease);
-        }
-        else
-        {
-            // Icrease vision when idle
-            targetVision = range + maxVision;
-        }
-
-        // Smooth zoom
-        vision = Mathf.Lerp(vision, targetVision * cellSize, Time.deltaTime * zoomSpeed);
-
-        // Camera update
-        if (cam.orthographic)
-            cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, vision, Time.deltaTime * zoomSpeed);
-        else
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, vision * zoomSpeed, Time.deltaTime * zoomSpeed);
-
-        // Smooth Camera Follow
-        Vector3 targetCamPos = new Vector3(rb.position.x, rb.position.y, -10);
-        cam.transform.position = Vector3.Lerp(cam.transform.position, targetCamPos, Time.deltaTime * 3f);
     }
 
     // Function to set the target swing angle dynamically
@@ -231,122 +263,125 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (isDashing)
+        if (view.IsMine)
         {
-            // Move the player in the dash direction
-            rb.linearVelocity = moveDirrection * dashSpeed;
-
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
-
-            // Timer for the dash duration
-            dashTime += Time.fixedDeltaTime;
-
-            // Stop dashing after the duration
-            if (dashTime >= dashDuration)
+            if (isDashing)
             {
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
-                isDashing = false;
-                rb.linearVelocity = Vector2.zero; // Stop player movement after dash
-            }
-        }
+                // Move the player in the dash direction
+                rb.linearVelocity = moveDirrection * dashSpeed;
 
-        if (movement.magnitude > 0)
-        {
-            // Apply acceleration-based force for smoother movement
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, movement * maxSpeed, Time.fixedDeltaTime * acceleration);
-        }
-        else
-        {
-            // Apply deceleration to slow down smoothly
-            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.fixedDeltaTime * deceleration);
-        }
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), true);
 
-        Boolean lastMovingState = isMoving;
-        isMoving = (rb.linearVelocity.magnitude > 0.2f);
-        float forward = 1f;
-        if (rb.linearVelocity.x<0)
-        {
-            forward = -1f;
-        }
-        if (isMoving)
-        {
-            if (lastMovingState == false)
-            {
-                legProgresion = 0f;
-                body_swing = 0f;
+                // Timer for the dash duration
+                dashTime += Time.fixedDeltaTime;
+
+                // Stop dashing after the duration
+                if (dashTime >= dashDuration)
+                {
+                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+                    isDashing = false;
+                    rb.linearVelocity = Vector2.zero; // Stop player movement after dash
+                }
             }
 
-            legProgresion += rb.linearVelocity.magnitude * forward * inverse * 0.04f;
-            body_swing = 0.05f * Mathf.Sin(legProgresion);
-            leg_L_swing = Mathf.MoveTowards(leg_L_swing, 60 * Mathf.Cos(legProgresion), Time.fixedDeltaTime * 1000);
-            leg_R_swing = Mathf.MoveTowards(leg_R_swing, 60 * Mathf.Cos(legProgresion + Mathf.PI), Time.fixedDeltaTime * 1000);
+            if (movement.magnitude > 0)
+            {
+                // Apply acceleration-based force for smoother movement
+                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, movement * maxSpeed, Time.fixedDeltaTime * acceleration);
+            }
+            else
+            {
+                // Apply deceleration to slow down smoothly
+                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.fixedDeltaTime * deceleration);
+            }
+
+            Boolean lastMovingState = isMoving;
+            isMoving = (rb.linearVelocity.magnitude > 0.2f);
+            float forward = 1f;
+            if (rb.linearVelocity.x < 0)
+            {
+                forward = -1f;
+            }
+            if (isMoving)
+            {
+                if (lastMovingState == false)
+                {
+                    legProgresion = 0f;
+                    body_swing = 0f;
+                }
+
+                legProgresion += rb.linearVelocity.magnitude * forward * inverse * 0.04f;
+                body_swing = 0.05f * Mathf.Sin(legProgresion);
+                leg_L_swing = Mathf.MoveTowards(leg_L_swing, 60 * Mathf.Cos(legProgresion), Time.fixedDeltaTime * 1000);
+                leg_R_swing = Mathf.MoveTowards(leg_R_swing, 60 * Mathf.Cos(legProgresion + Mathf.PI), Time.fixedDeltaTime * 1000);
+            }
+            else
+            {
+                body_swing = Mathf.MoveTowards(body_swing, 0, Time.fixedDeltaTime * 100);
+                leg_L_swing = Mathf.MoveTowards(leg_L_swing, 0, Time.fixedDeltaTime * 250);
+                leg_R_swing = Mathf.MoveTowards(leg_R_swing, 0, Time.fixedDeltaTime * 250);
+            }
+
+            Quaternion legLRotation = Quaternion.Euler(
+                new Vector3(0, 0, leg_L_swing)
+                );
+            leg_L.localRotation = legLRotation;
+
+            Quaternion legRRotation = Quaternion.Euler(
+                new Vector3(0, 0, leg_R_swing)
+                );
+            leg_R.localRotation = legRRotation;
+
+            model.localPosition = new Vector3(0, body_swing, 0);
+
+            // Keep player inside bounds
+            rb.position = new Vector2(
+                    Mathf.Clamp(rb.position.x, minBounds.x, maxBounds.x),
+                    Mathf.Clamp(rb.position.y, minBounds.y, maxBounds.y)
+                );
+
+            // Update Renderin 
+            // Mouse pos
+            Vector3 localScale = main_hand.transform.localScale;
+
+            Vector3 scale = model.localScale;
+
+            if (mousePosition.x > transform.position.x)
+            {
+                scale.x = Math.Abs(scale.x);
+                inverse = 1f;
+                localScale.y = Mathf.Abs(localScale.y);
+            }
+            else
+            {
+                scale.x = -Math.Abs(scale.x);
+                inverse = -1f;
+                localScale.y = -Mathf.Abs(localScale.y);
+            }
+
+            model.localScale = scale;
+
+            main_hand.transform.localScale = localScale;
+
+            // Hand movement
+
+            // Smoothly interpolate recoil
+            recoilOffset = Mathf.SmoothDamp(recoilOffset, 0f, ref recoilVelocity, recoilRecoverySpeed * Time.deltaTime);
+            currentSwing = Mathf.MoveTowards(currentSwing, targetSwing, swingSpeed * Time.deltaTime);
+
+            // If we reached the target swing angle, stop swinging and reset to 0
+            if (currentSwing == targetSwing)
+            {
+                targetSwing = 0f;
+            }
+
+            Vector3 direction = mousePosition - main_hand.transform.position;
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            lookDir = angle;
+            // Hand Update
+            main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
+            main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
         }
-        else
-        {
-            body_swing = Mathf.MoveTowards(body_swing, 0, Time.fixedDeltaTime * 100);
-            leg_L_swing = Mathf.MoveTowards(leg_L_swing, 0, Time.fixedDeltaTime * 250);
-            leg_R_swing = Mathf.MoveTowards(leg_R_swing, 0, Time.fixedDeltaTime * 250);
-        }
-
-        Quaternion legLRotation = Quaternion.Euler(
-            new Vector3(0, 0, leg_L_swing)
-            );
-        leg_L.localRotation = legLRotation;
-
-        Quaternion legRRotation = Quaternion.Euler(
-            new Vector3(0, 0, leg_R_swing)
-            );
-        leg_R.localRotation = legRRotation;
-
-        model.localPosition = new Vector3(0, body_swing, 0);
-
-        // Keep player inside bounds
-        rb.position = new Vector2(
-                Mathf.Clamp(rb.position.x, minBounds.x, maxBounds.x),
-                Mathf.Clamp(rb.position.y, minBounds.y, maxBounds.y)
-            );
-
-        // Update Rendering
-        Vector3 mousePosition = cam.ScreenToWorldPoint(Input.mousePosition); // Mouse pos
-        Vector3 localScale = main_hand.transform.localScale;
-
-        Vector3 scale = model.localScale;
-
-        if (mousePosition.x > transform.position.x)
-        {
-            scale.x = Math.Abs(scale.x);
-            inverse = 1f;
-            localScale.y = Mathf.Abs(localScale.y);
-        }
-        else
-        {
-            scale.x = -Math.Abs(scale.x);
-            inverse = -1f;
-            localScale.y = -Mathf.Abs(localScale.y);
-        }
-
-        model.localScale = scale;
-
-        main_hand.transform.localScale = localScale;
-
-        // Hand movement
-
-        // Smoothly interpolate recoil
-        recoilOffset = Mathf.SmoothDamp(recoilOffset, 0f, ref recoilVelocity, recoilRecoverySpeed * Time.deltaTime);
-        currentSwing = Mathf.MoveTowards(currentSwing, targetSwing, swingSpeed * Time.deltaTime);
-
-        // If we reached the target swing angle, stop swinging and reset to 0
-        if (currentSwing == targetSwing)
-        {
-            targetSwing = 0f;
-        }
-
-        Vector3 direction = mousePosition - main_hand.transform.position;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        lookDir = angle;
-        // Hand Update
-        main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
-        main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
     }
 }

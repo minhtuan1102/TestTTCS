@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
+using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -29,13 +30,15 @@ public class EnemyAI : MonoBehaviour
     private float attackTimer = 0f;
     private float waitingTimer = 0f;
 
-    public UnityEngine.Vector3 MoveDirection { get; private set; }
+    public UnityEngine.Vector3 MoveDirection;
     public float Speed { get; private set; }
 
     private int currentCorner = 0;
+    private PhotonView photonView;
 
     void Start()
     {
+        photonView = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
 
         enemy = GetComponent<Enemy>();
@@ -81,8 +84,11 @@ public class EnemyAI : MonoBehaviour
         return false;
     }
 
-    private void Update()
+    void Update()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         // Cập nhật tất cả timer
         detectTimer += Time.fixedDeltaTime;
         attackTimer += Time.fixedDeltaTime;

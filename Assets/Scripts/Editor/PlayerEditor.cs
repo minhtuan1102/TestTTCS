@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Player))]
+//[CustomEditor(typeof(Player))]
 public class PlayerEditor : Editor
 {
 

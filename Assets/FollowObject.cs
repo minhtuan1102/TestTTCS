@@ -3,7 +3,7 @@ using UnityEngine;
 public class FollowObject : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [SerializeReference] GameObject TargetObject;
+    [SerializeReference] public GameObject TargetObject;
     [SerializeField] bool followInstant = false;
     [SerializeField] Vector3 offset = Vector3.zero;
     void Start()

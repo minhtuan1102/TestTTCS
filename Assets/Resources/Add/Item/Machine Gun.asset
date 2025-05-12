@@ -30,7 +30,7 @@ MonoBehaviour:
   swing: -15
   recoil: -0.3
   swingOffset: 15
-  damage: 1
+  damage: 15
   cooldown: 0.1
   canMelee: 0
   hitbox: {fileID: 0}

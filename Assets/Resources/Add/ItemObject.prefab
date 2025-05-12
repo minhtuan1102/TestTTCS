@@ -633,13 +633,14 @@ GameObject:
   - component: {fileID: 5582001765278580969}
   - component: {fileID: 7725073214069916344}
   - component: {fileID: 5606798496541390922}
+  - component: {fileID: 5064876529374710002}
   m_Layer: 0
   m_Name: ItemObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8250411386483189934
 Transform:
   m_ObjectHideFlags: 0
@@ -777,4 +778,27 @@ MonoBehaviour:
     storage: {fileID: 0}
     itemRef: {fileID: 11400000, guid: 76699299a3a8ad0439dd670e1ef50bf0, type: 2}
     ammo: 0
+    reloading: 0
     attachments: []
+--- !u!114 &5064876529374710002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135609802419061193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 2
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

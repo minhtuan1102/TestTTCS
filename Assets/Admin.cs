@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Photon.Pun;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.ComTypes;
 using TMPro;
@@ -15,10 +16,12 @@ public class Admin : MonoBehaviour
 
     private bool loaded = false;
 
+    private PhotonView view;
+
     void OnEnable()
     {
-
-        if (!loaded)
+        view = GetComponent<PhotonView>();
+        if (!loaded && view.IsMine && PhotonNetwork.IsMasterClient)
         {
             try
             {
@@ -29,7 +32,7 @@ public class Admin : MonoBehaviour
                 //Debug.Log(spawnButton);
                 //Debug.Log(selections);
                 //Debug.Log(amount);
-                spawnButton.onClick.AddListener(() => GameManager.SpawnItem(
+                spawnButton.onClick.AddListener(() => GameManager.Instance.SpawnItem(
                     selections.options[selections.value].text,
                     (int.TryParse(amount.text, out int result))?result:1,
                     Game.localPlayer.transform.position,
@@ -59,7 +62,7 @@ public class Admin : MonoBehaviour
                 TMP_Dropdown e_selections = SpawmEnemy.Find("Dropdown").GetComponent<TMP_Dropdown>();
                 TMP_InputField e_amount = SpawmEnemy.Find("Amount").GetComponent<TMP_InputField>();
 
-                spawnEnemyButton.onClick.AddListener(() => GameManager.TrySpawnEnemy(
+                spawnEnemyButton.onClick.AddListener(() => GameManager.Instance.TrySpawnEnemy(
                     Game.GetEnemyData(selections.options[selections.value].text),
                     Game.localPlayer.transform.position
                 ));
@@ -101,7 +104,7 @@ public class Admin : MonoBehaviour
     void Start()
     {
         // Spawn Item
-        
+        view = GetComponent<PhotonView>();
     }
 
     void Update()

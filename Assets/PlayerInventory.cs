@@ -1,10 +1,6 @@
-using JetBrains.Annotations;
-using NUnit.Framework.Interfaces;
 using System.Collections.Generic;
-using TMPro;
-using Unity.Mathematics;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Photon.Pun;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -26,6 +22,7 @@ public class PlayerInventory : MonoBehaviour
     private Transform weaponMuzzle;
 
     private Player player;
+    private PhotonView view;
 
     // Attack
 
@@ -36,6 +33,7 @@ public class PlayerInventory : MonoBehaviour
     void Start()
     {
         player = GetComponent<Player>();
+        view = GetComponent<PhotonView>();
     }
 
     public void Holding(ItemInstance item)
@@ -64,6 +62,9 @@ public class PlayerInventory : MonoBehaviour
         return -1;
     }
 
+
+    // Server
+
     public void AddItem(ItemInstance item)
     {
         int index = FindItem(item);
@@ -87,7 +88,7 @@ public class PlayerInventory : MonoBehaviour
             if (Items[index].itemRef.isConsumable)
             {
                 int DropAmount = (int)Mathf.Min(amount, Items[index].amount);
-                GameManager.SpawnItem(Items[index].itemRef, DropAmount, transform.position, new Quaternion(0, 0, 0, 0));
+                GameManager.Instance.SpawnItem(Items[index].itemRef, DropAmount, transform.position, new Quaternion(0, 0, 0, 0));
 
                 Items[index].amount -= DropAmount;
                 if (Items[index].amount <= 0)
@@ -97,7 +98,7 @@ public class PlayerInventory : MonoBehaviour
             }
             else
             {
-                GameManager.SpawnItem(Items[index], transform.position, new Quaternion(0, 0, 0, 0));
+                GameManager.Instance.SpawnItem(Items[index], transform.position, new Quaternion(0, 0, 0, 0));
                 Items.RemoveAt(index);
             }
         }
@@ -138,7 +139,7 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    // Pick item
+    // Local
 
     private Transform FindNearItem()
     {
@@ -170,7 +171,7 @@ public class PlayerInventory : MonoBehaviour
         {
             currentWeaponModel = model;
 
-            if (holdingItem != null && holdingItem.itemRef)
+            if (holdingItem != null && holdingItem.itemRef != null)
             {
 
                 foreach (Transform item in player.HandItem.transform)
@@ -188,61 +189,64 @@ public class PlayerInventory : MonoBehaviour
 
     void Update()
     {
-        scanTimer += Time.fixedDeltaTime;
-
-        if (scanTimer > 0f)
+        if (view.IsMine)
         {
-            scanTimer -= scanTime;
+            scanTimer += Time.fixedDeltaTime;
+
+            if (scanTimer > 0f)
+            {
+                scanTimer -= scanTime;
+
+                if (nearestItem != null)
+                {
+                    GameObject canvas = nearestItem.transform.Find("Canvas").gameObject;
+                    canvas.SetActive(false);
+                }
+
+                nearestItem = FindNearItem();
+            }
 
             if (nearestItem != null)
             {
                 GameObject canvas = nearestItem.transform.Find("Canvas").gameObject;
-                canvas.SetActive(false);
+                canvas.SetActive(true);
+
+                canvas.transform.localPosition = new Vector3(0, 0.6f + 0.1f * Mathf.Cos(Time.time * 2), 0);
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    AddItem(nearestItem.GetComponent<ItemObject>().Data);
+                    Destroy(nearestItem.gameObject);
+                    nearestItem = null;
+                }
             }
 
-            nearestItem = FindNearItem();
-        }
-
-        if (nearestItem != null)
-        {
-            GameObject canvas = nearestItem.transform.Find("Canvas").gameObject;
-            canvas.SetActive(true);
-
-            canvas.transform.localPosition = new Vector3(0, 0.6f + 0.1f*Mathf.Cos(Time.time*2), 0);
-
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                AddItem(nearestItem.GetComponent<ItemObject>().Data);
-                Destroy(nearestItem.gameObject);
-                nearestItem = null;
+                PlayerUI.useMainWP = !(PlayerUI.useMainWP);
+                PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateWP();
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            PlayerUI.useMainWP = !(PlayerUI.useMainWP);
-            PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateWP(); 
-        }
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                PlayerUI.UI.transform.GetComponent<PlayerUI>().ToggleInventory();
+            }
 
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            PlayerUI.UI.transform.GetComponent<PlayerUI>().ToggleInventory();
-        }
+            timer += Time.deltaTime;
+            atkCooldown -= Time.deltaTime;
 
-        timer += Time.deltaTime;
-        atkCooldown -= Time.deltaTime;
-
-        if (holdingItem != null && holdingItem.itemRef)
-        {
-            player.swingOffset = holdingItem.itemRef.swingOffset;
-            GetWeaponModel(holdingItem.itemRef.itemID);
-            player.HandItem.gameObject.SetActive(true);
-        }
-        else
-        {
-            player.swingOffset = 0f;
-            GetWeaponModel("");
-            player.HandItem.gameObject.SetActive(false);
+            if (holdingItem != null && holdingItem.itemRef)
+            {
+                player.swingOffset = holdingItem.itemRef.swingOffset;
+                GetWeaponModel(holdingItem.itemRef.itemID);
+                player.HandItem.gameObject.SetActive(true);
+            }
+            else
+            {
+                player.swingOffset = 0f;
+                GetWeaponModel("");
+                player.HandItem.gameObject.SetActive(false);
+            }
         }
     }
 

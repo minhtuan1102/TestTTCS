@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -49,7 +50,10 @@ public class Projectile : MonoBehaviour
             {
                 if (health.CurrentHealth > 0f)
                 {
-                    health.TakeDamage((int)itemData.damage);
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        health.TakeDamage((int)itemData.damage);
+                    }
                     Destroy(gameObject);
                 }
             }
