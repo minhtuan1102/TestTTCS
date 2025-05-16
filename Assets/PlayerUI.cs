@@ -336,8 +336,6 @@ public class PlayerUI : MonoBehaviour
             if (useMainWP) wp = Weapon_Slot[0].GetComponent<ItemHolder>();
             else wp = Weapon_Slot[1].GetComponent<ItemHolder>();
 
-            Inventory.holdingItem = wp.item;
-
             if (wp.item != null && wp.item.itemRef)
             {
                 usingWP = wp.item;
@@ -349,6 +347,8 @@ public class PlayerUI : MonoBehaviour
                 usingWP = null;
                 wp_loadout.SetActive(false);
             }
+
+            Inventory.Holding(usingWP);
         }
         catch
         {

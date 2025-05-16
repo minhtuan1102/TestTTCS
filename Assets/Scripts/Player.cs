@@ -1,11 +1,10 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
-using UnityEngine.XR;
+using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -103,8 +102,14 @@ public class Player : MonoBehaviour
 
     public Vector3 mousePosition;
 
+    public Transform onTopDisplay;
+    private UnityEngine.UI.Slider healthBar;
+
+    private HealthSystem health;
+
     void Start()
     {
+        health = GetComponent<HealthSystem>();
         view = GetComponent<PhotonView>();
 
         rb = GetComponent<Rigidbody2D>();
@@ -134,9 +139,13 @@ public class Player : MonoBehaviour
         targetVision = vision;
 
         transform.SetParent(Game.g_players.transform);
+        onTopDisplay = transform.Find("Canvas");
+        healthBar = onTopDisplay.Find("HealthBar").GetComponent<UnityEngine.UI.Slider>();
 
         if (view.IsMine)
         {
+            Debug.Log(PhotonNetwork.NickName);
+
             Transform UI = GameObject.Find("PlayerUI").transform;
             Transform UICam = GameObject.Find("UICam").transform;
 
@@ -150,7 +159,13 @@ public class Player : MonoBehaviour
             UICam.Find("PlayerTrackerCam").GetComponent<FollowObject>().TargetObject = gameObject;
 
             Game.localPlayer = transform.gameObject;
+        } else
+        {
+            onTopDisplay.Find("HealthBar").gameObject.SetActive(true);
         }
+
+        onTopDisplay.Find("NameTag").GetComponent<TextMeshProUGUI>().SetText(view.Owner.NickName);
+        onTopDisplay.Find("NameTag").gameObject.SetActive(true);
     }
 
     void Update()
@@ -220,6 +235,7 @@ public class Player : MonoBehaviour
 
             mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
         }
+        healthBar.value = (float)health.CurrentHealth / (float)health.MaxHealth;
     }
 
     // Function to set the target swing angle dynamically
@@ -233,11 +249,21 @@ public class Player : MonoBehaviour
         recoilOffset = recoilForce * intensity;
     }
 
+    [PunRPC]
+    public void UpdateMana(float amount)
+    {
+        _currentMana = amount;
+    }
+
     public bool ConsumeMana(float value)
     {
         if (_currentMana >= value)
         {
             _currentMana -= value;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                view.RPC("UpdateMana", RpcTarget.Others, _currentMana);
+            }
             return true;
         }
         return false;

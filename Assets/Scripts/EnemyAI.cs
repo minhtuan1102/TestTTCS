@@ -36,7 +36,7 @@ public class EnemyAI : MonoBehaviour
     private int currentCorner = 0;
     private PhotonView photonView;
 
-    void Start()
+    void Awake()
     {
         photonView = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
@@ -49,6 +49,10 @@ public class EnemyAI : MonoBehaviour
         agent.updateUpAxis = false;
 
         path = new NavMeshPath();
+    }
+
+    void Start()
+    {
         agent.speed = data.Speed;
     }
 
@@ -108,14 +112,8 @@ public class EnemyAI : MonoBehaviour
             MoveDirection = UnityEngine.Vector3.zero;
         }
 
-        // Nếu đang trong thời gian "chờ" sau tấn công thì không làm gì
-        if (waitingTimer < 0f)
-        {
-            return;
-        }
-
         // Logic phát hiện player
-        if (detectTimer >= 0f)
+        if (detectTimer >= 0f && waitingTimer >= 0f)
         {
             Transform detected = FindPlayer();
             if (detected != null && CheckIfNear(detected.position, data.Detection_Range))
@@ -135,11 +133,11 @@ public class EnemyAI : MonoBehaviour
         }
 
         // Logic tấn công nếu đủ điều kiện
-        if (attackTimer >= data.Attack_Rate && target != null) // Thêm điều kiện cooldown cho tấn công
+        if (attackTimer >= 0 && target != null) // Thêm điều kiện cooldown cho tấn công
         {
             if (CheckIfNear(target.position, data.Range))
             {
-                attackTimer = 0f; // Đặt lại thời gian tấn công (reset cooldown)
+                attackTimer = -data.Attack_Rate; // Đặt lại thời gian tấn công (reset cooldown)
                 waitingTimer = -data.WaitTime; // Delay sau khi đánh
 
                 GameManager.SummonAttackArea(

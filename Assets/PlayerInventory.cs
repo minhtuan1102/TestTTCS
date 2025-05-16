@@ -26,21 +26,58 @@ public class PlayerInventory : MonoBehaviour
 
     // Attack
 
+    private int _itemIndex = 0;
+
     private float timer = 0f;
     private float atkCooldown = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Awake()
     {
         player = GetComponent<Player>();
         view = GetComponent<PhotonView>();
+
+        for  (int i=0; i<Items.Count; i++)
+        {
+            Items[i].itemID = i;
+            _itemIndex = i + 1;
+        }
+    }
+
+    void Start()
+    {
+        
+    }
+
+    [PunRPC]
+    public void RPC_Holding(int itemIndex)
+    {
+        if (itemIndex == -1)
+        {
+            holdingItem = null;
+        } else
+        {
+            ItemInstance item = GetItemInstanceFromID(itemIndex);
+            if (item != null)
+            {
+                holdingItem = item;
+            }
+        }
     }
 
     public void Holding(ItemInstance item)
     {
-        if (Items.Contains(item))
+        holdingItem = item;
+        if (holdingItem != null)
         {
-            holdingItem = item;
+            if (Items.Contains(item))
+            {
+                view.RPC("RPC_Holding", RpcTarget.Others, item.itemID);
+            }
+        } else
+        {
+            view.RPC("RPC_Holding", RpcTarget.Others, -1);
         }
     }
 
@@ -62,20 +99,81 @@ public class PlayerInventory : MonoBehaviour
         return -1;
     }
 
-
-    // Server
-
-    public void AddItem(ItemInstance item)
+    public ItemInstance GetItemInstanceFromID(int id)
     {
-        int index = FindItem(item);
-        if (index>=0 && item.itemRef.isConsumable)
+        int index = 0;
+        for (index = 0; index < Items.Count; index++)
         {
-            Items[index].amount += item.amount;
-        } else
-        {
-            Items.Add(new ItemInstance(item));
+            if (Items[index] != null)
+            {
+                if (Items[index].itemID == id)
+                {
+                    return Items[index];
+                }
+            }
         }
-        PlayerUI.UI.GetComponent<PlayerUI>().UpdateInventory();
+        return null;
+    }
+
+    public int GetItemIndexFromID(int id)
+    {
+        int index = 0;
+        for (index = 0; index < Items.Count; index++)
+        {
+            if (Items[index] != null)
+            {
+                if (Items[index].itemID == id)
+                {
+                    return index;
+                }
+            }
+        }
+        return -1;
+    }
+
+    // Update Item
+
+    [PunRPC]
+    public void RPC_UpdateItem(int id, string json)
+    {
+        ItemInstance data = new ItemInstance(JsonUtility.FromJson<ItemInstanceSender>(json));
+        int index = GetItemIndexFromID((int)id);
+
+        Items[index].amount = data.amount;
+
+        if (Items[index].amount <= 0)
+        {
+            Items.RemoveAt(index);
+        }
+    }
+
+    // Drop Item
+
+    [PunRPC]
+    public void Master_DropItem(int id, int amount)
+    {
+        int index = GetItemIndexFromID (id);
+        if (Items[index] != null)
+        {
+            if (Items[index].itemRef.isConsumable)
+            {
+                int DropAmount = (int)Mathf.Min(amount, Items[index].amount);
+                GameManager.Instance.SpawnItem(Items[index].itemRef, DropAmount, transform.position, new Quaternion(0, 0, 0, 0));
+
+                Items[index].amount -= DropAmount;
+                view.RPC("RPC_UpdateItem", RpcTarget.Others, id, (new ItemInstanceSender(Items[index])).ToJson());
+                if (Items[index].amount <= 0)
+                {
+                    Items.RemoveAt(index);
+                }
+            }
+            else
+            {
+                GameManager.SpawnItem(Items[index], transform.position, new Quaternion(0, 0, 0, 0));
+                view.RPC("RPC_UpdateItem", RpcTarget.Others, id, (new ItemInstanceSender(Items[index])).ToJson());
+                Items.RemoveAt(index);
+            }
+        }
     }
 
     public void DropItem(ItemInstance item, int amount)
@@ -88,30 +186,24 @@ public class PlayerInventory : MonoBehaviour
             if (Items[index].itemRef.isConsumable)
             {
                 int DropAmount = (int)Mathf.Min(amount, Items[index].amount);
-                GameManager.Instance.SpawnItem(Items[index].itemRef, DropAmount, transform.position, new Quaternion(0, 0, 0, 0));
-
-                Items[index].amount -= DropAmount;
-                if (Items[index].amount <= 0)
-                {
-                    Items.RemoveAt(index);
-                }
+                view.RPC("Master_DropItem", RpcTarget.MasterClient, Items[index].itemID, amount);
             }
             else
             {
-                GameManager.Instance.SpawnItem(Items[index], transform.position, new Quaternion(0, 0, 0, 0));
-                Items.RemoveAt(index);
+                view.RPC("Master_DropItem", RpcTarget.MasterClient, Items[index].itemID, amount);
             }
         }
     }
 
-    public void UseItem(ItemInstance item)
+    // Use Item
+
+    [PunRPC]
+    public void Master_UseItem(int id)
     {
-        if (Items.Contains(item)) { }
-        else return;
-        int index = Items.IndexOf(item);
+        int index = GetItemIndexFromID(id);
         if (Items[index] != null)
         {
-            if (Items[index].itemRef.isConsumable && Items[index].amount>0)
+            if (Items[index].itemRef.isConsumable && Items[index].amount > 0)
             {
                 foreach (Modify mod in Items[index].itemRef.consumeEffect)
                 {
@@ -130,16 +222,82 @@ public class PlayerInventory : MonoBehaviour
                 }
 
                 Items[index].amount -= 1;
+                view.RPC("RPC_UpdateItem", RpcTarget.Others, id, (new ItemInstanceSender(Items[index])).ToJson());
                 if (Items[index].amount <= 0)
                 {
                     Items.RemoveAt(index);
                 }
+            }
+        }
+    }
+
+    public void UseItem(ItemInstance item)
+    {
+        if (Items.Contains(item)) { }
+        else return;
+        int index = Items.IndexOf(item);
+        if (Items[index] != null)
+        {
+            if (Items[index].itemRef.isConsumable && Items[index].amount>0)
+            {
+                view.RPC("Master_UseItem", RpcTarget.MasterClient, item.itemID, (new ItemInstanceSender(Items[index])).ToJson());
+
+                Items[index].amount -= 1;
+                
                 PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateInventory();
             }
         }
     }
 
-    // Local
+    // Add Item
+
+    [PunRPC]
+    public void Master_AddItem(string id)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            foreach (Transform item in Game.g_items.transform)
+            {
+                if ((item.position - transform.position).magnitude < pickUpRange)
+                {
+                    ItemObject itemObject = item.GetComponent<ItemObject>();
+                    ItemInstance itemData = itemObject.Data;
+                    if (item.name == id)
+                    {
+                        AddItem(itemData);
+                        PhotonNetwork.Destroy(item.gameObject);
+                        view.RPC("Client_AddItem", RpcTarget.Others, new ItemInstanceSender(itemData).ToJson());
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    [PunRPC]
+    public void Client_AddItem(string json)
+    {
+        AddItem(new ItemInstance(JsonUtility.FromJson<ItemInstanceSender>(json)));
+    }
+
+    public void AddItem(ItemInstance item)
+    {
+        int index = FindItem(item);
+        if (index >= 0 && item.itemRef.isConsumable)
+        {
+            Items[index].amount += item.amount;
+        }
+        else
+        {
+            Items.Add(new ItemInstance(_itemIndex++, item));
+        }
+        if (view.IsMine)
+        {
+            PlayerUI.UI.GetComponent<PlayerUI>().UpdateInventory();
+        }
+    }
+
+    //---------------------------------------------------------
 
     private Transform FindNearItem()
     {
@@ -215,8 +373,7 @@ public class PlayerInventory : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    AddItem(nearestItem.GetComponent<ItemObject>().Data);
-                    Destroy(nearestItem.gameObject);
+                    view.RPC("Master_AddItem", RpcTarget.MasterClient, nearestItem.name);
                     nearestItem = null;
                 }
             }
@@ -231,48 +388,41 @@ public class PlayerInventory : MonoBehaviour
             {
                 PlayerUI.UI.transform.GetComponent<PlayerUI>().ToggleInventory();
             }
+        }
 
-            timer += Time.deltaTime;
-            atkCooldown -= Time.deltaTime;
+        timer += Time.deltaTime;
+        atkCooldown -= Time.deltaTime;
 
-            if (holdingItem != null && holdingItem.itemRef)
-            {
-                player.swingOffset = holdingItem.itemRef.swingOffset;
-                GetWeaponModel(holdingItem.itemRef.itemID);
-                player.HandItem.gameObject.SetActive(true);
-            }
-            else
-            {
-                player.swingOffset = 0f;
-                GetWeaponModel("");
-                player.HandItem.gameObject.SetActive(false);
-            }
+        if (holdingItem != null && holdingItem.itemRef)
+        {
+            player.swingOffset = holdingItem.itemRef.swingOffset;
+            GetWeaponModel(holdingItem.itemRef.itemID);
+            player.HandItem.gameObject.SetActive(true);
+        }
+        else
+        {
+            player.swingOffset = 0f;
+            GetWeaponModel("");
+            player.HandItem.gameObject.SetActive(false);
         }
     }
 
-    public void Attack()
+    [PunRPC]
+    public void RPC_Attack(Vector3 pos, float look)
     {
         if (holdingItem != null && holdingItem.itemRef)
         {
-            Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-
-            if (atkCooldown <= 0f && (holdingItem.ammo>0 && holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee))
+            if (atkCooldown <= 0f && (holdingItem.ammo > 0 && holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee))
             {
-                player.TriggerRecoil(holdingItem.itemRef.recoil);
-                player.TriggerSwing(holdingItem.itemRef.swing);
-
                 if (holdingItem.itemRef.canShoot)
                 {
-
-                    Vector3 CurrentPos = transform.position;
-
-                    if (weaponMuzzle != null) CurrentPos = weaponMuzzle.transform.position;
+                    Vector3 CurrentPos = pos;
 
                     for (int i = 0; i < holdingItem.itemRef.fireAmount; i++)
                     {
                         GameManager.SummonProjectile(transform.gameObject,
                             CurrentPos,
-                            Quaternion.Euler(0, 0, player.lookDir + UnityEngine.Random.Range(-holdingItem.itemRef.spread, holdingItem.itemRef.spread)),
+                            Quaternion.Euler(0, 0, look + UnityEngine.Random.Range(-holdingItem.itemRef.spread, holdingItem.itemRef.spread)),
                             new ProjectileData(
                                 holdingItem.itemRef.bulletSpeed,
                                 holdingItem.itemRef.damage,
@@ -298,20 +448,57 @@ public class PlayerInventory : MonoBehaviour
 
                 if (holdingItem.itemRef.canMelee)
                 {
-                    Vector3 CurrentPos = transform.position;
+                    Debug.Log("Start Melee");
+
+                    Vector3 CurrentPos = pos;
 
                     if (weaponMuzzle != null) CurrentPos = weaponMuzzle.transform.position;
                     GameManager.SummonAttackArea(
                          CurrentPos,
-                         Quaternion.Euler(0, 0, player.lookDir),
+                         Quaternion.Euler(0, 0, look),
                          new AreaInstance(holdingItem.itemRef.damage, holdingItem.itemRef.hitbox, Game.g_enemies.transform)
                         );
                 }
 
-                FireBullet Attack_Shoot = GetComponent<FireBullet>();
-                if (Attack_Shoot != null)
+                atkCooldown += holdingItem.itemRef.cooldown;
+            }
+
+            if (atkCooldown <= 0f && holdingItem.reloading)
+            {
+                if (player.ConsumeMana(holdingItem.itemRef.reload_manaConsume))
                 {
-                    Attack_Shoot.Shoot(holdingItem.itemRef.damage, holdingItem.itemRef.spread, holdingItem.itemRef.fireAmount);
+                    holdingItem.reloading = false;
+                    holdingItem.ammo = holdingItem.itemRef.clipSize;
+                }
+            }
+        }
+    }
+
+    public void Attack()
+    {
+        if (holdingItem != null && holdingItem.itemRef)
+        {
+            Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+            float angle = Mathf.Atan2(fireDirection.y, fireDirection.x) * Mathf.Rad2Deg;
+
+            if (atkCooldown <= 0f && (holdingItem.ammo>0 && holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee))
+            {
+
+                player.TriggerRecoil(holdingItem.itemRef.recoil);
+                player.TriggerSwing(holdingItem.itemRef.swing);
+
+                Vector3 CurrentPos = transform.position;
+                if (weaponMuzzle != null) CurrentPos = weaponMuzzle.transform.position;
+
+                view.RPC("RPC_Attack", RpcTarget.MasterClient, CurrentPos, angle);
+
+                if (holdingItem.itemRef.canShoot)
+                {
+                    player.ConsumeMana(holdingItem.itemRef.shooting_manaConsume);
+                }
+                else
+                {
+                    player.ConsumeMana(holdingItem.itemRef.mele_manaConsume);
                 }
 
                 atkCooldown += holdingItem.itemRef.cooldown;

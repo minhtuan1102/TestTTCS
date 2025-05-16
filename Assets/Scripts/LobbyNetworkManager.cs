@@ -4,7 +4,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
 public class LobbyNetworkManager :MonoBehaviourPunCallbacks
@@ -68,6 +67,13 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
         
 
     }
+
+    [PunRPC]
+    public void SetClass()
+    {
+
+    }
+
     public override void OnJoinedRoom()
     {
         statusText.text = "Joined " + PhotonNetwork.CurrentRoom.Name;
@@ -84,6 +90,8 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
         UpdatePlayerList();
  
     }
+
+
     public override void OnLeftRoom()
     {
         if (statusText != null)
@@ -144,6 +152,7 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
 
         }
     }
+
     private void UpdatePlayerList()
     {
         // Clear the current player list
@@ -180,6 +189,7 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom(roomName);
 
     }
+
     public void CreateRoom()
     {
         if(string.IsNullOrEmpty(roomNameInput.text) == false)
@@ -190,14 +200,17 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
             PhotonNetwork.CreateRoom("Room " + roomNameInput.text, new RoomOptions() { MaxPlayers = 4, BroadcastPropsChangeToAll = true });
         }
     }
+
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
     }
+
     public void OnStartGamePressed()
     {
         PhotonNetwork.LoadLevel("Game");
     }
+
     public void OnPressBackMenu()
     {
         SceneManager.LoadScene("Start");

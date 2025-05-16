@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using System;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class Enemy : MonoBehaviour
 {
@@ -56,14 +55,13 @@ public class Enemy : MonoBehaviour
 
     private PlayerInventory inventory;
 
-    private Vector3 lastPos;
+    private Vector2 lastPos;
 
     private Collider2D enemy_collider;
     private PhotonView view;
-    void Start()
-    {
-        transform.SetParent(Game.g_enemies.transform);
 
+    void Awake()
+    {
         view = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
@@ -82,6 +80,11 @@ public class Enemy : MonoBehaviour
 
         rb.gravityScale = 0;
         rb.freezeRotation = true;
+    }
+
+    private void Start()
+    {
+        transform.SetParent(Game.g_enemies.transform);
     }
 
     // Function to set the target swing angle dynamically
@@ -111,18 +114,27 @@ public class Enemy : MonoBehaviour
     {
         if (!PhotonNetwork.IsMasterClient)
         {
-            ai_movement.MoveDirection = (new Vector3(transform.position.x, transform.position.y, 0) - lastPos);
-            Debug.Log(ai_movement.MoveDirection.magnitude);
+            Vector3 moveDirection = (rb.position - lastPos);
+            lookAtPos = new Vector3(rb.position.x, rb.position.y, 0) + moveDirection.normalized * 5f;
+            ai_movement.MoveDirection = new Vector3(moveDirection.x, moveDirection.y, 0);
         }
 
-        lastPos = Vector3.Lerp(lastPos, new Vector3(transform.position.x, transform.position.y, 0), 1f);
+        lastPos = Vector3.Lerp(lastPos, new Vector3(transform.position.x, transform.position.y, 0), Time.fixedDeltaTime * 10f);
         Boolean lastMovingState = isMoving;
-        isMoving = (ai_movement.MoveDirection.magnitude > 0.1f);
+        
+        if (PhotonNetwork.IsMasterClient) {
+            isMoving = (ai_movement.MoveDirection.magnitude > 0.1f);
+        } else
+        {
+            isMoving = (ai_movement.MoveDirection.magnitude > 0.01f);
+        }
+
         float forward = 1f;
         if (ai_movement.MoveDirection.x < 0)
         {
             forward = -1f;
         }
+
         if (isMoving)
         {
             if (lastMovingState == false)
@@ -190,7 +202,7 @@ public class Enemy : MonoBehaviour
             targetSwing = 0f;
         }
 
-        Vector3 direction = (transform.position + ai_movement.MoveDirection.normalized * 10) - main_hand.transform.position;
+        Vector3 direction = mousePosition - main_hand.transform.position;
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         lookDir = angle;

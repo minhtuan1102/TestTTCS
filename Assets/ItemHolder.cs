@@ -92,7 +92,7 @@ public class ItemHolder : MonoBehaviour, IDropHandler
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         showImage = transform.Find("Icon").transform.GetComponent<Image>();
     }

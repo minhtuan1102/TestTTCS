@@ -976,7 +976,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7300319063617135439}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2890625
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   MoveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &4224621244631252087
 MonoBehaviour:
@@ -1069,7 +1069,7 @@ MonoBehaviour:
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 30
     ExtrapolateOption: 1
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1

@@ -88,6 +88,7 @@ public class Item : ScriptableObject
         public float reload = 0f;
 
         public GameObject projectile;
+        public string projectilePath = "";
 
         // Other
         public List<MonoBehaviour> options;

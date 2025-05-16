@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
         if (itemRef != null)
         {
 
-            SpawnItem(new ItemInstance(item_Index++, itemRef, itemRef.clipSize, amount), pos, rot);
+            SpawnItem(new ItemInstance(itemRef, itemRef.clipSize, amount), pos, rot);
         }
     }
 
@@ -158,14 +158,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SpawnItem(ItemInstance dat, Vector3 pos, Quaternion rot)
+    public static void SpawnItem(ItemInstance dat, Vector3 pos, Quaternion rot)
     {
         if (dat != null)
         {
             string json = (new ItemInstanceSender(dat)).ToJson();
             Debug.Log(json);
-            object[] data = new object[] { json };
-            PhotonNetwork.InstantiateRoomObject("ItemObject", pos, rot, 1, data);
+            object[] data = new object[] { json, item_Index++ };
+            PhotonNetwork.InstantiateRoomObject("ItemObject", pos, rot, 0, data);
         }
     }
 

@@ -24,16 +24,15 @@ MonoBehaviour:
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
-  effectsModules: []
   isWeapon: 1
   canAttack: 1
-  swing: -30
+  swing: -15
   recoil: 1
-  swingOffset: -15
+  swingOffset: -90
   damage: 25
   cooldown: 0.25
   canMelee: 1
-  hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+  hitbox: {fileID: 3290753383281791754, guid: 21753f86eb4000d46813745bdefabaa5, type: 3}
   mele_manaConsume: 0
   canShoot: 0
   fireAmount: 1
@@ -46,4 +45,5 @@ MonoBehaviour:
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}
+  projectilePath: 
   options: []
