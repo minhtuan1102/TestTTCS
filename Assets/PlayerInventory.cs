@@ -556,6 +556,9 @@ public class PlayerInventory : MonoBehaviour
             {
                 if (holdingItem.itemRef.canShoot)
                 {
+                    player.TriggerRecoil(holdingItem.itemRef.recoil);
+                    player.TriggerSwing(holdingItem.itemRef.swing);
+
                     Vector3 CurrentPos = pos;
 
                     for (int i = 0; i < holdingItem.itemRef.fireAmount; i++)
@@ -588,7 +591,8 @@ public class PlayerInventory : MonoBehaviour
 
                 if (holdingItem.itemRef.canMelee)
                 {
-                    Debug.Log("Start Melee");
+                    player.TriggerRecoil(holdingItem.itemRef.recoil);
+                    player.TriggerSwing(holdingItem.itemRef.swing);
 
                     Vector3 CurrentPos = pos;
 
@@ -621,36 +625,12 @@ public class PlayerInventory : MonoBehaviour
             Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
             float angle = Mathf.Atan2(fireDirection.y, fireDirection.x) * Mathf.Rad2Deg;
 
-            if (atkCooldown <= 0f && (holdingItem.ammo>0 && holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee))
+            if (atkCooldown <= 0f && (holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee))
             {
-
-                player.TriggerRecoil(holdingItem.itemRef.recoil);
-                player.TriggerSwing(holdingItem.itemRef.swing);
-
                 Vector3 CurrentPos = transform.position;
                 if (weaponMuzzle != null) CurrentPos = weaponMuzzle.transform.position;
 
-                view.RPC("RPC_Attack", RpcTarget.MasterClient, CurrentPos, angle);
-
-                if (holdingItem.itemRef.canShoot)
-                {
-                    player.ConsumeMana(holdingItem.itemRef.shooting_manaConsume);
-                }
-                else
-                {
-                    player.ConsumeMana(holdingItem.itemRef.mele_manaConsume);
-                }
-
-                atkCooldown += holdingItem.itemRef.cooldown;
-            }
-
-            if (atkCooldown <= 0f && holdingItem.reloading)
-            {
-                if (player.ConsumeMana(holdingItem.itemRef.reload_manaConsume))
-                {
-                    holdingItem.reloading = false;
-                    holdingItem.ammo = holdingItem.itemRef.clipSize;
-                }
+                view.RPC("RPC_Attack", RpcTarget.All, CurrentPos, angle);
             }
         }
     }
