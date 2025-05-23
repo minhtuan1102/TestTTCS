@@ -179,15 +179,20 @@ public class PlayerInventory : MonoBehaviour
     // Update Item
 
     [PunRPC]
-    public void RPC_UpdateItem(int id, string json)
+    private void RPC_UpdateItem(int id, string json)
     {
         ItemInstance data = new ItemInstance(JsonUtility.FromJson<ItemInstanceSender>(json));
+       // Debug.Log(data.itemID);
+       // Debug.Log(data.amount);
         int index = GetItemIndexFromID((int)id);
+
+        //Debug.Log(index);
 
         Items[index].amount = data.amount;
 
         if (Items[index].amount <= 0)
         {
+            Items[index].storage.gameObject.SetActive(false);
             Items.RemoveAt(index);
         }
     }
@@ -195,7 +200,7 @@ public class PlayerInventory : MonoBehaviour
     // Drop Item
 
     [PunRPC]
-    public void Master_DropItem(int id, int amount)
+    private void Master_DropItem(int id, int amount)
     {
         int index = GetItemIndexFromID (id);
         if (Items[index] != null)
@@ -215,6 +220,7 @@ public class PlayerInventory : MonoBehaviour
             else
             {
                 GameManager.SpawnItem(Items[index], transform.position, new Quaternion(0, 0, 0, 0));
+                Items[index].amount = 0;
                 view.RPC("RPC_UpdateItem", RpcTarget.Others, id, (new ItemInstanceSender(Items[index])).ToJson());
                 Items.RemoveAt(index);
             }
@@ -231,11 +237,12 @@ public class PlayerInventory : MonoBehaviour
             if (Items[index].itemRef.isConsumable)
             {
                 int DropAmount = (int)Mathf.Min(amount, Items[index].amount);
-                view.RPC("Master_DropItem", RpcTarget.MasterClient, Items[index].itemID, amount);
+                Items[index].amount -= DropAmount;
+                view.RPC("Master_DropItem", RpcTarget.MasterClient, Items[index].itemID, DropAmount);
             }
             else
             {
-                view.RPC("Master_DropItem", RpcTarget.MasterClient, Items[index].itemID, amount);
+                view.RPC("Master_DropItem", RpcTarget.MasterClient, Items[index].itemID, Items[index].amount);
             }
         }
     }
@@ -243,7 +250,7 @@ public class PlayerInventory : MonoBehaviour
     // Use Item
 
     [PunRPC]
-    public void Master_UseItem(int id)
+    private void Master_UseItem(int id)
     {
         int index = GetItemIndexFromID(id);
         if (Items[index] != null)
@@ -285,7 +292,7 @@ public class PlayerInventory : MonoBehaviour
         {
             if (Items[index].itemRef.isConsumable && Items[index].amount>0)
             {
-                view.RPC("Master_UseItem", RpcTarget.MasterClient, item.itemID, (new ItemInstanceSender(Items[index])).ToJson());
+                view.RPC("Master_UseItem", RpcTarget.MasterClient, item.itemID);
 
                 Items[index].amount -= 1;
                 
@@ -297,7 +304,7 @@ public class PlayerInventory : MonoBehaviour
     // Add Item
 
     [PunRPC]
-    public void Master_AddItem(string id)
+    private void Master_AddItem(string id)
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -320,7 +327,7 @@ public class PlayerInventory : MonoBehaviour
     }
 
     [PunRPC]
-    public void Client_AddItem(string json)
+    private void Client_AddItem(string json)
     {
         AddItem(new ItemInstance(JsonUtility.FromJson<ItemInstanceSender>(json)));
     }
@@ -541,7 +548,7 @@ public class PlayerInventory : MonoBehaviour
     }
 
     [PunRPC]
-    public void RPC_Attack(Vector3 pos, float look)
+    private void RPC_Attack(Vector3 pos, float look)
     {
         if (holdingItem != null && holdingItem.itemRef)
         {

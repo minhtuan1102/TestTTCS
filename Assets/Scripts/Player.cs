@@ -117,6 +117,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+
+
         health = GetComponent<HealthSystem>();
         view = GetComponent<PhotonView>();
 
@@ -160,6 +162,7 @@ public class Player : MonoBehaviour
 
         if (view.IsMine)
         {
+            transform.name = PhotonNetwork.LocalPlayer.NickName;
             Debug.Log(PhotonNetwork.NickName);
 
             Transform UI = GameObject.Find("PlayerUI").transform;
