@@ -107,6 +107,14 @@ public class Player : MonoBehaviour
 
     private HealthSystem health;
 
+    public PlayerClass _class;
+
+    public Transform model_Hat;
+    public Transform model_Hair;
+    public Transform model_Body;
+    public Transform model_Pant_L;
+    public Transform model_Pant_R;
+
     void Start()
     {
         health = GetComponent<HealthSystem>();
@@ -114,6 +122,7 @@ public class Player : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
+
         player_collider = GetComponent<BoxCollider2D>();
         inventory = GetComponent<PlayerInventory>();
 
@@ -125,6 +134,13 @@ public class Player : MonoBehaviour
 
         leg_L = model.Find("LegL").transform;
         leg_R = model.Find("LegR").transform;
+
+        model_Pant_L = leg_L;
+        model_Pant_R = leg_R;
+
+        model_Body = model.Find("Body").transform;
+        model_Hat = model.Find("Head").Find("Hat").transform;
+        model_Hair = model.Find("Head").Find("Hair").transform;
 
         Tilemap tilemap = GetComponent<Tilemap>();
         if (tilemap != null)

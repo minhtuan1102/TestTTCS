@@ -24,6 +24,15 @@ public class PlayerClass : ScriptableObject
 
     [Space]
 
+    [Header("Model")]
+
+    public Sprite Head;
+    public Sprite Hair;
+    public Sprite Body;
+    public Sprite Leg;
+
+    [Space]
+
     [Header("Starter Inventory")]
 
     public List<ItemInstance> loadout;

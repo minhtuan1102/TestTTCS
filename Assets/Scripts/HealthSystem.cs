@@ -11,7 +11,7 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private bool _destroyOnDeath = true;
 
     [Header("Armor Settings")]
-    [SerializeField] private float _maxArmor = 100;
+    [SerializeField] private float _maxArmor = 0f;
     [SerializeField] private float _currentArmor = 0f;
     public float CurrentArmor => _currentArmor;
 
@@ -37,6 +37,9 @@ public class HealthSystem : MonoBehaviour
     private bool isDamaged = false;
     private float timer = 0f;
     private float duration = 0.2f;
+
+    private float armorCD = 0f;
+    private float armorGain = 0f;
 
     private void Awake()
     {
@@ -71,12 +74,21 @@ public class HealthSystem : MonoBehaviour
                 isDamaged = false;
             }
         }
+
+        if (_currentArmor < MaxArmor)
+        {
+            if (armorCD >= 0f)
+            {
+                armorCD -= 2f;
+                AddArmor((int)armorGain);
+            }
+        }
     }
 
     public void TakeDamage(int damage)
     {
         float damageDeal = (float)damage;
-
+        armorCD = -10f;
         if (_currentArmor > 0)
         {
             if (_currentArmor > damageDeal)
@@ -97,6 +109,11 @@ public class HealthSystem : MonoBehaviour
 
         _currentHealth = Mathf.Max(0, _currentHealth - damageDeal);
         UpdateStats();
+
+    }
+
+    public void calculateMaxArmor(List<ItemInstance> items)
+    {
 
     }
 

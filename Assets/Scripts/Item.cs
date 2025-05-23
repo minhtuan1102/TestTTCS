@@ -18,6 +18,19 @@ public enum ItemType
     QuestItem
 }
 
+public enum ArmorModelType
+{
+    Texture,
+    Model
+}
+
+public enum ArmorType
+{
+    Head,
+    Body,
+    Pant
+}
+
 [System.Serializable]
 public enum ValueType
 {
@@ -45,6 +58,18 @@ public class Item : ScriptableObject
 
     public float weight = 0f;
     public int value = 0;
+
+    // Wearable Stats
+
+    public ArmorModelType armor_modelType;
+    public GameObject armor_Model;
+    public Sprite armor_Sprite;
+
+    public bool hide_Hair = false;
+
+    public int wearSlot = 0;
+    public float armor = 0f;
+    public float armor_regen = 0f;
 
     // Consuming Stats
 

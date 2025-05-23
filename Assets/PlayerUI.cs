@@ -108,7 +108,11 @@ public class PlayerUI : MonoBehaviour
         {
             Transform bar = AP_UI.transform.Find("Hider");
             RectTransform hider = bar.GetComponent<RectTransform>();
-            float scale = Mathf.Clamp01((float)health.CurrentArmor / (float)health.MaxArmor);
+            float scale = 0f;
+            if (health.MaxArmor > 0)
+            {
+                Mathf.Clamp01((float)health.CurrentArmor / (float)health.MaxArmor);
+            }
             hider.localScale = new Vector3(1f - scale, 1, 1);
 
             Transform display = AP_UI.transform.Find("Text");
@@ -261,6 +265,11 @@ public class PlayerUI : MonoBehaviour
                if (holder != null) holder.GetComponent<ItemHolder>().Unequip(true);
             }
         }
+    }
+
+    public void ToggleArmor(ItemHolder holder)
+    {
+        Inventory.Wearing(holder.item, holder.SlotType);
     }
 
     public void UseItem(ItemHolder holder)

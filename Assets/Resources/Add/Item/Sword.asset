@@ -17,14 +17,16 @@ MonoBehaviour:
   _itemType: 0
   icon: {fileID: -3944723101261518829, guid: aa654356a0196e5428b1f67d63080965, type: 3}
   itemID: Sword
-  itemDescription: 
+  itemDescription: Medium damage with wide AOE range
   model: {fileID: 6994442434215011227, guid: 64eb925160bd0ae458585fa97940ce16, type: 3}
   weight: 1
   value: 0
+  wearSlot: 0
+  armor: 0
+  armor_regen: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
-  effectsModules: []
   isWeapon: 1
   canAttack: 1
   swing: -180
@@ -46,4 +48,5 @@ MonoBehaviour:
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}
+  projectilePath: 
   options: []

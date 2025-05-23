@@ -21,6 +21,9 @@ MonoBehaviour:
   model: {fileID: 1281956672415766616, guid: d0d61e8b8d0a6c8468fc71fbf74d2e9a, type: 3}
   weight: 0
   value: 0
+  wearSlot: 0
+  armor: 0
+  armor_regen: 0
   isConsumable: 1
   effectDescription: Heal HP and MP
   consumeEffect:
@@ -45,7 +48,7 @@ MonoBehaviour:
   swingOffset: 0
   damage: 1
   cooldown: 1
-  canMelee: 1
+  canMelee: 0
   hitbox: {fileID: 0}
   mele_manaConsume: 0
   canShoot: 0
@@ -59,4 +62,5 @@ MonoBehaviour:
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}
+  projectilePath: 
   options: []

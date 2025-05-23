@@ -53,6 +53,8 @@ MonoBehaviour:
   - Master_UseItem
   - UpdateMana
   - Master_Attack
+  - RPC_Attack
+  - RPC_Wearing
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

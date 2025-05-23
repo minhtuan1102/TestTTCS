@@ -7,7 +7,7 @@ public class ItemHolder : MonoBehaviour, IDropHandler
 {
 
     [SerializeReference] public string ItemType;
-    [SerializeReference] public string SlotType;
+    [SerializeReference] public int SlotType = 0;
 
     public ItemInstance item = null;
 
@@ -19,6 +19,16 @@ public class ItemHolder : MonoBehaviour, IDropHandler
         {
             if (DragPayload.dragType == ItemType)
             {
+                if (ItemType == "Armor")
+                {
+                    if (DragPayload.ItemData.itemRef.wearSlot != SlotType)
+                    {
+                        DragPayload.ItemData = null;
+                        DragPayload.icon = null;
+                        DragPayload.dragType = "";
+                        return;
+                    }
+                }
 
                 if (item != null)
                 {
@@ -43,7 +53,11 @@ public class ItemHolder : MonoBehaviour, IDropHandler
                 showImage.sprite = item.itemRef.icon;
                 showImage.enabled = true;
 
-                if (item.itemRef.itemType != "Armor")
+                if (item.itemRef.itemType == "Armor")
+                {
+                    PlayerUI.UI.GetComponent<PlayerUI>().ToggleArmor(this);
+                }
+                else
                 {
                     PlayerUI.UI.GetComponent<PlayerUI>().UpdateLoadOut();
                 }
@@ -78,6 +92,9 @@ public class ItemHolder : MonoBehaviour, IDropHandler
                 if (canUpdate)
                 {
                     PlayerUI.UI.GetComponent<PlayerUI>().UpdateLoadOut();
+                } else
+                {
+                    PlayerUI.UI.GetComponent<PlayerUI>().ToggleArmor(this);
                 }
             }
         }

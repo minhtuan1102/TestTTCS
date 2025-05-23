@@ -17,10 +17,13 @@ MonoBehaviour:
   _itemType: 0
   icon: {fileID: 5151419490667711304, guid: 131d21822916c474ea4ad833b248a6b4, type: 3}
   itemID: Knife
-  itemDescription: 
+  itemDescription: Fast light damage attack
   model: {fileID: 5688164655049515616, guid: 8f575885ef349bc458f0cb8e057c9a9f, type: 3}
   weight: 1
   value: 0
+  wearSlot: 0
+  armor: 0
+  armor_regen: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []

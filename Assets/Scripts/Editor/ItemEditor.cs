@@ -17,10 +17,13 @@ public class ItemEditor : Editor
     bool showAttackAnimStats = true;
     bool showMeleeStats = true;
     bool showShootingStats = true;
+    bool showWearableStats = true;
 
     private Type[] availableScripts;
     private int selectedIndex = 0;
     private string[] scriptNames;
+
+    private ArmorType armorSlot = ArmorType.Head;
 
     void OnEnable()
     {
@@ -57,6 +60,47 @@ public class ItemEditor : Editor
         }
 
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+        // Stats Group
+        if (item._itemType == ItemType.Armor)
+        {
+            showWearableStats = EditorGUILayout.Foldout(showWearableStats, "Wearable Stats");
+            if (showWearableStats)
+            {
+                EditorGUI.indentLevel++;
+                item.armor_modelType = (ArmorModelType)EditorGUILayout.EnumPopup("Model Type", item.armor_modelType);
+                if (item.armor_modelType == ArmorModelType.Texture) {
+                    item.armor_Sprite = (Sprite)EditorGUILayout.ObjectField("Sprite", item.armor_Sprite, typeof(Sprite), false);
+                } else
+                {
+                    item.armor_Model = (GameObject)EditorGUILayout.ObjectField("Model", item.armor_Model, typeof(GameObject), false);
+                }
+                EditorGUILayout.Space();
+
+                armorSlot = (ArmorType)EditorGUILayout.EnumPopup("Slot", armorSlot);
+                switch (armorSlot)
+                {
+                    case ArmorType.Body:
+                        item.wearSlot = 1;
+                        break;
+                    case ArmorType.Pant:
+                        item.wearSlot = 2;
+                        break;
+                    default:
+                        item.wearSlot = 0;
+                        armorSlot = ArmorType.Head;
+                        break;
+                }
+                if (item.wearSlot == 0)
+                {
+                    item.hide_Hair = EditorGUILayout.Toggle("Hide Hair", item.hide_Hair);
+                } 
+                EditorGUILayout.Space();
+                item.armor = EditorGUILayout.FloatField("Armor", item.armor);
+                item.armor_regen = EditorGUILayout.FloatField("Regen", item.armor_regen);
+                EditorGUI.indentLevel--;
+            }
+        }
 
         // Stats Group
         showStats = EditorGUILayout.Foldout(showStats, "Stats");

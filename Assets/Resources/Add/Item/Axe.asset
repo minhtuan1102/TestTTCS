@@ -17,20 +17,22 @@ MonoBehaviour:
   _itemType: 0
   icon: {fileID: -4261161032346744600, guid: ae4798baef4e3074fa90dd622e6809d9, type: 3}
   itemID: Axe
-  itemDescription: 
+  itemDescription: A heavy axe that deal lot of damage and knockback.
   model: {fileID: 2449047747417268984, guid: 10bf109700fa49148aae9af36dad4a91, type: 3}
   weight: 0
   value: 0
+  wearSlot: 0
+  armor: 0
+  armor_regen: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
-  effectsModules: []
   isWeapon: 1
   canAttack: 1
   swing: -240
   recoil: 0
   swingOffset: 0
-  damage: 75
+  damage: 50
   cooldown: 2
   canMelee: 1
   hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
@@ -46,5 +48,6 @@ MonoBehaviour:
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}
+  projectilePath: 
   options:
   - {fileID: 0}

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Linq.Expressions;
+using Spine;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] public ItemInstance holdingItem;
 
     [SerializeField] public List<ItemInstance> Armor;
+    [SerializeField] public List<string> currentWearing;
 
     private Transform nearestItem;
 
@@ -37,6 +40,12 @@ public class PlayerInventory : MonoBehaviour
     {
         player = GetComponent<Player>();
         view = GetComponent<PhotonView>();
+
+        for (int i=0; i<3; i++)
+        {
+            Armor.Add(null);
+            currentWearing.Add("");
+        }
 
         for  (int i=0; i<Items.Count; i++)
         {
@@ -78,6 +87,42 @@ public class PlayerInventory : MonoBehaviour
         } else
         {
             view.RPC("RPC_Holding", RpcTarget.Others, -1);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_Wearing(int itemIndex, int slot)
+    {
+        if (itemIndex == -1)
+        {
+            if (Armor[slot] != null)
+            {
+                Armor[slot] = null;
+            }
+        }
+        else
+        {
+            ItemInstance item = GetItemInstanceFromID(itemIndex);
+            if (item != null)
+            {
+                Armor[slot] = item;
+            }
+        }
+    }
+
+    public void Wearing(ItemInstance item, int slot)
+    {
+        Armor[slot] = item;
+        if (Armor[slot] != null)
+        {
+            if (Items.Contains(item))
+            {
+                view.RPC("RPC_Wearing", RpcTarget.Others, item.itemID, slot);
+            }
+        }
+        else
+        {
+            view.RPC("RPC_Wearing", RpcTarget.Others, -1, slot);
         }
     }
 
@@ -345,6 +390,82 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    private void GetWearModel(ItemInstance wearing, Transform model, Sprite oldSprite)
+    {
+        foreach (Transform item in model)
+        {
+            Destroy(item.gameObject);
+        }
+
+        if (wearing != null)
+        {
+            if (wearing.itemRef.armor_modelType == ArmorModelType.Model)
+            {
+                GameObject wp_model = Instantiate(wearing.itemRef.armor_Model, model);
+                wp_model.transform.localPosition = new Vector3(0, 0, 0);
+
+                Vector3 scale = wp_model.transform.localScale;
+                scale.x = Mathf.Abs(scale.x);
+                scale.y = Mathf.Abs(scale.y);
+                wp_model.transform.localScale = scale;
+            }
+            else
+            {
+                model.GetComponent<SpriteRenderer>().sprite = wearing.itemRef.armor_Sprite;
+            }
+        } else
+        {
+            model.GetComponent<SpriteRenderer>().sprite = oldSprite;
+        }
+    }
+
+    void GetArmorModel(int slot, string model)
+    {
+        if (currentWearing[slot] != model)
+        {
+            currentWearing[slot] = model;
+
+            if (Armor[slot] != null && Armor[slot].itemRef != null)
+            {
+
+                switch (slot)
+                {
+                    case 0:
+                        player.model_Hair.gameObject.SetActive(!Armor[slot].itemRef.hide_Hair);
+                        GetWearModel(Armor[slot], player.model_Hat, null);
+                        break;
+                    case 1:
+                        GetWearModel(Armor[slot], player.model_Body, player._class.Body);
+                        break;
+                    case 2:
+                        GetWearModel(Armor[slot], player.model_Pant_L, player._class.Leg);
+                        GetWearModel(Armor[slot], player.model_Pant_R, player._class.Leg);
+                        break;
+                    default:
+                        break;
+                }
+            } else
+            {
+                switch (slot)
+                {
+                    case 0:
+                        player.model_Hair.gameObject.SetActive(true);
+                        GetWearModel(null, player.model_Hat, null);
+                        break;
+                    case 1:
+                        GetWearModel(null, player.model_Body, player._class.Body);
+                        break;
+                    case 2:
+                        GetWearModel(null, player.model_Pant_L, player._class.Leg);
+                        GetWearModel(null, player.model_Pant_R, player._class.Leg);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
     void Update()
     {
         if (view.IsMine)
@@ -404,6 +525,18 @@ public class PlayerInventory : MonoBehaviour
             player.swingOffset = 0f;
             GetWeaponModel("");
             player.HandItem.gameObject.SetActive(false);
+        }
+
+        for (int i=0; i<3; i++)
+        {
+            if (Armor[i] != null && Armor[i].itemRef)
+            {
+                GetArmorModel(i, Armor[i].itemRef.itemID);
+            }
+            else
+            {
+                GetArmorModel(i, "");
+            }
         }
     }
 

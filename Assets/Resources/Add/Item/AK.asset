@@ -17,15 +17,16 @@ MonoBehaviour:
   _itemType: 0
   icon: {fileID: 1585974835397443309, guid: 052c33c8b90327941b09e72c52fff60f, type: 3}
   itemID: AK
-  itemDescription: 
+  itemDescription: An AK-Rifle with good range and damage.
   model: {fileID: 6430733109803348369, guid: 6ffcabb08b99904419f4ba3610239a5e, type: 3}
   weight: 0
   value: 0
+  wearSlot: 0
+  armor: 0
+  armor_regen: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
-  effectsModules:
-  - {fileID: 0}
   isWeapon: 1
   canAttack: 1
   swing: 0
@@ -45,7 +46,8 @@ MonoBehaviour:
   shooting_manaConsume: 0
   reload_manaConsume: 20
   clipSize: 30
-  reload: 3
+  reload: 2.5
   projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
+  projectilePath: 
   options:
   - {fileID: 0}
