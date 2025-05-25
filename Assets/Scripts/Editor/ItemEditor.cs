@@ -23,8 +23,6 @@ public class ItemEditor : Editor
     private int selectedIndex = 0;
     private string[] scriptNames;
 
-    private ArmorType armorSlot = ArmorType.Head;
-
     void OnEnable()
     {
         availableScripts = AppDomain.CurrentDomain.GetAssemblies()
@@ -77,8 +75,8 @@ public class ItemEditor : Editor
                 }
                 EditorGUILayout.Space();
 
-                armorSlot = (ArmorType)EditorGUILayout.EnumPopup("Slot", armorSlot);
-                switch (armorSlot)
+                item.armorType = (ArmorType)EditorGUILayout.EnumPopup("Slot", item.armorType);
+                switch (item.armorType)
                 {
                     case ArmorType.Body:
                         item.wearSlot = 1;
@@ -88,7 +86,7 @@ public class ItemEditor : Editor
                         break;
                     default:
                         item.wearSlot = 0;
-                        armorSlot = ArmorType.Head;
+                        item.armorType = ArmorType.Head;
                         break;
                 }
                 if (item.wearSlot == 0)
@@ -96,8 +94,14 @@ public class ItemEditor : Editor
                     item.hide_Hair = EditorGUILayout.Toggle("Hide Hair", item.hide_Hair);
                 } 
                 EditorGUILayout.Space();
+
                 item.armor = EditorGUILayout.FloatField("Armor", item.armor);
                 item.armor_regen = EditorGUILayout.FloatField("Regen", item.armor_regen);
+
+                EditorGUILayout.Space();
+
+                item.defense = EditorGUILayout.FloatField("Defense", item.defense);
+
                 EditorGUI.indentLevel--;
             }
         }

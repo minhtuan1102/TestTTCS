@@ -15,6 +15,7 @@ MonoBehaviour:
   id: 0
   class_Name: Survival
   des: 
+  icon: {fileID: -7905857065169784764, guid: cb449c9091e1cb64799f6979c93c090b, type: 3}
   health: 100
   mana: 100
   armor: 0

@@ -100,6 +100,7 @@ public class ItemInstance
         this.storage = other.storage;
         this.itemRef = other.itemRef;
         this.ammo = other.ammo;
+        this.reloading = other.reloading;
 
         if (other.attachments != null) this.attachments = new List<string>(other.attachments);
     }
@@ -112,6 +113,8 @@ public class ItemInstance
         this.storage = other.storage;
         this.itemRef = other.itemRef;
         this.ammo = other.ammo;
+        this.reloading = other.reloading;
+
 
         if (other.attachments != null) this.attachments = new List<string>(other.attachments);
     }
@@ -130,7 +133,7 @@ public class ItemInstance
 
         this.itemRef = Game.GetItemDataFromName(other.itemRef);
         this.ammo = other.ammo;
-
+        this.reloading = other.reloading;
         this.attachments = new List<string>(other.attachments);
     }
 
@@ -139,6 +142,11 @@ public class ItemInstance
         this.amount = amount;
         this.ammo = ammo;
         this.itemRef = itemRef;
+
+        if (this.ammo == 0)
+        {
+            this.reloading = true;
+        }
     }
 
     public string ToJson()

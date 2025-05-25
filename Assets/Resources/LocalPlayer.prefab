@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 7
   m_Sprite: {fileID: -1071523155210718792, guid: 12d276b6eb16b2a4e85f334e79864319, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -166,7 +166,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 3
   m_Sprite: {fileID: 1730826577450134818, guid: ca865881edbe3924490d41083bdccc87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -404,7 +404,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 8
   m_Sprite: {fileID: 6291076074326483787, guid: 36dbf44e961ef0745a607155094e9de7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -522,7 +522,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 9
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -878,23 +878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f95cfdaa0379724b9e1973cadd8cfdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Items:
-  - itemID: 0
-    amount: 1
-    holder: {fileID: 0}
-    storage: {fileID: 0}
-    itemRef: {fileID: 11400000, guid: 628a7a75a56f05444bbf91b4e7dcf056, type: 2}
-    ammo: 0
-    reloading: 0
-    attachments: []
-  - itemID: 0
-    amount: 10
-    holder: {fileID: 0}
-    storage: {fileID: 0}
-    itemRef: {fileID: 11400000, guid: 2393bdcf2cd69744d81ba71a7bc443cc, type: 2}
-    ammo: 0
-    reloading: 0
-    attachments: []
+  Items: []
   pickUpRange: 2
   holdingItem:
     itemID: 0
@@ -921,9 +905,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _destroyOnDeath: 1
-  _maxArmor: 0
+  _maxArmor: 100
   _currentArmor: 0
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _defense: 0
 --- !u!114 &2118433274465155552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1213,7 +1198,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 8
+  m_SortingOrder: 10
   m_Sprite: {fileID: -8529268355625852236, guid: 36c3b74a4a3fa3145aaa1e97cd553919, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1592,7 +1577,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 3
   m_Sprite: {fileID: 1730826577450134818, guid: ca865881edbe3924490d41083bdccc87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -111,7 +111,7 @@ public class PlayerUI : MonoBehaviour
             float scale = 0f;
             if (health.MaxArmor > 0)
             {
-                Mathf.Clamp01((float)health.CurrentArmor / (float)health.MaxArmor);
+                scale = Mathf.Clamp01((float)health.CurrentArmor / (float)health.MaxArmor);
             }
             hider.localScale = new Vector3(1f - scale, 1, 1);
 

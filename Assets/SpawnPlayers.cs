@@ -1,5 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
+using Spine;
 
 public class SpawnPlayers : MonoBehaviour
 {
@@ -13,9 +14,13 @@ public class SpawnPlayers : MonoBehaviour
     private void Start()
     {
         Vector2 randomPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-        GameObject newPlayer = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
-        newPlayer.transform.SetParent(GameObject.Find("Players").transform);
 
-        newPlayer.SetActive(true);
+        object classIndex = null;
+        PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("playerAvatar", out classIndex);
+        int _class = 0;
+        if (classIndex != null) _class = (int)classIndex;
+
+        object[] data = new object[] { _class };
+        GameObject newPlayer = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity, 0, data);
     }
 }

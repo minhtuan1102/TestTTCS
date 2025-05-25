@@ -55,6 +55,7 @@ MonoBehaviour:
   - Master_Attack
   - RPC_Attack
   - RPC_Wearing
+  - RPC_ChangeAvatar
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -24,6 +24,7 @@ public class PlayerInventory : MonoBehaviour
     private string currentWeaponModel = "";
     private Transform weaponMuzzle;
 
+    private HealthSystem healthSystem;
     private Player player;
     private PhotonView view;
 
@@ -40,6 +41,7 @@ public class PlayerInventory : MonoBehaviour
     {
         player = GetComponent<Player>();
         view = GetComponent<PhotonView>();
+        healthSystem = GetComponent<HealthSystem>();
 
         for (int i=0; i<3; i++)
         {
@@ -108,6 +110,7 @@ public class PlayerInventory : MonoBehaviour
                 Armor[slot] = item;
             }
         }
+        healthSystem.calculateArmor(Armor);
     }
 
     public void Wearing(ItemInstance item, int slot)
@@ -124,6 +127,7 @@ public class PlayerInventory : MonoBehaviour
         {
             view.RPC("RPC_Wearing", RpcTarget.Others, -1, slot);
         }
+        healthSystem.calculateArmor(Armor);
     }
 
     // Game function
@@ -279,6 +283,11 @@ public class PlayerInventory : MonoBehaviour
                 {
                     Items.RemoveAt(index);
                 }
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateInventory();
+                }
             }
         }
     }
@@ -294,9 +303,11 @@ public class PlayerInventory : MonoBehaviour
             {
                 view.RPC("Master_UseItem", RpcTarget.MasterClient, item.itemID);
 
-                Items[index].amount -= 1;
-                
-                PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateInventory();
+                if (!PhotonNetwork.IsMasterClient)
+                {
+                    Items[index].amount -= 1;
+                    PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateInventory();
+                }
             }
         }
     }
@@ -345,7 +356,10 @@ public class PlayerInventory : MonoBehaviour
         }
         if (view.IsMine)
         {
-            PlayerUI.UI.GetComponent<PlayerUI>().UpdateInventory();
+            if (PlayerUI.UI != null)
+            {
+                PlayerUI.UI.GetComponent<PlayerUI>().UpdateInventory();
+            }
         }
     }
 

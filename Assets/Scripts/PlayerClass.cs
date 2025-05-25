@@ -12,6 +12,10 @@ public class PlayerClass : ScriptableObject
 
     [Space]
 
+    public Sprite icon;
+
+    [Space]
+
     [Header("Stats")]
 
     public float health = 100f;
@@ -21,6 +25,10 @@ public class PlayerClass : ScriptableObject
     [Space]
 
     public float speed = 5f;
+    public float maxSpeed = 5f;
+
+    [Space]
+    public float range = 5f;
 
     [Space]
 

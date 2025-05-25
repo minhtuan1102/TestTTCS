@@ -168,8 +168,9 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
         {
             RoomEntryUI newPlayerEntry = Instantiate(_playerEntryUIPrefab);
             newPlayerEntry.transform.SetParent(_playerListParent,false);
+            newPlayerEntry.transform.SetAsFirstSibling();
             newPlayerEntry.setName(player.Value.NickName);
-
+            newPlayerEntry.gameObject.name = player.Value.NickName;
             _playerList.Add(newPlayerEntry);
 
         }

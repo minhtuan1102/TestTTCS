@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 {
     // Basic stats
 
@@ -115,12 +115,37 @@ public class Player : MonoBehaviour
     public Transform model_Pant_L;
     public Transform model_Pant_R;
 
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        _class = Game.player_Class[(int)PhotonView.Get(this).InstantiationData[0]];
+
+        Debug.Log("Loaded Class " + _class.name);
+
+        inventory = GetComponent<PlayerInventory>();
+        health = GetComponent<HealthSystem>();
+
+        foreach (ItemInstance item in _class.loadout)
+        {
+            inventory.AddItem(item);
+        }
+
+        moveSpeed = _class.speed;
+        maxSpeed = _class.maxSpeed;
+
+        range = _class.range;
+
+        MaxMana = _class.mana;
+        _currentMana = MaxMana;
+
+        health.SetMaxHealth((int)_class.health);
+        health.SetHealth((int)_class.health);
+    }
+
     void Start()
     {
-
-
-        health = GetComponent<HealthSystem>();
         view = GetComponent<PhotonView>();
+
+        gameObject.name = view.Owner.NickName;
 
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
@@ -178,13 +203,16 @@ public class Player : MonoBehaviour
             UICam.Find("PlayerTrackerCam").GetComponent<FollowObject>().TargetObject = gameObject;
 
             Game.localPlayer = transform.gameObject;
-        } else
+        }
+        else
         {
             onTopDisplay.Find("HealthBar").gameObject.SetActive(true);
         }
 
         onTopDisplay.Find("NameTag").GetComponent<TextMeshProUGUI>().SetText(view.Owner.NickName);
         onTopDisplay.Find("NameTag").gameObject.SetActive(true);
+
+        health.calculateArmor(inventory.Armor);
     }
 
     void Update()

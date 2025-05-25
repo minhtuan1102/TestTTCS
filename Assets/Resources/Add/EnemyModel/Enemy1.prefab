@@ -967,6 +967,7 @@ MonoBehaviour:
   _maxArmor: 100
   _currentArmor: 25
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _defense: 0
 --- !u!195 &5591387431694869499
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -67,9 +67,11 @@ public class Item : ScriptableObject
 
     public bool hide_Hair = false;
 
+    public ArmorType armorType = ArmorType.Head;
     public int wearSlot = 0;
     public float armor = 0f;
     public float armor_regen = 0f;
+    public float defense = 0f;
 
     // Consuming Stats
 

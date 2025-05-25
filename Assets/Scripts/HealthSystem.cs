@@ -30,6 +30,8 @@ public class HealthSystem : MonoBehaviour
     public float MaxHealth => _maxHealth;
     public float MaxArmor => _maxArmor;
 
+    public float _defense = 0f;
+
     private PhotonView view;
 
     // Effect
@@ -39,7 +41,7 @@ public class HealthSystem : MonoBehaviour
     private float duration = 0.2f;
 
     private float armorCD = 0f;
-    private float armorGain = 0f;
+    private float _armorGain = 0f;
 
     private void Awake()
     {
@@ -56,9 +58,11 @@ public class HealthSystem : MonoBehaviour
 
     private void Update()
     {
+        armorCD += Time.fixedDeltaTime;
+
         if (isDamaged)
         {
-            timer += Time.deltaTime;
+            timer += Time.fixedDeltaTime;
             float t = timer / duration;
 
             for (int i = 0; i < renderedPart.Count; i++)
@@ -75,19 +79,19 @@ public class HealthSystem : MonoBehaviour
             }
         }
 
-        if (_currentArmor < MaxArmor)
+        if (_currentArmor < _maxArmor)
         {
             if (armorCD >= 0f)
             {
                 armorCD -= 2f;
-                AddArmor((int)armorGain);
+                AddArmor((int)_armorGain);
             }
         }
     }
 
     public void TakeDamage(int damage)
     {
-        float damageDeal = (float)damage;
+        float damageDeal = Mathf.Max(1, (float)damage - _defense);
         armorCD = -10f;
         if (_currentArmor > 0)
         {
@@ -112,9 +116,26 @@ public class HealthSystem : MonoBehaviour
 
     }
 
-    public void calculateMaxArmor(List<ItemInstance> items)
+    public void calculateArmor(List<ItemInstance> items)
     {
+        float maxArmor = 50f;
+        float regenArmor = 0f;
+        float defense = 0f;
+        foreach (ItemInstance item in items)
+        {
+            if (item != null && item.itemRef != null)
+            {
+                maxArmor += item.itemRef.armor;
+                regenArmor += item.itemRef.armor_regen;
+                defense += item.itemRef.defense;
+            }
+        }
 
+        _maxArmor = maxArmor;
+        _defense = defense;
+        _armorGain = regenArmor;
+
+        _currentArmor = Mathf.Min(_currentArmor, _maxArmor);
     }
 
     public void Heal(int amount)
@@ -146,6 +167,13 @@ public class HealthSystem : MonoBehaviour
         _currentHealth = amount;
         UpdateStats();
     }
+
+    public void SetMaxHealth(int amount)
+    {
+        _maxHealth = amount;
+        SetHealth(amount);
+    }
+
 
     public void SetArmor(int amount)
     {
