@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1f069031c7aed4390c8a02ed9de8d8, type: 3}
-  m_Name: Zombie
+  m_Name: Zombie Speedy
   m_EditorClassIdentifier: 
-  ID: Zombie
+  ID: Zombie Speedy
   Point: 100
-  Health: 100
-  Speed: 3
-  Damage: 10
+  Health: 75
+  Speed: 5
+  Damage: 5
   Range: 2
-  Attack_Rate: 5
+  Attack_Rate: 2
   Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
   WaitTime: 1
-  EnemyModel: {fileID: 7300319063617135439, guid: 595a830a1ce035446846d471aef83638, type: 3}
+  EnemyModel: {fileID: 7300319063617135439, guid: 361758570b6d1df4799f2ab11dc20cb6, type: 3}
   Detection_Range: 20
   Detection_Rate: 0.2
   Chasing_Time_Threshold: 1
-  path: Add/EnemyModel/Enemy1
+  path: Add/EnemyModel/Enemy2

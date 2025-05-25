@@ -72,6 +72,7 @@ public class PlayerEntryUI : MonoBehaviourPunCallbacks
     // Cập nhật thông tin người chơi khi có sự thay đổi thuộc tính
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
+        Debug.Log("UPdate");
         if (player == targetPlayer)
         {
             UpdatePlayerItem(targetPlayer);
@@ -79,7 +80,7 @@ public class PlayerEntryUI : MonoBehaviourPunCallbacks
     }
 
     // Cập nhật avatar người chơi
-    void UpdatePlayerItem(Photon.Realtime.Player targetPlayer)
+    private void UpdatePlayerItem(Photon.Realtime.Player targetPlayer)
     {
         if (targetPlayer.CustomProperties.ContainsKey("playerAvatar"))
         {

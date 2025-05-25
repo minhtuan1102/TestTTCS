@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
 {
     public EnemyData data;
     private Vector3 moveDirrection;
@@ -60,6 +60,11 @@ public class Enemy : MonoBehaviour
     private Collider2D enemy_collider;
     private PhotonView view;
 
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        data = Game.GetEnemyData((string)PhotonView.Get(this).InstantiationData[0]);
+    }
+
     void Awake()
     {
         view = GetComponent<PhotonView>();
@@ -85,6 +90,11 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         transform.SetParent(Game.g_enemies.transform);
+
+        health.SetMaxHealth((int)data.Health);
+        health.SetHealth((int)data.Health);
+
+        GetComponent<EnemyAI>().enabled = true;
     }
 
     // Function to set the target swing angle dynamically

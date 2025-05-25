@@ -172,7 +172,7 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
             newPlayerEntry.setName(player.Value.NickName);
             newPlayerEntry.gameObject.name = player.Value.NickName;
             _playerList.Add(newPlayerEntry);
-
+            newPlayerEntry.transform.GetComponent<PlayerEntryUI>().SetPlayerInfo(player.Value);
         }
     }
     private void ShowWindow(bool isRoomList)

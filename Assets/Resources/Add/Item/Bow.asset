@@ -21,9 +21,15 @@ MonoBehaviour:
   model: {fileID: 7896927009034923347, guid: f0fda1a8beafa8a4abd954e253748fac, type: 3}
   weight: 3
   value: 0
+  armor_modelType: 0
+  armor_Model: {fileID: 0}
+  armor_Sprite: {fileID: 0}
+  hide_Hair: 0
+  armorType: 0
   wearSlot: 0
   armor: 0
   armor_regen: 0
+  defense: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
@@ -47,6 +53,6 @@ MonoBehaviour:
   reload_manaConsume: 5
   clipSize: 1
   reload: 2
-  projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
+  projectile: {fileID: 7422263984037488310, guid: 4864d61feeb715a42a8d396f8089c772, type: 3}
   projectilePath: 
   options: []

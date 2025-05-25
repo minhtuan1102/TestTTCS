@@ -75,17 +75,19 @@ public class Game : MonoBehaviour
         return playerClass;
     }
 
-    public static EnemyData GetEnemyData(string name)
+    public static EnemyData GetEnemyData(string enemyID)
     {
+        EnemyData enemyData = null;
         foreach (var obj in Game.enemies)
         {
-            if (name == obj.name)
+            if (enemyID == obj.ID)
             {
-                return obj;
+                enemyData = obj;
+                break;
             }
         }
 
-        return Game.enemies[0];
+        return enemyData;
     } 
 
     public static Item GetItemDataFromName(string name)

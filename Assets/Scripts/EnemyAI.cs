@@ -41,9 +41,6 @@ public class EnemyAI : MonoBehaviour
         photonView = GetComponent<PhotonView>();
         rb = GetComponent<Rigidbody2D>();
 
-        enemy = GetComponent<Enemy>();
-        data = enemy.data;
-
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -53,6 +50,9 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        enemy = GetComponent<Enemy>();
+        data = enemy.data;
+
         agent.speed = data.Speed;
     }
 
