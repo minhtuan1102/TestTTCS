@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|c:\\users\\nitro\\ideaprojects\\test\\newttcs\\testttcs\\assets\\scripts\\startcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\startcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|c:\\users\\nitro\\ideaprojects\\test\\newttcs\\testttcs\\assets\\shootingsound\\readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\shootingsound\\readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\assets\\scripts\\optionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|c:\\users\\nitro\\ideaprojects\\test\\newttcs\\testttcs\\assets\\scripts\\optionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\optionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\assets\\scripts\\startcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\startcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\assets\\levelloader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -41,11 +45,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 162,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "RoomEntryUI.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\Scripts\\RoomEntryUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\RoomEntryUI.cs",
@@ -62,7 +66,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "ReadMe.txt",
+              "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\ShootingSound\\ReadMe.txt",
+              "RelativeDocumentMoniker": "Assets\\ShootingSound\\ReadMe.txt",
+              "ToolTip": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\ShootingSound\\ReadMe.txt",
+              "RelativeToolTip": "Assets\\ShootingSound\\ReadMe.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2025-05-25T09:58:17.807Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "LevelLoader.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\LevelLoader.cs",
               "RelativeDocumentMoniker": "Assets\\LevelLoader.cs",
@@ -70,8 +87,7 @@
               "RelativeToolTip": "Assets\\LevelLoader.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T08:24:34.246Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-11T08:24:34.246Z"
             },
             {
               "$type": "Document",
@@ -81,14 +97,14 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\OptionsController.cs",
               "ToolTip": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\Scripts\\OptionsController.cs",
               "RelativeToolTip": "Assets\\Scripts\\OptionsController.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAuwGsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAAYwDQAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-24T15:43:30.533Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "StartController.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\Scripts\\StartController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\StartController.cs",
@@ -96,12 +112,11 @@
               "RelativeToolTip": "Assets\\Scripts\\StartController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-11T06:56:47.834Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-11T06:56:47.834Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "PlayerEntryUI.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\Scripts\\PlayerEntryUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PlayerEntryUI.cs",
@@ -113,7 +128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "CharacterSwitcher.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\Scripts\\CharacterSwitcher.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\CharacterSwitcher.cs",
@@ -125,7 +140,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "S2USettings.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\TestTTCS\\Assets\\Spriter2UnityDX\\Editor\\S2USettings.cs",
               "RelativeDocumentMoniker": "..\\..\\TestTTCS\\Assets\\Spriter2UnityDX\\Editor\\S2USettings.cs",
@@ -137,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "LobbyNetworkManager.cs",
               "DocumentMoniker": "C:\\Users\\NITRO\\IdeaProjects\\Test\\NewTTCS\\TestTTCS\\Assets\\Scripts\\LobbyNetworkManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\LobbyNetworkManager.cs",
