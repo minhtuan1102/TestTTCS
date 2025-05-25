@@ -75,6 +75,9 @@ public class Item : ScriptableObject
 
     // Consuming Stats
 
+    // Pickup Stats
+    public bool useOnDelete = false;
+
     public bool isConsumable = false;
     public string effectDescription = "";
 
@@ -94,7 +97,8 @@ public class Item : ScriptableObject
 
         public float damage = 0f;
         public float cooldown = 0f;
-        
+        public float knockBack = 0f;
+        public float userKnockBack = 0f;
 
         // Melee
         public bool canMelee = false;

@@ -756,7 +756,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 12
   m_Sprite: {fileID: -7905857065169784764, guid: cb449c9091e1cb64799f6979c93c090b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -860,7 +860,9 @@ MonoBehaviour:
   swingRecoil: -180
   mousePosition: {x: 0, y: 0, z: 0}
   onTopDisplay: {fileID: 5644817541168042359}
+  health: {fileID: 0}
   _class: {fileID: 11400000, guid: 42e818aa9e8333b4dab76806405eae2d, type: 2}
+  model_Head: {fileID: 0}
   model_Hat: {fileID: 0}
   model_Hair: {fileID: 0}
   model_Body: {fileID: 0}

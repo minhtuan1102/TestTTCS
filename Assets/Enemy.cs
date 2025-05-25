@@ -1,6 +1,10 @@
-﻿using Photon.Pun;
+﻿using NUnit.Framework.Internal;
+using Photon.Pun;
 using System;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
 {
@@ -224,6 +228,16 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
         {
             if (health.CurrentHealth <= 0)
             {
+
+                if (data.Loot.Count > 0)
+                {
+                    int randomLoot = Random.Range(0, data.Loot.Count);
+                    foreach (ItemInstance item in data.Loot[randomLoot].Items)
+                    {
+                        GameManager.SpawnItem(item, transform.position, transform.rotation);
+                    }
+                }
+
                 PhotonNetwork.Destroy(gameObject);
             }
         }

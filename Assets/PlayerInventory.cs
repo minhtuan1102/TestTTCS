@@ -3,6 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 using System.Linq.Expressions;
 using Spine;
+using System;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -254,39 +255,64 @@ public class PlayerInventory : MonoBehaviour
     // Use Item
 
     [PunRPC]
-    private void Master_UseItem(int id)
+    private void Master_UseItem(int id, Vector3 pos, float look)
     {
         int index = GetItemIndexFromID(id);
         if (Items[index] != null)
         {
             if (Items[index].itemRef.isConsumable && Items[index].amount > 0)
             {
-                foreach (Modify mod in Items[index].itemRef.consumeEffect)
-                {
-                    switch (mod.modify_ID)
-                    {
-                        case "HP":
-                            HealthSystem health = player.GetComponent<HealthSystem>();
-                            health.Heal(mod.modify_IntValue);
-                            break;
-                        case "MP":
-                            player.GainMana((float)mod.modify_IntValue);
-                            break;
-                        default:
-                            break;
-                    }
-                }
 
-                Items[index].amount -= 1;
-                view.RPC("RPC_UpdateItem", RpcTarget.Others, id, (new ItemInstanceSender(Items[index])).ToJson());
-                if (Items[index].amount <= 0)
+                if (Items[index].itemRef.canShoot)
                 {
-                    Items.RemoveAt(index);
+                    Vector3 CurrentPos = pos;
+
+                    for (int i = 0; i < Items[index].itemRef.fireAmount; i++)
+                    {
+                        GameManager.SummonProjectile(transform.gameObject,
+                            CurrentPos,
+                            Quaternion.Euler(0, 0, look + UnityEngine.Random.Range(-Items[index].itemRef.spread, Items[index].itemRef.spread)),
+                            new ProjectileData(
+                                Items[index].itemRef.bulletSpeed,
+                                Items[index].itemRef.damage,
+                                Items[index].itemRef.bulletLifetime
+                            ),
+                            Items[index].itemRef.projectile
+                        );
+                    }
                 }
 
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateInventory();
+                    foreach (Modify mod in Items[index].itemRef.consumeEffect)
+                    {
+                        switch (mod.modify_ID)
+                        {
+                            case "HP":
+                                player.health.Heal(mod.modify_IntValue);
+                                break;
+                            case "MP":
+                                player.GainMana((float)mod.modify_IntValue);
+                                break;
+                            case "AP":
+                                player.health.AddArmor((int)mod.modify_IntValue);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    Items[index].amount -= 1;
+                    view.RPC("RPC_UpdateItem", RpcTarget.Others, id, (new ItemInstanceSender(Items[index])).ToJson());
+                    if (Items[index].amount <= 0)
+                    {
+                        Items.RemoveAt(index);
+                    }
+
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateInventory();
+                    }
                 }
             }
         }
@@ -301,7 +327,12 @@ public class PlayerInventory : MonoBehaviour
         {
             if (Items[index].itemRef.isConsumable && Items[index].amount>0)
             {
-                view.RPC("Master_UseItem", RpcTarget.MasterClient, item.itemID);
+                Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+                float angle = Mathf.Atan2(fireDirection.y, fireDirection.x) * Mathf.Rad2Deg;
+
+                Vector3 CurrentPos = transform.position;
+
+                view.RPC("Master_UseItem", RpcTarget.All, item.itemID, CurrentPos, angle);
 
                 if (!PhotonNetwork.IsMasterClient)
                 {
@@ -327,9 +358,36 @@ public class PlayerInventory : MonoBehaviour
                     ItemInstance itemData = itemObject.Data;
                     if (item.name == id)
                     {
-                        AddItem(itemData);
-                        PhotonNetwork.Destroy(item.gameObject);
-                        view.RPC("Client_AddItem", RpcTarget.Others, new ItemInstanceSender(itemData).ToJson());
+                        if (itemData.itemRef.useOnDelete)
+                        {
+                            int amount = itemData.amount;
+                            foreach (Modify mod in itemData.itemRef.consumeEffect)
+                            {
+                                switch (mod.modify_ID)
+                                {
+                                    case "HP":
+                                        player.health.Heal(mod.modify_IntValue * amount);
+                                        break;
+                                    case "MP":
+                                        player.GainMana((float)mod.modify_IntValue * amount);
+                                        break;
+                                    case "AP":
+                                        player.health.AddArmor((int)mod.modify_IntValue * amount);
+                                        break;
+                                    case "Cash":
+                                        player.cash += (int)mod.modify_IntValue * amount;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            PhotonNetwork.Destroy(item.gameObject);
+                        } else
+                        {
+                            AddItem(itemData);
+                            PhotonNetwork.Destroy(item.gameObject);
+                            view.RPC("Client_AddItem", RpcTarget.Others, new ItemInstanceSender(itemData).ToJson());
+                        }
                         return;
                     }
                 }
@@ -405,6 +463,8 @@ public class PlayerInventory : MonoBehaviour
 
                 GameObject wp_model = Instantiate(holdingItem.itemRef.model, player.HandItem.transform);
                 wp_model.name = "Model";
+
+                wp_model.GetComponent<SpriteRenderer>().sortingOrder = player.HandItem.parent.GetComponent<SpriteRenderer>().sortingOrder - 1;
 
                 weaponMuzzle = wp_model.transform.Find("Muzzle");
             }

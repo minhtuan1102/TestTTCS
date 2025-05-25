@@ -150,7 +150,7 @@ public class PlayerUI : MonoBehaviour
 
             TextMeshProUGUI reserve = ItemStats_UI.transform.Find("Amount").Find("Text").GetComponent<TextMeshProUGUI>();
 
-            if (usingWP.itemRef.canShoot)
+            if (usingWP.itemRef.canShoot && !usingWP.itemRef.isConsumable)
             {
                 reserve.SetText($"{usingWP.ammo}/{usingWP.itemRef.clipSize}");
                 scale.localScale = new Vector3(Mathf.Lerp(scale.localScale.x, (float)usingWP.ammo/(float)usingWP.itemRef.clipSize, Time.deltaTime * 10), 1f, 1f);

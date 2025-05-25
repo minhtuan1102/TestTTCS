@@ -125,7 +125,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: grenade
     originalName: 
-    pivot: {x: 0.56, y: -0.3783784}
+    pivot: {x: 0.48528662, y: 0.50505674}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 

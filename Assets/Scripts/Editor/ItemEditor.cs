@@ -126,15 +126,17 @@ public class ItemEditor : Editor
             item.isConsumable = EditorGUILayout.Toggle("Is Consumable", item.isConsumable);
             if (item.isConsumable )
             {
+                item.useOnDelete = EditorGUILayout.Toggle("UseOnDelete", item.useOnDelete);
+                EditorGUILayout.Space();
+                
                 item.effectDescription = EditorGUILayout.TextField("Effect Description", item.effectDescription);
-
                 EditorGUILayout.Space();
 
                 EditorGUILayout.LabelField("Effect", EditorStyles.boldLabel);
 
                 EditorGUILayout.Space();
-                    EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-                    EditorGUILayout.Space();
+                EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+                EditorGUILayout.Space();
 
                 EditorGUI.indentLevel++;
 

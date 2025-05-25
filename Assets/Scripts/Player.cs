@@ -105,10 +105,11 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
     public Transform onTopDisplay;
     private UnityEngine.UI.Slider healthBar;
 
-    private HealthSystem health;
+    public HealthSystem health;
 
     public PlayerClass _class;
 
+    public Transform model_Head;
     public Transform model_Hat;
     public Transform model_Hair;
     public Transform model_Body;
@@ -166,8 +167,16 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
         model_Pant_R = leg_R;
 
         model_Body = model.Find("Body").transform;
-        model_Hat = model.Find("Head").Find("Hat").transform;
-        model_Hair = model.Find("Head").Find("Hair").transform;
+        model_Head = model.Find("Head").transform;
+        model_Hat = model_Head.Find("Hat").transform;
+        model_Hair = model_Head.Find("Hair").transform;
+
+        model_Pant_L.GetComponent<SpriteRenderer>().sprite = _class.Leg;
+        model_Pant_R.GetComponent<SpriteRenderer>().sprite = _class.Leg;
+
+        model_Body.GetComponent<SpriteRenderer>().sprite = _class.Body;
+        model_Head.GetComponent<SpriteRenderer>().sprite = _class.Head;
+        model_Hair.GetComponent<SpriteRenderer>().sprite = _class.Hair;
 
         Tilemap tilemap = GetComponent<Tilemap>();
         if (tilemap != null)

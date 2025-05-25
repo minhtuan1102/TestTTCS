@@ -26,3 +26,13 @@ MonoBehaviour:
   Detection_Rate: 0.2
   Chasing_Time_Threshold: 1
   path: Add/EnemyModel/Enemy3
+  Loot:
+  - Items:
+    - itemID: 1
+      amount: 0
+      holder: {fileID: 0}
+      storage: {fileID: 0}
+      itemRef: {fileID: 11400000, guid: 5b116e820fc78ff4dbbcc8605efe029f, type: 2}
+      ammo: 3
+      reloading: 0
+      attachments: []
