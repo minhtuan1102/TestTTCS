@@ -48,7 +48,7 @@ public class ItemInstanceButton : MonoBehaviour, IBeginDragHandler, IDragHandler
 
             // Display Amount
             GameObject amountDisplay = transform.Find("Amount").gameObject;
-            if (itemReference.itemType != "Weapon")
+            if (item.amount > 1)
             {
                 amountDisplay.transform.GetComponent<TextMeshProUGUI>().SetText("x" + item.amount.ToString());
                 amountDisplay.SetActive(true);

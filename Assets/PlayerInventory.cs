@@ -76,6 +76,7 @@ public class PlayerInventory : MonoBehaviour
                 holdingItem = item;
             }
         }
+        healthSystem.calculateArmor(Armor, holdingItem);
     }
 
     public void Holding(ItemInstance item)
@@ -91,6 +92,7 @@ public class PlayerInventory : MonoBehaviour
         {
             view.RPC("RPC_Holding", RpcTarget.Others, -1);
         }
+        healthSystem.calculateArmor(Armor, holdingItem);
     }
 
     [PunRPC]
@@ -111,7 +113,7 @@ public class PlayerInventory : MonoBehaviour
                 Armor[slot] = item;
             }
         }
-        healthSystem.calculateArmor(Armor);
+        healthSystem.calculateArmor(Armor, holdingItem);
     }
 
     public void Wearing(ItemInstance item, int slot)
@@ -128,7 +130,7 @@ public class PlayerInventory : MonoBehaviour
         {
             view.RPC("RPC_Wearing", RpcTarget.Others, -1, slot);
         }
-        healthSystem.calculateArmor(Armor);
+        healthSystem.calculateArmor(Armor, holdingItem);
     }
 
     // Game function
@@ -275,7 +277,9 @@ public class PlayerInventory : MonoBehaviour
                             new ProjectileData(
                                 Items[index].itemRef.bulletSpeed,
                                 Items[index].itemRef.damage,
-                                Items[index].itemRef.bulletLifetime
+                                Items[index].itemRef.knockBack,
+                                Items[index].itemRef.bulletLifetime,
+                                holdingItem.itemRef.effects
                             ),
                             Items[index].itemRef.projectile
                         );
@@ -382,6 +386,8 @@ public class PlayerInventory : MonoBehaviour
                                 }
                             }
                             PhotonNetwork.Destroy(item.gameObject);
+                            healthSystem.UpdateStats();
+                            player.UpdateCash(player.cash);
                         } else
                         {
                             AddItem(itemData);
@@ -626,7 +632,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (holdingItem != null && holdingItem.itemRef)
         {
-            if (atkCooldown <= 0f && (holdingItem.ammo > 0 && holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee))
+            if (atkCooldown <= 0f && (holdingItem.ammo > 0 && holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee) && holdingItem.amount>0)
             {
                 if (holdingItem.itemRef.canShoot)
                 {
@@ -643,12 +649,15 @@ public class PlayerInventory : MonoBehaviour
                             new ProjectileData(
                                 holdingItem.itemRef.bulletSpeed,
                                 holdingItem.itemRef.damage,
-                                holdingItem.itemRef.bulletLifetime
+                                holdingItem.itemRef.knockBack,
+                                holdingItem.itemRef.bulletLifetime,
+                                holdingItem.itemRef.effects
                             ),
                             holdingItem.itemRef.projectile
                         );
                     }
 
+                    holdingItem.amount -= 1;
                     holdingItem.ammo = (holdingItem.ammo > 0) ? holdingItem.ammo - 1 : 0;
                     player.ConsumeMana(holdingItem.itemRef.shooting_manaConsume);
 
@@ -674,11 +683,24 @@ public class PlayerInventory : MonoBehaviour
                     GameManager.SummonAttackArea(
                          CurrentPos,
                          Quaternion.Euler(0, 0, look),
-                         new AreaInstance(holdingItem.itemRef.damage, holdingItem.itemRef.hitbox, Game.g_enemies.transform)
+                         new AreaInstance(
+                             holdingItem.itemRef.damage,
+                             holdingItem.itemRef.knockBack,
+                             holdingItem.itemRef.effects,
+                             holdingItem.itemRef.hitbox, 
+                             Game.g_enemies.transform
+                             )
                         );
                 }
 
                 atkCooldown += holdingItem.itemRef.cooldown;
+            }
+
+            if (holdingItem.amount == 0)
+            {
+                int index = GetItemIndexFromID(holdingItem.itemID);
+                view.RPC("RPC_UpdateItem", RpcTarget.Others, holdingItem.itemID, (new ItemInstanceSender(Items[index])).ToJson());
+                Items.RemoveAt(index);
             }
 
             if (atkCooldown <= 0f && holdingItem.reloading)
@@ -699,7 +721,7 @@ public class PlayerInventory : MonoBehaviour
             Vector2 fireDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
             float angle = Mathf.Atan2(fireDirection.y, fireDirection.x) * Mathf.Rad2Deg;
 
-            if (atkCooldown <= 0f && (holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee))
+            if (atkCooldown <= 0f && (holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee) && holdingItem.amount>0)
             {
                 Vector3 CurrentPos = transform.position;
                 if (weaponMuzzle != null) CurrentPos = weaponMuzzle.transform.position;

@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using NUnit.Framework.Interfaces;
+using System.Diagnostics;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -21,6 +23,15 @@ public class AreaAttack : MonoBehaviour
         enemyLayer = (1 << data.group.gameObject.layer);
     }
 
+    public void Knockback(Rigidbody2D rb, float kb)
+    {
+        if (rb == null) return;
+        Vector2 direction = (rb.position - new Vector2(transform.position.x, transform.position.y)).normalized;
+        rb.linearVelocity = Vector2.zero;
+
+        rb.AddForce(direction * kb, ForceMode2D.Impulse);
+    }
+
     public void Attack()
     {
         ContactFilter2D filter = new ContactFilter2D();
@@ -37,6 +48,19 @@ public class AreaAttack : MonoBehaviour
                 HealthSystem health = results[i].GetComponent<HealthSystem>();
 
                 health.TakeDamage((int)data.damage);
+
+                EnemyAI enemyAI = results[i].GetComponent<EnemyAI>();
+                if (enemyAI != null)
+                {
+                    enemyAI.Stunned(1f);
+                }
+
+                Knockback(results[i].GetComponent<Rigidbody2D>(), data.kb);
+
+                foreach (DamageEffect effect in data.effects.ToList<DamageEffect>())
+                {
+                    health.addEffect(effect);
+                }
             }
         }
 

@@ -8,6 +8,9 @@ using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
 {
+    public bool canAnimate = true;
+    public bool canMove = true;
+
     public EnemyData data;
     private Vector3 moveDirrection;
 
@@ -17,7 +20,7 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
 
     private HealthSystem health;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private Vector2 movement;
     public Vector3 lookAtPos;
 
@@ -93,12 +96,16 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         transform.SetParent(Game.g_enemies.transform);
 
         health.SetMaxHealth((int)data.Health);
         health.SetHealth((int)data.Health);
 
-        GetComponent<EnemyAI>().enabled = true;
+        if (canMove)
+        {
+            GetComponent<EnemyAI>().enabled = true;
+        }
     }
 
     // Function to set the target swing angle dynamically
@@ -133,96 +140,102 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
             ai_movement.MoveDirection = new Vector3(moveDirection.x, moveDirection.y, 0);
         }
 
-        lastPos = Vector3.Lerp(lastPos, new Vector3(transform.position.x, transform.position.y, 0), Time.fixedDeltaTime * 10f);
-        Boolean lastMovingState = isMoving;
-        
-        if (PhotonNetwork.IsMasterClient) {
-            isMoving = (ai_movement.MoveDirection.magnitude > 0.1f);
-        } else
+        if (canAnimate)
         {
-            isMoving = (ai_movement.MoveDirection.magnitude > 0.01f);
-        }
+            lastPos = Vector3.Lerp(lastPos, new Vector3(transform.position.x, transform.position.y, 0), Time.fixedDeltaTime * 10f);
+            Boolean lastMovingState = isMoving;
 
-        float forward = 1f;
-        if (ai_movement.MoveDirection.x < 0)
-        {
-            forward = -1f;
-        }
-
-        if (isMoving)
-        {
-            if (lastMovingState == false)
+            if (PhotonNetwork.IsMasterClient)
             {
-                legProgresion = 0f;
-                body_swing = 0f;
+                isMoving = (ai_movement.MoveDirection.magnitude > 0.1f);
+            }
+            else
+            {
+                isMoving = (ai_movement.MoveDirection.magnitude > 0.01f);
             }
 
-            legProgresion += ai_movement.MoveDirection.magnitude * forward * inverse * 0.2f;
-            body_swing = 0.05f * Mathf.Sin(legProgresion);
-            leg_L_swing = Mathf.MoveTowards(leg_L_swing, 60 * Mathf.Cos(legProgresion), Time.fixedDeltaTime * 1000);
-            leg_R_swing = Mathf.MoveTowards(leg_R_swing, 60 * Mathf.Cos(legProgresion + Mathf.PI), Time.fixedDeltaTime * 1000);
+            float forward = 1f;
+            if (ai_movement.MoveDirection.x < 0)
+            {
+                forward = -1f;
+            }
+
+            if (isMoving)
+            {
+                if (lastMovingState == false)
+                {
+                    legProgresion = 0f;
+                    body_swing = 0f;
+                }
+
+                legProgresion += ai_movement.MoveDirection.magnitude * forward * inverse * 0.2f;
+                body_swing = 0.05f * Mathf.Sin(legProgresion);
+                leg_L_swing = Mathf.MoveTowards(leg_L_swing, 60 * Mathf.Cos(legProgresion), Time.fixedDeltaTime * 1000);
+                leg_R_swing = Mathf.MoveTowards(leg_R_swing, 60 * Mathf.Cos(legProgresion + Mathf.PI), Time.fixedDeltaTime * 1000);
+            }
+            else
+            {
+                body_swing = Mathf.MoveTowards(body_swing, 0, Time.fixedDeltaTime * 100);
+                leg_L_swing = Mathf.MoveTowards(leg_L_swing, 0, Time.fixedDeltaTime * 250);
+                leg_R_swing = Mathf.MoveTowards(leg_R_swing, 0, Time.fixedDeltaTime * 250);
+            }
+
+            Quaternion legLRotation = Quaternion.Euler(
+                new Vector3(0, 0, leg_L_swing)
+                );
+            leg_L.localRotation = legLRotation;
+
+            Quaternion legRRotation = Quaternion.Euler(
+                new Vector3(0, 0, leg_R_swing)
+                );
+            leg_R.localRotation = legRRotation;
+
+            model.localPosition = new Vector3(0, body_swing, 0);
+
+            // Update Rendering
+            Vector3 mousePosition = lookAtPos;
+            Vector3 localScale = main_hand.transform.localScale;
+
+            Vector3 scale = model.localScale;
+
+            if (mousePosition.x > transform.position.x)
+            {
+                scale.x = Math.Abs(scale.x);
+                inverse = 1f;
+                localScale.y = Mathf.Abs(localScale.y);
+            }
+            else
+            {
+                scale.x = -Math.Abs(scale.x);
+                inverse = -1f;
+                localScale.y = -Mathf.Abs(localScale.y);
+            }
+
+            model.localScale = scale;
+
+            main_hand.transform.localScale = localScale;
+
+            // Hand movement
+
+            // Smoothly interpolate recoil
+            recoilOffset = Mathf.SmoothDamp(recoilOffset, 0f, ref recoilVelocity, recoilRecoverySpeed * Time.deltaTime);
+            currentSwing = Mathf.MoveTowards(currentSwing, targetSwing, swingSpeed * Time.deltaTime);
+
+            // If we reached the target swing angle, stop swinging and reset to 0
+            if (currentSwing == targetSwing)
+            {
+                targetSwing = 0f;
+            }
+
+            Vector3 direction = mousePosition - main_hand.transform.position;
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            lookDir = angle;
+            // Hand Update
+            main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
+            main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
+
         }
-        else
-        {
-            body_swing = Mathf.MoveTowards(body_swing, 0, Time.fixedDeltaTime * 100);
-            leg_L_swing = Mathf.MoveTowards(leg_L_swing, 0, Time.fixedDeltaTime * 250);
-            leg_R_swing = Mathf.MoveTowards(leg_R_swing, 0, Time.fixedDeltaTime * 250);
-        }
-
-        Quaternion legLRotation = Quaternion.Euler(
-            new Vector3(0, 0, leg_L_swing)
-            );
-        leg_L.localRotation = legLRotation;
-
-        Quaternion legRRotation = Quaternion.Euler(
-            new Vector3(0, 0, leg_R_swing)
-            );
-        leg_R.localRotation = legRRotation;
-
-        model.localPosition = new Vector3(0, body_swing, 0);
-
-        // Update Rendering
-        Vector3 mousePosition = lookAtPos;
-        Vector3 localScale = main_hand.transform.localScale;
-
-        Vector3 scale = model.localScale;
-
-        if (mousePosition.x > transform.position.x)
-        {
-            scale.x = Math.Abs(scale.x);
-            inverse = 1f;
-            localScale.y = Mathf.Abs(localScale.y);
-        }
-        else
-        {
-            scale.x = -Math.Abs(scale.x);
-            inverse = -1f;
-            localScale.y = -Mathf.Abs(localScale.y);
-        }
-
-        model.localScale = scale;
-
-        main_hand.transform.localScale = localScale;
-
-        // Hand movement
-
-        // Smoothly interpolate recoil
-        recoilOffset = Mathf.SmoothDamp(recoilOffset, 0f, ref recoilVelocity, recoilRecoverySpeed * Time.deltaTime);
-        currentSwing = Mathf.MoveTowards(currentSwing, targetSwing, swingSpeed * Time.deltaTime);
-
-        // If we reached the target swing angle, stop swinging and reset to 0
-        if (currentSwing == targetSwing)
-        {
-            targetSwing = 0f;
-        }
-
-        Vector3 direction = mousePosition - main_hand.transform.position;
-
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        lookDir = angle;
-        // Hand Update
-        main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
-        main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
 
         if (PhotonNetwork.IsMasterClient)
         {

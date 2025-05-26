@@ -1,6 +1,64 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+
+[System.Serializable]
+public class DamageEffect
+{
+    public bool _show = false;
+    public float timer = 0f;
+    public float tick = 1f;
+    public float lifeTime = 0f;
+
+    public string id = "";
+    public int power = 1;
+    public bool canStack = false;
+    public bool canOveride = false;
+
+    public List<Modify> effects = new List<Modify>();
+
+    public DamageEffect(float lifeTime, float tick, List<Modify> effects)
+    {
+        this.lifeTime = lifeTime;
+        this.tick = tick;
+        this.effects = new List<Modify>();
+        timer = 0f;
+        foreach (Modify item in effects)
+        {
+            Modify modify = new Modify();
+            modify.modify_BoolValue = item.modify_BoolValue;
+            modify.modify_FloatValue = item.modify_FloatValue;
+            modify.modify_IntValue = item.modify_IntValue;
+            modify.modify_StringValue = item.modify_StringValue;
+            modify.modify_Des = item.modify_Des;
+            modify.modify_ID = item.modify_ID;
+
+            effects.Add(modify);
+        }
+    }
+
+    public DamageEffect(DamageEffect effect)
+    {
+        this.lifeTime = effect.lifeTime;
+        this.tick = effect.tick;
+        this.effects = new List<Modify>();
+        timer = 0f;
+        foreach (Modify item in effect.effects)
+        {
+            Modify modify = new Modify();
+            modify.modify_BoolValue = item.modify_BoolValue;
+            modify.modify_FloatValue = item.modify_FloatValue;
+            modify.modify_IntValue = item.modify_IntValue;
+            modify.modify_StringValue = item.modify_StringValue;
+            modify.modify_Des = item.modify_Des;
+            modify.modify_ID = item.modify_ID;
+
+            effects.Add(modify);
+        }
+    }
+}
+
 
 [System.Serializable]
 public class AttackScript
@@ -16,6 +74,13 @@ public enum ItemType
     Armor,
     Consumable,
     QuestItem
+}
+
+[System.Serializable]
+public enum WeaponType
+{
+    Melee,
+    Shooting
 }
 
 public enum ArmorModelType
@@ -98,7 +163,13 @@ public class Item : ScriptableObject
         public float damage = 0f;
         public float cooldown = 0f;
         public float knockBack = 0f;
+        public float knockBack_Duration = 1f;
         public float userKnockBack = 0f;
+        public float userKnockBack_Duration = 1f;
+        public int durability = 100;
+        public WeaponType weaponType;
+
+        public List<DamageEffect> effects = new List<DamageEffect>(); 
 
         // Melee
         public bool canMelee = false;

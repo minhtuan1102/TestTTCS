@@ -22,6 +22,9 @@ public class EnemyData : ScriptableObject
     [SerializeField] public float Damage = 10f;
     [SerializeField] public float Range = 5f;
     [SerializeField] public float Attack_Rate = 1f;
+    [SerializeField] public float Attack_KB = 0f;
+
+    [SerializeField] public List<DamageEffect> Attack_Effect = new List<DamageEffect>();
 
     [SerializeField] public GameObject Attack_Hitbox;
 
