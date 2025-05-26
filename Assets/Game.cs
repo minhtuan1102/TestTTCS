@@ -20,6 +20,8 @@ public class Game : MonoBehaviour
     public static GameObject ItemObjectSample;
     public static GameObject AreaAtkSample;
 
+    public static PlayerClass[] player_Class;
+
     public static GameObject prefab;
 
     public static GameObject localPlayer;
@@ -28,6 +30,8 @@ public class Game : MonoBehaviour
     {
         if (Instance == null)
         {
+            Instance = this;
+
             g_enemies = GameObject.Find("Enemies");
             g_items = GameObject.Find("Items");
             g_players = GameObject.Find("Players");
@@ -36,10 +40,9 @@ public class Game : MonoBehaviour
             ItemObjectSample = Resources.Load<GameObject>("Add/ItemObject");
             AreaAtkSample = Resources.Load<GameObject>("Add/AreaAttack");
 
-            Instance = this;
-
             Game.items = Resources.LoadAll<Item>("Add/Item");
             Game.enemies = Resources.LoadAll<EnemyData>("Add/Enemy");
+            Game.player_Class = Resources.LoadAll<PlayerClass>("Add/PlayerClass");
 
             foreach (var obj in Game.enemies)
             {
@@ -58,17 +61,33 @@ public class Game : MonoBehaviour
         
     }
 
-    public static EnemyData GetEnemyData(string name)
+    public static PlayerClass GetClassFromName(string name)
     {
+        PlayerClass playerClass = null;
+        foreach (PlayerClass item in player_Class)
+        {
+            if (item.name == name)
+            {
+                playerClass = item;
+                break;
+            }
+        }
+        return playerClass;
+    }
+
+    public static EnemyData GetEnemyData(string enemyID)
+    {
+        EnemyData enemyData = null;
         foreach (var obj in Game.enemies)
         {
-            if (name == obj.name)
+            if (enemyID == obj.ID)
             {
-                return obj;
+                enemyData = obj;
+                break;
             }
         }
 
-        return Game.enemies[0];
+        return enemyData;
     } 
 
     public static Item GetItemDataFromName(string name)

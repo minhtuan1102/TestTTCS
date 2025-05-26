@@ -17,14 +17,16 @@ MonoBehaviour:
   _itemType: 0
   icon: {fileID: -2408530018317867212, guid: cad1f0e53515ac64b8c0c6c3b491e435, type: 3}
   itemID: Shotgun
-  itemDescription: 
+  itemDescription: Very good crowd control and pack a punch.
   model: {fileID: 7712177893306523388, guid: 9b05f05c7acfaab4b980039e03ea386d, type: 3}
   weight: 3
   value: 0
+  wearSlot: 0
+  armor: 0
+  armor_regen: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
-  effectsModules: []
   isWeapon: 1
   canAttack: 1
   swing: 0
@@ -36,7 +38,7 @@ MonoBehaviour:
   hitbox: {fileID: 0}
   mele_manaConsume: 0
   canShoot: 1
-  fireAmount: 8
+  fireAmount: 10
   maxAmmo: 1
   spread: 3
   bulletSpeed: 40
@@ -46,4 +48,5 @@ MonoBehaviour:
   clipSize: 6
   reload: 3
   projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
+  projectilePath: 
   options: []

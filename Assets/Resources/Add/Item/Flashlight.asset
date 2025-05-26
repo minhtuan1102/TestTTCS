@@ -17,14 +17,16 @@ MonoBehaviour:
   _itemType: 0
   icon: {fileID: -5913738696227704600, guid: 17b31ede1f3453a4f9eedbef84b08968, type: 3}
   itemID: Flashlight
-  itemDescription: 
+  itemDescription: Light you way!
   model: {fileID: 9081472294502579287, guid: 84ed49c992ae5874d9dd63a0df83d7e1, type: 3}
   weight: 1
   value: 0
+  wearSlot: 0
+  armor: 0
+  armor_regen: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
-  effectsModules: []
   isWeapon: 1
   canAttack: 1
   swing: -30
@@ -46,4 +48,5 @@ MonoBehaviour:
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}
+  projectilePath: 
   options: []

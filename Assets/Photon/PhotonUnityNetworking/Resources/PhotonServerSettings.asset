@@ -28,7 +28,7 @@ MonoBehaviour:
     AuthMode: 0
     EnableLobbyStatistics: 0
     NetworkLogging: 1
-  DevRegion: 
+  DevRegion: asia
   PunLogging: 0
   EnableSupportLogger: 0
   RunInBackground: 1
@@ -39,6 +39,23 @@ MonoBehaviour:
   - DestroySpaceship
   - Fire
   - RespawnSpaceship
+  - RPC_Holding
+  - Client_AddItem
+  - Client_DropItem
+  - Master_AddItem
+  - Master_DropItem
+  - RPC_UpdateItem
+  - RPC_FlashEffect
+  - RPC_UpdateHealth
+  - RPC_UpdateArmor
+  - RPC_UpdateStats
+  - SetClass
+  - Master_UseItem
+  - UpdateMana
+  - Master_Attack
+  - RPC_Attack
+  - RPC_Wearing
+  - RPC_ChangeAvatar
   DisableAutoOpenWizard: 1
   ShowSettings: 0
-  DevRegionSetOnce: 0
+  DevRegionSetOnce: 1

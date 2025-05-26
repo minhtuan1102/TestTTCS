@@ -16,6 +16,7 @@ public class ItemObject : MonoBehaviourPun, IPunInstantiateMagicCallback
     {
 
         string json = (string)PhotonView.Get(this).InstantiationData[0];
+        int itemID = (int)PhotonView.Get(this).InstantiationData[1];
 
         transform.SetParent(Game.g_items.transform);
         Data = new ItemInstance(JsonUtility.FromJson<ItemInstanceSender>(json));
@@ -29,6 +30,6 @@ public class ItemObject : MonoBehaviourPun, IPunInstantiateMagicCallback
         }
         transform.Find("Canvas").Find("Name").GetComponent<TextMeshProUGUI>().SetText($"x{Data.amount} {Data.itemRef.itemName}");
 
-        transform.gameObject.name = $"{Data.itemID}";
+        transform.gameObject.name = $"{itemID}";
     }
 }

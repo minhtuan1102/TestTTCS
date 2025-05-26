@@ -63,7 +63,7 @@ public class Admin : MonoBehaviour
                 TMP_InputField e_amount = SpawmEnemy.Find("Amount").GetComponent<TMP_InputField>();
 
                 spawnEnemyButton.onClick.AddListener(() => GameManager.Instance.TrySpawnEnemy(
-                    Game.GetEnemyData(selections.options[selections.value].text),
+                    Game.GetEnemyData(e_selections.options[e_selections.value].text),
                     Game.localPlayer.transform.position
                 ));
 
@@ -93,7 +93,7 @@ public class Admin : MonoBehaviour
         itemList = new List<string>();
         foreach (var obj in Game.enemies)
         {
-            itemList.Add(obj.name);
+            itemList.Add(obj.ID);
         }
 
         itemID = buttons[3].Find("Dropdown").GetComponent<TMP_Dropdown>();

@@ -1,13 +1,12 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
-using UnityEngine.XR;
+using UnityEngine.UI;
 using Photon.Pun;
+using TMPro;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 {
     // Basic stats
 
@@ -103,12 +102,55 @@ public class Player : MonoBehaviour
 
     public Vector3 mousePosition;
 
+    public Transform onTopDisplay;
+    private UnityEngine.UI.Slider healthBar;
+
+    public HealthSystem health;
+
+    public PlayerClass _class;
+
+    public Transform model_Head;
+    public Transform model_Hat;
+    public Transform model_Hair;
+    public Transform model_Body;
+    public Transform model_Pant_L;
+    public Transform model_Pant_R;
+
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        _class = Game.player_Class[(int)PhotonView.Get(this).InstantiationData[0]];
+
+        Debug.Log("Loaded Class " + _class.name);
+
+        inventory = GetComponent<PlayerInventory>();
+        health = GetComponent<HealthSystem>();
+
+        foreach (ItemInstance item in _class.loadout)
+        {
+            inventory.AddItem(item);
+        }
+
+        moveSpeed = _class.speed;
+        maxSpeed = _class.maxSpeed;
+
+        range = _class.range;
+
+        MaxMana = _class.mana;
+        _currentMana = MaxMana;
+
+        health.SetMaxHealth((int)_class.health);
+        health.SetHealth((int)_class.health);
+    }
+
     void Start()
     {
         view = GetComponent<PhotonView>();
 
+        gameObject.name = view.Owner.NickName;
+
         rb = GetComponent<Rigidbody2D>();
         skin = GetComponent<SpriteRenderer>();
+
         player_collider = GetComponent<BoxCollider2D>();
         inventory = GetComponent<PlayerInventory>();
 
@@ -120,6 +162,21 @@ public class Player : MonoBehaviour
 
         leg_L = model.Find("LegL").transform;
         leg_R = model.Find("LegR").transform;
+
+        model_Pant_L = leg_L;
+        model_Pant_R = leg_R;
+
+        model_Body = model.Find("Body").transform;
+        model_Head = model.Find("Head").transform;
+        model_Hat = model_Head.Find("Hat").transform;
+        model_Hair = model_Head.Find("Hair").transform;
+
+        model_Pant_L.GetComponent<SpriteRenderer>().sprite = _class.Leg;
+        model_Pant_R.GetComponent<SpriteRenderer>().sprite = _class.Leg;
+
+        model_Body.GetComponent<SpriteRenderer>().sprite = _class.Body;
+        model_Head.GetComponent<SpriteRenderer>().sprite = _class.Head;
+        model_Hair.GetComponent<SpriteRenderer>().sprite = _class.Hair;
 
         Tilemap tilemap = GetComponent<Tilemap>();
         if (tilemap != null)
@@ -134,9 +191,14 @@ public class Player : MonoBehaviour
         targetVision = vision;
 
         transform.SetParent(Game.g_players.transform);
+        onTopDisplay = transform.Find("Canvas");
+        healthBar = onTopDisplay.Find("HealthBar").GetComponent<UnityEngine.UI.Slider>();
 
         if (view.IsMine)
         {
+            transform.name = PhotonNetwork.LocalPlayer.NickName;
+            Debug.Log(PhotonNetwork.NickName);
+
             Transform UI = GameObject.Find("PlayerUI").transform;
             Transform UICam = GameObject.Find("UICam").transform;
 
@@ -151,6 +213,15 @@ public class Player : MonoBehaviour
 
             Game.localPlayer = transform.gameObject;
         }
+        else
+        {
+            onTopDisplay.Find("HealthBar").gameObject.SetActive(true);
+        }
+
+        onTopDisplay.Find("NameTag").GetComponent<TextMeshProUGUI>().SetText(view.Owner.NickName);
+        onTopDisplay.Find("NameTag").gameObject.SetActive(true);
+
+        health.calculateArmor(inventory.Armor);
     }
 
     void Update()
@@ -220,6 +291,7 @@ public class Player : MonoBehaviour
 
             mousePosition = cam.ScreenToWorldPoint(Input.mousePosition);
         }
+        healthBar.value = (float)health.CurrentHealth / (float)health.MaxHealth;
     }
 
     // Function to set the target swing angle dynamically
@@ -233,11 +305,21 @@ public class Player : MonoBehaviour
         recoilOffset = recoilForce * intensity;
     }
 
+    [PunRPC]
+    public void UpdateMana(float amount)
+    {
+        _currentMana = amount;
+    }
+
     public bool ConsumeMana(float value)
     {
         if (_currentMana >= value)
         {
             _currentMana -= value;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                view.RPC("UpdateMana", RpcTarget.Others, _currentMana);
+            }
             return true;
         }
         return false;

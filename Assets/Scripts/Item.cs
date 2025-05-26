@@ -18,6 +18,19 @@ public enum ItemType
     QuestItem
 }
 
+public enum ArmorModelType
+{
+    Texture,
+    Model
+}
+
+public enum ArmorType
+{
+    Head,
+    Body,
+    Pant
+}
+
 [System.Serializable]
 public enum ValueType
 {
@@ -46,7 +59,24 @@ public class Item : ScriptableObject
     public float weight = 0f;
     public int value = 0;
 
+    // Wearable Stats
+
+    public ArmorModelType armor_modelType;
+    public GameObject armor_Model;
+    public Sprite armor_Sprite;
+
+    public bool hide_Hair = false;
+
+    public ArmorType armorType = ArmorType.Head;
+    public int wearSlot = 0;
+    public float armor = 0f;
+    public float armor_regen = 0f;
+    public float defense = 0f;
+
     // Consuming Stats
+
+    // Pickup Stats
+    public bool useOnDelete = false;
 
     public bool isConsumable = false;
     public string effectDescription = "";
@@ -67,7 +97,8 @@ public class Item : ScriptableObject
 
         public float damage = 0f;
         public float cooldown = 0f;
-        
+        public float knockBack = 0f;
+        public float userKnockBack = 0f;
 
         // Melee
         public bool canMelee = false;
@@ -88,6 +119,7 @@ public class Item : ScriptableObject
         public float reload = 0f;
 
         public GameObject projectile;
+        public string projectilePath = "";
 
         // Other
         public List<MonoBehaviour> options;

@@ -967,6 +967,7 @@ MonoBehaviour:
   _maxArmor: 100
   _currentArmor: 25
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _defense: 0
 --- !u!195 &5591387431694869499
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -976,7 +977,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7300319063617135439}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.2890625
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -996,14 +997,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7300319063617135439}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2887bd7de6e2f3b4c80a595d9f003a93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   MoveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &4224621244631252087
 MonoBehaviour:
@@ -1069,7 +1070,7 @@ MonoBehaviour:
     TeleportIfDistanceGreaterThan: 3
     InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 30
     ExtrapolateOption: 1
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1

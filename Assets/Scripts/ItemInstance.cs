@@ -6,7 +6,7 @@ using UnityEngine;
 public class ItemInstanceSender
 {
     // Basic Stats
-    public int itemID;
+    public int itemID = 0;
     public int amount = 0;
     public int holder = -1;
     public int storage = -1;
@@ -18,9 +18,8 @@ public class ItemInstanceSender
     // Modify
     public List<string> attachments;
 
-    public ItemInstanceSender(int itemID, int amount, int holder, int storage, string itemRef, int ammo, bool reloading, List<string> attachments)
+    public ItemInstanceSender(int amount, int holder, int storage, string itemRef, int ammo, bool reloading, List<string> attachments)
     {
-        this.itemID = itemID;
         this.amount = amount;
         this.holder = holder;
         this.storage = storage;
@@ -33,6 +32,24 @@ public class ItemInstanceSender
     public ItemInstanceSender(ItemInstance item)
     {
         this.itemID = item.itemID;
+        this.amount = item.amount;
+        this.holder = -1;
+
+        if (item.holder != null) this.holder = PlayerUI.Holder.IndexOf(item.holder);
+
+        this.storage = -1;
+
+        if (item.holder != null) this.holder = PlayerUI.Holder.IndexOf(item.holder);
+
+        this.itemRef = item.itemRef.itemID;
+        this.ammo = item.ammo;
+        this.reloading = item.reloading;
+        this.attachments = item.attachments;
+    }
+
+    public ItemInstanceSender(int id, ItemInstance item)
+    {
+        this.itemID = id;
         this.amount = item.amount;
         this.holder = -1;
 
@@ -63,7 +80,7 @@ public class ItemInstanceSender
 public class ItemInstance
 {
     // Basic Stats
-    public int itemID;
+    public int itemID = 0;
     public int amount = 0;
     public Transform holder = null;
     public Transform storage = null;
@@ -83,6 +100,21 @@ public class ItemInstance
         this.storage = other.storage;
         this.itemRef = other.itemRef;
         this.ammo = other.ammo;
+        this.reloading = other.reloading;
+
+        if (other.attachments != null) this.attachments = new List<string>(other.attachments);
+    }
+
+    public ItemInstance(int id, ItemInstance other)
+    {
+        this.itemID = id;
+        this.amount = other.amount;
+        this.holder = other.holder;
+        this.storage = other.storage;
+        this.itemRef = other.itemRef;
+        this.ammo = other.ammo;
+        this.reloading = other.reloading;
+
 
         if (other.attachments != null) this.attachments = new List<string>(other.attachments);
     }
@@ -101,16 +133,20 @@ public class ItemInstance
 
         this.itemRef = Game.GetItemDataFromName(other.itemRef);
         this.ammo = other.ammo;
-
+        this.reloading = other.reloading;
         this.attachments = new List<string>(other.attachments);
     }
 
-    public ItemInstance(int id, Item itemRef, int ammo, int amount)
+    public ItemInstance(Item itemRef, int ammo, int amount)
     {
-        this.itemID = id;
         this.amount = amount;
         this.ammo = ammo;
         this.itemRef = itemRef;
+
+        if (this.ammo == 0)
+        {
+            this.reloading = true;
+        }
     }
 
     public string ToJson()

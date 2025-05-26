@@ -50,10 +50,7 @@ public class Projectile : MonoBehaviour
             {
                 if (health.CurrentHealth > 0f)
                 {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        health.TakeDamage((int)itemData.damage);
-                    }
+                    health.TakeDamage((int)itemData.damage);
                     Destroy(gameObject);
                 }
             }

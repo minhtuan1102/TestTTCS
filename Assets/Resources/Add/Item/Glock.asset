@@ -17,14 +17,16 @@ MonoBehaviour:
   _itemType: 0
   icon: {fileID: 2025432562616822404, guid: 54ef006a8796e024ea29add8cfd68137, type: 3}
   itemID: Glock
-  itemDescription: 
+  itemDescription: High range and great damage
   model: {fileID: 8472142361449280045, guid: 6461a13b782bbac4d852848c9c54a111, type: 3}
   weight: 3
   value: 0
+  wearSlot: 0
+  armor: 0
+  armor_regen: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
-  effectsModules: []
   isWeapon: 1
   canAttack: 1
   swing: 0
@@ -44,6 +46,7 @@ MonoBehaviour:
   shooting_manaConsume: 0
   reload_manaConsume: 10
   clipSize: 10
-  reload: 2
+  reload: 1.5
   projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
+  projectilePath: 
   options: []

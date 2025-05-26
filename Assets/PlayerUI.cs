@@ -108,7 +108,11 @@ public class PlayerUI : MonoBehaviour
         {
             Transform bar = AP_UI.transform.Find("Hider");
             RectTransform hider = bar.GetComponent<RectTransform>();
-            float scale = Mathf.Clamp01((float)health.CurrentArmor / (float)health.MaxArmor);
+            float scale = 0f;
+            if (health.MaxArmor > 0)
+            {
+                scale = Mathf.Clamp01((float)health.CurrentArmor / (float)health.MaxArmor);
+            }
             hider.localScale = new Vector3(1f - scale, 1, 1);
 
             Transform display = AP_UI.transform.Find("Text");
@@ -146,7 +150,7 @@ public class PlayerUI : MonoBehaviour
 
             TextMeshProUGUI reserve = ItemStats_UI.transform.Find("Amount").Find("Text").GetComponent<TextMeshProUGUI>();
 
-            if (usingWP.itemRef.canShoot)
+            if (usingWP.itemRef.canShoot && !usingWP.itemRef.isConsumable)
             {
                 reserve.SetText($"{usingWP.ammo}/{usingWP.itemRef.clipSize}");
                 scale.localScale = new Vector3(Mathf.Lerp(scale.localScale.x, (float)usingWP.ammo/(float)usingWP.itemRef.clipSize, Time.deltaTime * 10), 1f, 1f);
@@ -263,6 +267,11 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
+    public void ToggleArmor(ItemHolder holder)
+    {
+        Inventory.Wearing(holder.item, holder.SlotType);
+    }
+
     public void UseItem(ItemHolder holder)
     {
         if (holder.item != null && holder.item.itemRef)
@@ -336,8 +345,6 @@ public class PlayerUI : MonoBehaviour
             if (useMainWP) wp = Weapon_Slot[0].GetComponent<ItemHolder>();
             else wp = Weapon_Slot[1].GetComponent<ItemHolder>();
 
-            Inventory.holdingItem = wp.item;
-
             if (wp.item != null && wp.item.itemRef)
             {
                 usingWP = wp.item;
@@ -349,6 +356,8 @@ public class PlayerUI : MonoBehaviour
                 usingWP = null;
                 wp_loadout.SetActive(false);
             }
+
+            Inventory.Holding(usingWP);
         }
         catch
         {

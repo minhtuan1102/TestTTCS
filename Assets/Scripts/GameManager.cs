@@ -99,41 +99,46 @@ public class GameManager : MonoBehaviour
     public static void SpawnEnemy(string id, Vector3 pos)
     {
         EnemyData dat = Game.GetEnemyData(id);
-        GameObject e_model = PhotonNetwork.InstantiateRoomObject(dat.path, pos, Quaternion.identity);
-        Enemy enemy = e_model.GetComponent<Enemy>();
-        enemy.data = dat;
+        object[] data = new object[] { id };
+        Debug.Log(dat.path);
+        GameObject e_model = PhotonNetwork.InstantiateRoomObject(dat.path, pos, Quaternion.identity, 0, data);
     }
 
     public void TrySpawnEnemy(EnemyData dat, Vector3 pos)
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (dat != null)
         {
-            float checkDistance = 6f;
-            float spawnOffset = 0.5f;
+            Debug.Log(dat.ID);
 
-            LayerMask obstacleMask;
-
-            obstacleMask = (1 << LayerMask.NameToLayer("Barrier"));
-
-            Vector3 origin = pos;
-
-            for (int angle = 0; angle < 360; angle += 10)
+            if (PhotonNetwork.IsMasterClient)
             {
-                float rad = angle * Mathf.Deg2Rad;
-                Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+                float checkDistance = 6f;
+                float spawnOffset = 0.5f;
 
-                RaycastHit2D hit = Physics2D.Raycast(origin, dir, checkDistance, obstacleMask);
+                LayerMask obstacleMask;
 
-                if (hit.collider == null)
+                obstacleMask = (1 << LayerMask.NameToLayer("Barrier"));
+
+                Vector3 origin = pos;
+
+                for (int angle = 0; angle < 360; angle += 10)
                 {
-                    Vector3 pointToCheck = origin + (Vector3)(dir * (checkDistance - spawnOffset));
-                    pointToCheck.z = 0f;
+                    float rad = angle * Mathf.Deg2Rad;
+                    Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
 
-                    // Kiểm tra NavMesh
-                    if (NavMesh.SamplePosition(pointToCheck, out NavMeshHit navHit, 1f, NavMesh.AllAreas))
+                    RaycastHit2D hit = Physics2D.Raycast(origin, dir, checkDistance, obstacleMask);
+
+                    if (hit.collider == null)
                     {
-                        SpawnEnemy(dat.ID, navHit.position);
-                        return;
+                        Vector3 pointToCheck = origin + (Vector3)(dir * (checkDistance - spawnOffset));
+                        pointToCheck.z = 0f;
+
+                        // Kiểm tra NavMesh
+                        if (NavMesh.SamplePosition(pointToCheck, out NavMeshHit navHit, 1f, NavMesh.AllAreas))
+                        {
+                            SpawnEnemy(dat.ID, navHit.position);
+                            return;
+                        }
                     }
                 }
             }
@@ -145,7 +150,7 @@ public class GameManager : MonoBehaviour
         if (itemRef != null)
         {
 
-            SpawnItem(new ItemInstance(item_Index++, itemRef, itemRef.clipSize, amount), pos, rot);
+            SpawnItem(new ItemInstance(itemRef, itemRef.clipSize, amount), pos, rot);
         }
     }
 
@@ -158,14 +163,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SpawnItem(ItemInstance dat, Vector3 pos, Quaternion rot)
+    public static void SpawnItem(ItemInstance dat, Vector3 pos, Quaternion rot)
     {
         if (dat != null)
         {
             string json = (new ItemInstanceSender(dat)).ToJson();
             Debug.Log(json);
-            object[] data = new object[] { json };
-            PhotonNetwork.InstantiateRoomObject("ItemObject", pos, rot, 1, data);
+            object[] data = new object[] { json, item_Index++ };
+            PhotonNetwork.InstantiateRoomObject("ItemObject", pos, rot, 0, data);
         }
     }
 
