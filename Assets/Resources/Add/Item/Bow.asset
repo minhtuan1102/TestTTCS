@@ -30,6 +30,7 @@ MonoBehaviour:
   armor: 0
   armor_regen: 0
   defense: 0
+  useOnDelete: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
@@ -40,6 +41,10 @@ MonoBehaviour:
   swingOffset: 0
   damage: 60
   cooldown: 1.5
+  knockBack: 0
+  userKnockBack: 0
+  durability: 100
+  weaponType: 1
   canMelee: 0
   hitbox: {fileID: 0}
   mele_manaConsume: 0

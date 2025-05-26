@@ -1,5 +1,7 @@
+using Codice.Client.BaseCommands.BranchExplorer;
 using NUnit.Framework.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEditor;
@@ -14,6 +16,7 @@ public class ItemEditor : Editor
     bool showAttack = true;
 
     bool showAttackStats = true;
+    bool showAttackEffects = true;
     bool showAttackAnimStats = true;
     bool showMeleeStats = true;
     bool showShootingStats = true;
@@ -168,6 +171,8 @@ public class ItemEditor : Editor
 
                 EditorGUI.indentLevel--;
 
+                EditorGUILayout.BeginHorizontal();
+
                 if (GUILayout.Button("Add Effect"))
                 {
                     item.consumeEffect.Add(new Modify());
@@ -178,6 +183,8 @@ public class ItemEditor : Editor
                     if (item.consumeEffect.Count > 0)
                         item.consumeEffect.RemoveAt(item.consumeEffect.Count - 1);
                 }
+
+                EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
@@ -203,6 +210,113 @@ public class ItemEditor : Editor
                     EditorGUI.indentLevel++;
                     item.damage = EditorGUILayout.FloatField("Damage", item.damage);
                     item.cooldown = EditorGUILayout.FloatField("Cooldown", item.cooldown);
+                    EditorGUILayout.Space();
+
+                    item.knockBack = EditorGUILayout.FloatField("Knock Back", item.knockBack);
+                    item.knockBack_Duration = EditorGUILayout.FloatField("Knock Back Duration", item.knockBack_Duration);
+
+                    item.durability = EditorGUILayout.IntField("Durability", item.durability);
+                    EditorGUILayout.Space();
+                    item.weaponType = (WeaponType)EditorGUILayout.EnumPopup("Weapon Type", item.weaponType);
+                    EditorGUI.indentLevel--;
+                }
+
+                showAttackEffects = EditorGUILayout.Foldout(showAttackEffects, "Damage Effect");
+
+                if (showAttackEffects)
+                {
+                    EditorGUI.indentLevel++;
+
+
+                    for (int j=0; j<item.effects.Count; j++)
+                    {
+                        EditorGUI.indentLevel++;
+
+                        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+                        DamageEffect effect = item.effects[j];
+                        effect._show = EditorGUILayout.Foldout(effect._show, "Effect"+item.effects.IndexOf(effect));
+
+                        if (effect._show)
+                        {
+                            EditorGUI.indentLevel++;
+
+                            EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+                            for (int i = 0; i < effect.effects.Count; i++)
+                            {
+                                effect.effects[i].modify_ID = EditorGUILayout.TextField("Key", effect.effects[i].modify_ID);
+                                effect.effects[i].modify_Type = (ValueType)EditorGUILayout.EnumPopup("Type", effect.effects[i].modify_Type);
+                                switch (effect.effects[i].modify_Type)
+                                {
+                                    case ValueType.Int:
+                                        effect.effects[i].modify_IntValue = EditorGUILayout.IntField("Value", effect.effects[i].modify_IntValue);
+                                        break;
+                                    case ValueType.Float:
+                                        effect.effects[i].modify_FloatValue = EditorGUILayout.FloatField("Value", effect.effects[i].modify_FloatValue);
+                                        break;
+                                    case ValueType.Bool:
+                                        effect.effects[i].modify_BoolValue = EditorGUILayout.Toggle("Value", effect.effects[i].modify_BoolValue);
+                                        break;
+                                    default:
+                                        effect.effects[i].modify_StringValue = EditorGUILayout.TextField("Value", effect.effects[i].modify_StringValue);
+                                        break;
+                                }
+                                effect.effects[i].modify_Des = EditorGUILayout.TextField("Des", effect.effects[i].modify_Des);
+
+                                EditorGUILayout.Space();
+                                EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+                                EditorGUILayout.Space();
+                            }
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            if (GUILayout.Button("Add Effect"))
+                            {
+                                effect.effects.Add(new Modify());
+                            }
+
+                            if (GUILayout.Button("Remove Last"))
+                            {
+                                if (effect.effects.Count > 0)
+                                    effect.effects.RemoveAt(effect.effects.Count - 1);
+                            }
+
+                            EditorGUILayout.EndHorizontal();
+
+                            EditorGUI.indentLevel--;
+                        }
+
+                        effect.tick = EditorGUILayout.FloatField("Tick", effect.tick);
+                        effect.lifeTime = EditorGUILayout.FloatField("Time", effect.lifeTime);
+
+                        effect.canStack = EditorGUILayout.Toggle("Can Stack", effect.canStack);
+                        effect.canOveride = EditorGUILayout.Toggle("Can Overide", effect.canOveride);
+
+                        EditorGUI.indentLevel--;
+                    }
+
+                    EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+
+                    EditorGUILayout.BeginHorizontal();
+
+                    if (GUILayout.Button("Add Effect", new GUILayoutOption[] {
+                        GUILayout.Height(30),
+                    }))
+                    {
+                        item.effects.Add(new DamageEffect(0,1,new List<Modify>()));
+                    }
+
+                    if (GUILayout.Button("Remove Last", new GUILayoutOption[] {
+                        GUILayout.Width(100),
+                        GUILayout.Height(30),
+                    }))
+                    {
+                        if (item.effects.Count > 0)
+                            item.effects.RemoveAt(item.effects.Count - 1);
+                    }
+
+                    EditorGUILayout.EndHorizontal();
                     EditorGUI.indentLevel--;
                 }
 

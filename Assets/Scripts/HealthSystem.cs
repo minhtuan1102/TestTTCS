@@ -2,6 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
+using static UnityEditor.Progress;
+using Unity.Mathematics;
+using Photon.Realtime;
+using System;
+using System.Linq;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class HealthSystem : MonoBehaviour
@@ -42,6 +47,8 @@ public class HealthSystem : MonoBehaviour
 
     private float armorCD = 0f;
     private float _armorGain = 0f;
+
+    private List<DamageEffect> effects = new List<DamageEffect>();
 
     private void Awake()
     {
@@ -87,6 +94,40 @@ public class HealthSystem : MonoBehaviour
                 AddArmor((int)_armorGain);
             }
         }
+
+        if (effects.Count > 0)
+        {
+            for (int i = 0; i < effects.Count; i++)
+            {
+                if (effects[i].lifeTime <= 0f)
+                {
+                    effects[i].lifeTime = 0f;
+                }
+                else
+                {
+                    effects[i].timer += Time.fixedDeltaTime;
+                    if (effects[i].timer >= effects[i].tick)
+                    {
+                        float amount = Mathf.Floor(effects[i].timer / effects[i].tick);
+
+                        foreach (Modify mod in effects[i].effects)
+                        {
+                            switch (mod.modify_ID)
+                            {
+                                case "HP":
+                                    TakeDamage((int)(mod.modify_IntValue * amount));
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        effects[i].timer -= amount * effects[i].tick;
+                        effects[i].lifeTime -= amount * effects[i].tick;
+                    }
+                }
+            }
+        }
     }
 
     public void TakeDamage(int damage)
@@ -116,11 +157,38 @@ public class HealthSystem : MonoBehaviour
 
     }
 
-    public void calculateArmor(List<ItemInstance> items)
+    public void addEffect(DamageEffect effect)
+    {
+        //Debug.Log("Adding Effect");
+        int amount = effects.Count;
+        if (amount>0)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                if (effects[i].lifeTime <= 0f && i < amount)
+                {
+                    DamageEffect damageEffect = new DamageEffect(effect);
+                    effects[i] = damageEffect;
+                    return;
+                }
+            }
+        }
+        effects.Add(new DamageEffect(effect));
+    }
+
+    public void calculateArmor(List<ItemInstance> items, ItemInstance holdingItem)
     {
         float maxArmor = 50f;
         float regenArmor = 0f;
         float defense = 0f;
+
+        if (holdingItem != null && holdingItem.itemRef)
+        {
+            maxArmor += holdingItem.itemRef.armor;
+            regenArmor += holdingItem.itemRef.armor_regen;
+            defense += holdingItem.itemRef.defense;
+        }
+
         foreach (ItemInstance item in items)
         {
             if (item != null && item.itemRef != null)

@@ -221,7 +221,7 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
         onTopDisplay.Find("NameTag").GetComponent<TextMeshProUGUI>().SetText(view.Owner.NickName);
         onTopDisplay.Find("NameTag").gameObject.SetActive(true);
 
-        health.calculateArmor(inventory.Armor);
+        health.calculateArmor(inventory.Armor, inventory.holdingItem);
     }
 
     void Update()
@@ -309,6 +309,18 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
     public void UpdateMana(float amount)
     {
         _currentMana = amount;
+    }
+
+    [PunRPC]
+    public void RPC_UpdateCash(int amount)
+    {
+        cash = amount;
+    }
+
+    public void UpdateCash(int amount)
+    {
+        cash = amount;
+        view.RPC("RPC_UpdateCash", RpcTarget.Others, cash);
     }
 
     public bool ConsumeMana(float value)

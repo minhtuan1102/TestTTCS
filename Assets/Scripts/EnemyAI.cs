@@ -36,6 +36,8 @@ public class EnemyAI : MonoBehaviour
     private int currentCorner = 0;
     private PhotonView photonView;
 
+    private float stunTime = 0f;
+
     void Awake()
     {
         photonView = GetComponent<PhotonView>();
@@ -88,6 +90,12 @@ public class EnemyAI : MonoBehaviour
         return false;
     }
 
+    public void Stunned(float duration)
+    {
+        stunTime = duration;
+        agent.enabled = false;
+    }
+
     void Update()
     {
         if (!PhotonNetwork.IsMasterClient)
@@ -98,6 +106,20 @@ public class EnemyAI : MonoBehaviour
         attackTimer += Time.fixedDeltaTime;
         chaseTimer += Time.fixedDeltaTime;
         waitingTimer += Time.fixedDeltaTime;
+
+        stunTime -= Time.fixedDeltaTime;
+
+        if (stunTime > 0f)
+        {
+            return;
+        } else
+        {
+            if (!agent.enabled)
+            {
+                agent.enabled = true;
+            } 
+        }
+
 
         UnityEngine.Vector3 velocity = agent.velocity;
 
@@ -143,7 +165,7 @@ public class EnemyAI : MonoBehaviour
                 GameManager.SummonAttackArea(
                         transform.position,
                         UnityEngine.Quaternion.Euler(0, 0, enemy.lookDir),
-                        new AreaInstance(data.Damage, data.Attack_Hitbox, Game.g_players.transform)
+                        new AreaInstance(data.Damage, data.Attack_KB, data.Attack_Effect, data.Attack_Hitbox, Game.g_players.transform)
                         );
 
                 /*

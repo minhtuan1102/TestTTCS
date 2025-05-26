@@ -28,7 +28,7 @@ MonoBehaviour:
   Leg: {fileID: 1730826577450134818, guid: ca865881edbe3924490d41083bdccc87, type: 3}
   loadout:
   - itemID: 0
-    amount: 1
+    amount: 64
     holder: {fileID: 0}
     storage: {fileID: 0}
     itemRef: {fileID: 11400000, guid: 5b116e820fc78ff4dbbcc8605efe029f, type: 2}

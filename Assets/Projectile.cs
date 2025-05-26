@@ -9,19 +9,25 @@ public class ProjectileData
     public float speed;
     public float damage;
     public float lifeTime = 2f;
+    public float kb = 0f;
+    public List<DamageEffect> effect;
 
-    public ProjectileData(float speed, float damage, float lifeTime)
+    public ProjectileData(float speed, float damage, float kb, float lifeTime, List<DamageEffect> effect)
     {
         this.speed = speed;
         this.damage = damage;
+        this.kb = kb;
         this.lifeTime = lifeTime;
+        this.effect = effect;
     }
 
     public ProjectileData(ProjectileData item)
     {
         this.speed = item.speed;
         this.damage = item.damage;
+        this.kb = item.kb;
         this.lifeTime = item.lifeTime;
+        this.effect = item.effect;
     }
 }
 
@@ -39,6 +45,15 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, itemData.lifeTime);
     }
 
+    public void Knockback(Rigidbody2D rb, float kb)
+    {
+        if (rb == null) return;
+        Vector2 direction = transform.right.normalized;
+        rb.linearVelocity = Vector2.zero;
+
+        rb.AddForce(direction * kb, ForceMode2D.Impulse);
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         // Gây sát thương nếu cần
@@ -51,6 +66,11 @@ public class Projectile : MonoBehaviour
                 if (health.CurrentHealth > 0f)
                 {
                     health.TakeDamage((int)itemData.damage);
+                    Knockback(other.GetComponent<Rigidbody2D>(), itemData.kb);
+                    foreach (DamageEffect effect in itemData.effect)
+                    {
+                        health.addEffect(effect);
+                    }
                     Destroy(gameObject);
                 }
             }

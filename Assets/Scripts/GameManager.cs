@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Spine;
+using Unity.Jobs;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -149,8 +150,19 @@ public class GameManager : MonoBehaviour
     {
         if (itemRef != null)
         {
-
-            SpawnItem(new ItemInstance(itemRef, itemRef.clipSize, amount), pos, rot);
+            if (itemRef.isWeapon)
+            {
+                if (itemRef.weaponType == WeaponType.Melee)
+                {
+                    SpawnItem(new ItemInstance(itemRef, 0, 1), pos, rot);
+                } else
+                {
+                    SpawnItem(new ItemInstance(itemRef, itemRef.clipSize, itemRef.durability), pos, rot);
+                }
+            } else
+            {
+                SpawnItem(new ItemInstance(itemRef, 0, amount), pos, rot);
+            }
         }
     }
 
