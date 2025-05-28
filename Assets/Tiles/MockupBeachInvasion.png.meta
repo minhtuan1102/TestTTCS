@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      MockupBeachInvasion_0: -2445827431890574305
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
