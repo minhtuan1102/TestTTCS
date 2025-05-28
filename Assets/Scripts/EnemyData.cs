@@ -7,7 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class LootPackage
 {
-    [SerializeField] public ItemInstance[] Items;
+    [SerializeField] public List<ItemInstance> Items = new List<ItemInstance>();
 }
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Items/EnemyData")]
