@@ -19,9 +19,9 @@ MonoBehaviour:
   health: 100
   mana: 100
   armor: 0
-  speed: 5
-  maxSpeed: 5
-  range: 5
+  speed: 7
+  maxSpeed: 7
+  range: 7
   Head: {fileID: -1071523155210718792, guid: 12d276b6eb16b2a4e85f334e79864319, type: 3}
   Hair: {fileID: 6291076074326483787, guid: 36dbf44e961ef0745a607155094e9de7, type: 3}
   Body: {fileID: -6199720543617963891, guid: 2c96a1fee1d899b48a7fa2bf029a363b, type: 3}

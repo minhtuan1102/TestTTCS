@@ -1,6 +1,5 @@
 using UnityEngine;
 using Photon.Pun;
-using Spine;
 
 public class SpawnPlayers : MonoBehaviour
 {

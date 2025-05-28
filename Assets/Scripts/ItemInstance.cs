@@ -82,8 +82,8 @@ public class ItemInstance
     // Basic Stats
     public int itemID = 0;
     public int amount = 0;
-    public Transform holder = null;
-    public Transform storage = null;
+    [HideInInspector]public Transform holder = null;
+    [HideInInspector]public Transform storage = null;
     public Item itemRef;
 
     // Firearm
