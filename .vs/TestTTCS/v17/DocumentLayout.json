@@ -3,19 +3,19 @@
   "WorkspaceRootPath": "D:\\UnityProject\\TestTTCS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\scripts\\iteminstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\iteminstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\unityproject\\testttcs\\assets\\daynightcycle2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\daynightcycle2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\daynightcycle2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\daynightcycle2d.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\scripts\\iteminstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\iteminstance.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\enemygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\enemygroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\unityproject\\testttcs\\assets\\itemgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\itemgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\itemgroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -23,7 +23,7 @@
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemydata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|d:\\unityproject\\testttcs\\assets\\scripts\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|D:\\UnityProject\\TestTTCS\\assets\\scripts\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6830E749-029D-744A-87B4-155D28EEF90B}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\item.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -130,7 +130,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 162,
-          "SelectedChildIndex": 22,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -142,8 +142,7 @@
               "RelativeToolTip": "Assets\\ItemGroup.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T15:02:36.033Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-27T15:02:36.033Z"
             },
             {
               "$type": "Document",
@@ -155,8 +154,7 @@
               "RelativeToolTip": "Assets\\EnemyGroup.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T12:42:34.051Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-27T12:42:34.051Z"
             },
             {
               "$type": "Document",
@@ -184,13 +182,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "DayNightCycle2D.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\DayNightCycle2D.cs",
               "RelativeDocumentMoniker": "Assets\\DayNightCycle2D.cs",
               "ToolTip": "D:\\UnityProject\\TestTTCS\\Assets\\DayNightCycle2D.cs",
               "RelativeToolTip": "Assets\\DayNightCycle2D.cs",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAAAKMAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAvwJ0AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-26T17:10:01.996Z",
               "EditorCaption": ""
@@ -229,8 +227,7 @@
               "RelativeToolTip": "Assets\\Scripts\\EnemyData.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-25T14:33:50.682Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-25T14:33:50.682Z"
             },
             {
               "$type": "Document",
@@ -386,8 +383,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Item.cs",
               "ViewState": "AgIAAEgAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T11:59:41.706Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-13T11:59:41.706Z"
             },
             {
               "$type": "Document",
@@ -403,7 +399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ItemInstance.cs",
               "DocumentMoniker": "D:\\UnityProject\\TestTTCS\\Assets\\Scripts\\ItemInstance.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ItemInstance.cs",
@@ -411,8 +407,7 @@
               "RelativeToolTip": "Assets\\Scripts\\ItemInstance.cs",
               "ViewState": "AgIAADwAAAAAAAAAAAAAAFUAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-13T02:11:24.331Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-13T02:11:24.331Z"
             },
             {
               "$type": "Document",
