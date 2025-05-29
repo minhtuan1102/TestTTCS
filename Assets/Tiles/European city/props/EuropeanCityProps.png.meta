@@ -1,0 +1,598 @@
+fileFormatVersion: 2
+guid: b2bd9a886cc3fea4bbc998c12d674236
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4693491454658768357
+    second: EuropeanCityProps_0
+  - first:
+      213: 8069265214300067932
+    second: EuropeanCityProps_1
+  - first:
+      213: -6232609119557182864
+    second: EuropeanCityProps_2
+  - first:
+      213: -5684996080801191840
+    second: EuropeanCityProps_3
+  - first:
+      213: -6937108978972495618
+    second: EuropeanCityProps_4
+  - first:
+      213: 3553422936940531173
+    second: EuropeanCityProps_5
+  - first:
+      213: 8551189020866991277
+    second: EuropeanCityProps_6
+  - first:
+      213: -5063703178359550764
+    second: EuropeanCityProps_7
+  - first:
+      213: 3634112293832358039
+    second: EuropeanCityProps_8
+  - first:
+      213: -2241768055596655382
+    second: EuropeanCityProps_9
+  - first:
+      213: -6035424596336311073
+    second: EuropeanCityProps_10
+  - first:
+      213: 9061375223867890300
+    second: EuropeanCityProps_11
+  - first:
+      213: -6870392900268198502
+    second: EuropeanCityProps_12
+  - first:
+      213: -4794784119820713497
+    second: EuropeanCityProps_13
+  - first:
+      213: -8666892885817900964
+    second: EuropeanCityProps_14
+  - first:
+      213: -5820630770161970696
+    second: EuropeanCityProps_15
+  - first:
+      213: 8772451287885139250
+    second: EuropeanCityProps_16
+  - first:
+      213: 6717692850309852646
+    second: EuropeanCityProps_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: EuropeanCityProps_0
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 411
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b129bb0a36e5ddeb0800000000000000
+      internalID: -4693491454658768357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_1
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 411
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5895c8a5f9cbff60800000000000000
+      internalID: 8069265214300067932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_2
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 411
+        width: 32
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07a1fec07035189a0800000000000000
+      internalID: -6232609119557182864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_3
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 396
+        width: 66
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0686b565f26da11b0800000000000000
+      internalID: -5684996080801191840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_4
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 396
+        width: 66
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef0fb2453207abf90800000000000000
+      internalID: -6937108978972495618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_5
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 396
+        width: 65
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5edc015955b405130800000000000000
+      internalID: 3553422936940531173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 316
+        width: 355
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da45ffbbb1deba670800000000000000
+      internalID: 8551189020866991277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_7
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 219
+        width: 66
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dcccd5b9cc1ab9b0800000000000000
+      internalID: -5063703178359550764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_8
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 220
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798f1cb70e5fe6230800000000000000
+      internalID: 3634112293832358039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_9
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 220
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aecd751b4d3a3e0e0800000000000000
+      internalID: -2241768055596655382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_10
+      rect:
+        serializedVersion: 2
+        x: 319
+        y: 251
+        width: 30
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd408b28e4ddd3ca0800000000000000
+      internalID: -6035424596336311073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_11
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 251
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7adb23c1c870cd70800000000000000
+      internalID: 9061375223867890300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_12
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 140
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a95f520ee0677a0a0800000000000000
+      internalID: -6870392900268198502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_13
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 140
+        width: 66
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e107633f31857db0800000000000000
+      internalID: -4794784119820713497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_14
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 139
+        width: 66
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c50c67ae6d209b780800000000000000
+      internalID: -8666892885817900964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_15
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 176
+        width: 15
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f199cf4727f83fa0800000000000000
+      internalID: -5820630770161970696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_16
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 143
+        width: 24
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23dcfc7c7f10eb970800000000000000
+      internalID: 8772451287885139250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EuropeanCityProps_17
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 91
+        width: 108
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ed66e43e0a0a3d50800000000000000
+      internalID: 6717692850309852646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      EuropeanCityProps_0: -4693491454658768357
+      EuropeanCityProps_1: 8069265214300067932
+      EuropeanCityProps_10: -6035424596336311073
+      EuropeanCityProps_11: 9061375223867890300
+      EuropeanCityProps_12: -6870392900268198502
+      EuropeanCityProps_13: -4794784119820713497
+      EuropeanCityProps_14: -8666892885817900964
+      EuropeanCityProps_15: -5820630770161970696
+      EuropeanCityProps_16: 8772451287885139250
+      EuropeanCityProps_17: 6717692850309852646
+      EuropeanCityProps_2: -6232609119557182864
+      EuropeanCityProps_3: -5684996080801191840
+      EuropeanCityProps_4: -6937108978972495618
+      EuropeanCityProps_5: 3553422936940531173
+      EuropeanCityProps_6: 8551189020866991277
+      EuropeanCityProps_7: -5063703178359550764
+      EuropeanCityProps_8: 3634112293832358039
+      EuropeanCityProps_9: -2241768055596655382
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
