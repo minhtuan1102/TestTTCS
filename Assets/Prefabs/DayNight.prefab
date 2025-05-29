@@ -2812,6 +2812,29 @@ MonoBehaviour:
   timeOfDay: 6
   _timeOfDay: 6
   dayDuration: 300
+  zoneGroups:
+  - EnemyZone:
+    - {fileID: 1628049675636769649}
+    - {fileID: 4452089270555224306}
+    - {fileID: 1852843451910582657}
+    - {fileID: 2591791527449666695}
+    - {fileID: 307655012349725078}
+    - {fileID: 1999706818882332441}
+    - {fileID: 1953874785709356186}
+    - {fileID: 5959158503970500429}
+    - {fileID: 5208620953106829479}
+    - {fileID: 6712619529528935301}
+    - {fileID: 5557609760151067454}
+    - {fileID: 6193982543329887609}
+    ItemZone:
+    - {fileID: 6120747783794868316}
+    - {fileID: 4489829810722160618}
+    - {fileID: 594208783112523249}
+    - {fileID: 5253588212726496245}
+    - {fileID: 4344639482679988138}
+    - {fileID: 7893099555663781149}
+    - {fileID: 8335356285337074903}
+    - {fileID: 6250268487575948471}
   daySpawn:
   - Data: []
   - Data:
@@ -2821,6 +2844,9 @@ MonoBehaviour:
       itemPackages:
       - Item: {fileID: 11400000, guid: c2aff267e1fcaf447a70bccb7f4d4816, type: 2}
         amount: 6
+      zoneGroup:
+        EnemyZone: []
+        ItemZone: []
     - tag: "K\u1EBB th\xF9 t\u1EA5n c\xF4ng l\xFAc t\u1ED1i"
       time: 21
       enemyPackages:
@@ -2829,6 +2855,9 @@ MonoBehaviour:
       itemPackages:
       - Item: {fileID: 11400000, guid: c2aff267e1fcaf447a70bccb7f4d4816, type: 2}
         amount: 6
+      zoneGroup:
+        EnemyZone: []
+        ItemZone: []
   - Data:
     - tag: "Nhu y\u1EBFu ph\u1EA9m sinh ra"
       time: 4
@@ -2838,18 +2867,27 @@ MonoBehaviour:
       itemPackages:
       - Item: {fileID: 11400000, guid: c2aff267e1fcaf447a70bccb7f4d4816, type: 2}
         amount: 6
+      zoneGroup:
+        EnemyZone: []
+        ItemZone: []
     - tag: "K\u1EBB th\xF9 \u0111\xE1nh l\xFAc s\xE1ng"
       time: 5
       enemyPackages:
       - Item: {fileID: 11400000, guid: 10544c1e805505d4791d3d11908ac433, type: 2}
         amount: 4
       itemPackages: []
+      zoneGroup:
+        EnemyZone: []
+        ItemZone: []
     - tag: "K\u1EBB th\xF9 \u0111\xE1nh l\xFAc tr\u01B0a"
       time: 13
       enemyPackages:
       - Item: {fileID: 11400000, guid: 10544c1e805505d4791d3d11908ac433, type: 2}
         amount: 4
       itemPackages: []
+      zoneGroup:
+        EnemyZone: []
+        ItemZone: []
   - Data: []
   - Data: []
   - Data: []
