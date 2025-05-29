@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using JetBrains.Annotations;
+using Photon.Pun;
 using System.Buffers;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -39,12 +40,20 @@ public class DaySpawn
 }
 
 [System.Serializable]
+public class ZoneGroup
+{
+    public List<Transform> EnemyZone;
+    public List<Transform> ItemZone;
+}
+
+[System.Serializable]
 public class Gen
 {
     public string tag = "";
     public float time = 0f;
     [SerializeField] public EnemyPackage[] enemyPackages;
     [SerializeField] public ItemPackage[] itemPackages;
+    public int zoneGroup;
 }
 
 public class DayNightCycle2D : MonoBehaviour
@@ -69,6 +78,9 @@ public class DayNightCycle2D : MonoBehaviour
 
     [Space]
 
+    public ZoneGroup[] zoneGroups;
+
+    [Space]
     public List<DaySpawn> daySpawn = new List<DaySpawn>();
 
     private void Awake()
@@ -117,24 +129,7 @@ public class DayNightCycle2D : MonoBehaviour
         {
             int day = _day;
             if (day >= daySpawn.Count) day = daySpawn.Count - 1;
-            List<GameObject> itemZoneAvailable = new List<GameObject>();
-            List<GameObject> enemyZoneAvailable = new List<GameObject>();
 
-            foreach (Transform zone in itemZone)
-            {
-                if (zone.gameObject.activeSelf)
-                {
-                    itemZoneAvailable.Add(zone.gameObject);
-                }
-            }
-
-            foreach (Transform zone in enemyZone)
-            {
-                if (zone.gameObject.activeSelf)
-                {
-                    enemyZoneAvailable.Add(zone.gameObject);
-                }
-            }
             //Debug.Log(day);
             foreach (Gen genAction in daySpawn[day].Data)
             {
@@ -146,9 +141,9 @@ public class DayNightCycle2D : MonoBehaviour
                     {
                         for (int i = 0; i < enemyPackage.amount; i++)
                         {
-                            int randomPlace = UnityEngine.Random.Range(0, enemyZoneAvailable.Count);
+                            int randomPlace = UnityEngine.Random.Range(0, zoneGroups[genAction.zoneGroup].EnemyZone.Count);
                             EnemyData randomEnemy = GetRandomWeightedItem<EnemyData>(enemyPackage.Item.groups);
-                            GameManager.SpawnEnemy(randomEnemy.ID, GetRandomPositionInBarrier(enemyZoneAvailable[randomPlace].GetComponent<BoxCollider2D>(), new Vector2(0.1f, 0.1f)));
+                            GameManager.SpawnEnemy(randomEnemy.ID, GetRandomPositionInBarrier(zoneGroups[genAction.zoneGroup].EnemyZone[randomPlace].GetComponent<BoxCollider2D>(), new Vector2(0.1f, 0.1f)));
                         }
                     }
 
@@ -156,9 +151,9 @@ public class DayNightCycle2D : MonoBehaviour
                     {
                         for (int i = 0; i < itemPackage.amount; i++)
                         {
-                            int randomPlace = UnityEngine.Random.Range(0, itemZoneAvailable.Count);
+                            int randomPlace = UnityEngine.Random.Range(0, zoneGroups[genAction.zoneGroup].ItemZone.Count);
                             ItemInstance randomItem = GetRandomWeightedItem<ItemInstance>(itemPackage.Item.Items);
-                            GameManager.SpawnItem(randomItem, GetRandomPositionInBarrier(itemZoneAvailable[randomPlace].GetComponent<BoxCollider2D>(), new Vector2(0.1f, 0.1f)), quaternion.identity);
+                            GameManager.SpawnItem(randomItem, GetRandomPositionInBarrier(zoneGroups[genAction.zoneGroup].ItemZone[randomPlace].GetComponent<BoxCollider2D>(), new Vector2(0.1f, 0.1f)), quaternion.identity);
                         }
                     }
                 }
