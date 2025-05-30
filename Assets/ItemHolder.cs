@@ -105,6 +105,7 @@ public class ItemHolder : MonoBehaviour, IDropHandler
         if (item != null && item.holder == transform)
         {
             SelectedItem.ItemData = item;
+            SelectedItem.action = "Unequip";
         }
     }
 

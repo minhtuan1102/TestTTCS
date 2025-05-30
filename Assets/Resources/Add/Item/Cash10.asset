@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 9062607142165174483, guid: 147329a1f78cb4643a19caff431a0b79, type: 3}
   itemID: Cash10
   itemDescription: Very fresh apple
-  model: {fileID: 1281956672415766616, guid: d0d61e8b8d0a6c8468fc71fbf74d2e9a, type: 3}
+  model: {fileID: 1281956672415766616, guid: 3eeaf730d01523f4bbbe9b3102232656, type: 3}
   weight: 0
   value: 0
   armor_modelType: 0
@@ -34,7 +34,8 @@ MonoBehaviour:
   isConsumable: 1
   effectDescription: Heal HP and MP
   consumeEffect:
-  - modify_ID: Cash
+  - _show: 0
+    modify_ID: Cash
     modify_Type: 0
     modify_Des: + 10$
     modify_IntValue: 10
@@ -49,7 +50,12 @@ MonoBehaviour:
   damage: 1
   cooldown: 1
   knockBack: 0
+  knockBack_Duration: 1
   userKnockBack: 0
+  userKnockBack_Duration: 1
+  durability: 100
+  weaponType: 0
+  effects: []
   canMelee: 0
   hitbox: {fileID: 0}
   mele_manaConsume: 0

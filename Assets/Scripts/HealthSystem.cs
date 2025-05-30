@@ -2,11 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
-using static UnityEditor.Progress;
-using Unity.Mathematics;
-using Photon.Realtime;
-using System;
-using System.Linq;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class HealthSystem : MonoBehaviour

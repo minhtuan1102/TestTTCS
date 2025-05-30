@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BeachInvasionTilesheet_0: 6892188461700587756
+      BeachInvasionTilesheet_1: -8115916697447247949
+      BeachInvasionTilesheet_2: -6230990598737805649
+      BeachInvasionTilesheet_3: -5404342042540795815
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

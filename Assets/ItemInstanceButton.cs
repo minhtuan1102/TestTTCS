@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,6 +10,7 @@ using UnityEngine.UI;
 public static class SelectedItem
 {
     public static ItemInstance ItemData;
+    public static string action = "Unequip";
 }
 
 public class ItemInstanceButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
@@ -120,6 +122,13 @@ public class ItemInstanceButton : MonoBehaviour, IBeginDragHandler, IDragHandler
     public void Select()
     {
         SelectedItem.ItemData = item;
+        if (item.itemRef.isConsumable)
+        {
+            SelectedItem.action = "Use";
+        } else
+        {
+            SelectedItem.action = "Unequip";
+        }
     }
 
     void Update()

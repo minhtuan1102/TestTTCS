@@ -66,7 +66,7 @@ public class SelectedUI : MonoBehaviour
         if (SelectedItem.ItemData != null)
         {
             Transform holder = SelectedItem.ItemData.holder;
-            if (holder != null)
+            if (holder != null && SelectedItem.action == "Unequip")
             {
                 holder.GetComponent<ItemHolder>().Unequip(true);
             } else

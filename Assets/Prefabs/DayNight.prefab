@@ -2771,32 +2771,32 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.20086816
-      value: 0.70461655
-      inSlope: 2.7300963
-      outSlope: 2.7300963
+      time: 0.2811282
+      value: 0.39413467
+      inSlope: 3.8184311
+      outSlope: 3.8184311
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.18119754
+      outWeight: 0.111301735
     - serializedVersion: 3
       time: 0.4997446
-      value: 1.0070486
-      inSlope: 0.035350084
-      outSlope: 0.035350084
+      value: 0.97737074
+      inSlope: 0.66761994
+      outSlope: 0.66761994
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.5306636
+      inWeight: 0.20230047
       outWeight: 0.7343404
     - serializedVersion: 3
-      time: 0.7970427
-      value: 0.6923949
-      inSlope: -2.7027335
-      outSlope: -2.7027335
+      time: 0.7952979
+      value: 0.4161626
+      inSlope: -4.2669597
+      outSlope: -4.2669597
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.13250065
-      outWeight: 0.3124785
+      inWeight: 0.12833902
+      outWeight: 0.09655882
     - serializedVersion: 3
       time: 1.005127
       value: 0.04169464
@@ -2839,14 +2839,12 @@ MonoBehaviour:
   - Data: []
   - Data:
     - tag: "\u0110\u1ED3 kh\u1EDFi \u0111\u1ED9ng"
-      time: 6.1
+      time: 7
       enemyPackages: []
       itemPackages:
       - Item: {fileID: 11400000, guid: c2aff267e1fcaf447a70bccb7f4d4816, type: 2}
         amount: 6
-      zoneGroup:
-        EnemyZone: []
-        ItemZone: []
+      zoneGroup: 0
     - tag: "K\u1EBB th\xF9 t\u1EA5n c\xF4ng l\xFAc t\u1ED1i"
       time: 21
       enemyPackages:
@@ -2855,9 +2853,7 @@ MonoBehaviour:
       itemPackages:
       - Item: {fileID: 11400000, guid: c2aff267e1fcaf447a70bccb7f4d4816, type: 2}
         amount: 6
-      zoneGroup:
-        EnemyZone: []
-        ItemZone: []
+      zoneGroup: 0
   - Data:
     - tag: "Nhu y\u1EBFu ph\u1EA9m sinh ra"
       time: 4
@@ -2867,27 +2863,21 @@ MonoBehaviour:
       itemPackages:
       - Item: {fileID: 11400000, guid: c2aff267e1fcaf447a70bccb7f4d4816, type: 2}
         amount: 6
-      zoneGroup:
-        EnemyZone: []
-        ItemZone: []
+      zoneGroup: 0
     - tag: "K\u1EBB th\xF9 \u0111\xE1nh l\xFAc s\xE1ng"
       time: 5
       enemyPackages:
       - Item: {fileID: 11400000, guid: 10544c1e805505d4791d3d11908ac433, type: 2}
         amount: 4
       itemPackages: []
-      zoneGroup:
-        EnemyZone: []
-        ItemZone: []
+      zoneGroup: 0
     - tag: "K\u1EBB th\xF9 \u0111\xE1nh l\xFAc tr\u01B0a"
       time: 13
       enemyPackages:
       - Item: {fileID: 11400000, guid: 10544c1e805505d4791d3d11908ac433, type: 2}
         amount: 4
       itemPackages: []
-      zoneGroup:
-        EnemyZone: []
-        ItemZone: []
+      zoneGroup: 0
   - Data: []
   - Data: []
   - Data: []
