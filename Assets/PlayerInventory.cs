@@ -4,6 +4,8 @@ using Photon.Pun;
 using System.Linq.Expressions;
 using Spine;
 using System;
+using UnityEngine.UI;
+using Unity.Mathematics;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -17,7 +19,10 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] public List<ItemInstance> Armor;
     [SerializeField] public List<string> currentWearing;
 
-    private Transform nearestItem;
+    private Transform nearestItem = null;
+    private Transform nearestFallen = null;
+
+    private float revivePower = 0f;
 
     private float scanTime = 0.2f;
     private float scanTimer = 0f;
@@ -453,6 +458,30 @@ public class PlayerInventory : MonoBehaviour
         return nearest;
     }
 
+    private Transform FindFallenAlly()
+    {
+        Transform nearest = null;
+        float nearestDis = pickUpRange;
+        float dis;
+        if (Game.items != null)
+        {
+            foreach (Transform item in Game.g_players.transform)
+            {
+                dis = (item.position - transform.position).sqrMagnitude;
+                if (dis < pickUpRange && item.GetComponent<Player>().fallen && item.name != PhotonNetwork.LocalPlayer.NickName)
+                {
+                    if (nearest == null || (dis < nearestDis))
+                    {
+                        nearest = item;
+                        nearestDis = dis;
+                    }
+                }
+            }
+        }
+
+        return nearest;
+    }
+
     void GetWeaponModel(string model)
     {
         if (model != currentWeaponModel)
@@ -506,6 +535,21 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    int CheckForMedkit()
+    {
+        int index = -1;
+
+        foreach (ItemInstance item in Items)
+        {
+            if (item.itemRef.itemID == "Medkit")
+            {
+                return Items.IndexOf(item);
+            }
+        }
+
+        return index;
+    }
+
     void GetArmorModel(int slot, string model)
     {
         if (currentWearing[slot] != model)
@@ -553,6 +597,45 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    void Master_RevivePlayer(string player)
+    {
+        Transform revivePlayer = null;
+
+        foreach (Transform ally in Game.g_players.transform)
+        {
+            if (ally.name == player)
+            {
+                revivePlayer = ally;
+                break;
+            }
+        }
+
+        if (revivePlayer != null)
+        {
+            int index = CheckForMedkit();
+            if (index >= 0)
+            {
+                ItemInstance medkit = Items[index];
+
+                if (medkit != null)
+                {
+                    if (medkit.amount>0)
+                    {
+                        medkit.amount--;
+                        revivePlayer.GetComponent<Player>().Revive();
+                    }
+
+                    view.RPC("RPC_UpdateItem", RpcTarget.Others, medkit.itemID, (new ItemInstanceSender(Items[index])).ToJson());
+                    if (Items[index].amount <= 0)
+                    {
+                        Items.RemoveAt(index);
+                    }
+                }
+            }
+        }
+    }
+
     void Update()
     {
         if (view.IsMine)
@@ -570,6 +653,14 @@ public class PlayerInventory : MonoBehaviour
                 }
 
                 nearestItem = FindNearItem();
+
+                if (nearestFallen != null)
+                {
+                    GameObject canvas = nearestFallen.transform.Find("Canvas").Find("Revive").gameObject;
+                    canvas.SetActive(false);
+                }
+
+                nearestFallen = FindFallenAlly();
             }
 
             if (nearestItem != null)
@@ -577,12 +668,46 @@ public class PlayerInventory : MonoBehaviour
                 GameObject canvas = nearestItem.transform.Find("Canvas").gameObject;
                 canvas.SetActive(true);
 
-                canvas.transform.localPosition = new Vector3(0, 0.6f + 0.1f * Mathf.Cos(Time.time * 2), 0);
+                canvas.transform.localPosition = new Vector3(0, 0.6f + 0.05f * Mathf.Cos(Time.time * 2), 0);
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     view.RPC("Master_AddItem", RpcTarget.MasterClient, nearestItem.name);
                     nearestItem = null;
+                }
+            }
+
+            if (nearestFallen != null)
+            {
+                try
+                {
+                    GameObject canvas = nearestFallen.transform.Find("Canvas").Find("Revive").gameObject;
+                    canvas.SetActive(true);
+
+                    if (Input.GetKey(KeyCode.E))
+                    {
+                        revivePower += Time.fixedDeltaTime;
+                        if (revivePower >= 5f)
+                        {
+                            int itemIndex = CheckForMedkit();
+                            if (itemIndex >= 0)
+                            {
+                                Items[itemIndex].amount -= 1;
+                                view.RPC("Master_RevivePlayer", RpcTarget.MasterClient, nearestFallen.name);
+                            }
+                            revivePower = 0f;
+                            nearestFallen = null;
+                        }
+                    }
+                    else
+                    {
+                        revivePower = 0f;
+                    }
+
+                    canvas.GetComponent<Image>().fillAmount = Mathf.Clamp01(revivePower / 5f);
+                } catch
+                {
+
                 }
             }
 

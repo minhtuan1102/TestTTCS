@@ -58,6 +58,8 @@ MonoBehaviour:
   - RPC_ChangeAvatar
   - UpdateCash
   - RPC_UpdateCash
+  - RPC_Fallen
+  - Master_RevivePlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

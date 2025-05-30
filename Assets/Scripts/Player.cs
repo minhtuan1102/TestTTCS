@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
+using Unity.Mathematics;
 
 public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 {
@@ -14,7 +15,7 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
     public float MaxMana = 100f;
 
     public int cash = 0;
-
+    public bool fallen = false;
     public float CurrentMana => _currentMana;
 
     // Vision Stats
@@ -204,7 +205,8 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 
             Transform Stats = UI.Find("PlayerStats");
             Stats.GetComponent<PlayerUI>().Current_Player = gameObject;
-            Stats.gameObject.SetActive(true);
+            Stats.GetComponent<PlayerUI>().enabled = true;
+            Stats.Find("UI").gameObject.SetActive(true);
 
             UI.Find("Loadout").GetComponent<LoadOut>().gameObject.SetActive(true);
 
@@ -226,7 +228,7 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 
     void Update()
     {
-        if (view.IsMine)
+        if (view.IsMine && !fallen)
         {
             // Get Input (WASD or Arrow Keys)
             movement.x = Input.GetAxis("Horizontal");
@@ -354,8 +356,75 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
         _currentMana = Mathf.Min(MaxMana, _currentMana + value);
     }
 
+    public void Revive()
+    {
+        health.SetHealth((int)health.MaxHealth/2);
+        fallen = false;
+
+        view.RPC("RPC_Fallen", RpcTarget.All, fallen);
+
+        model.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        onTopDisplay.Find("HealthBar").gameObject.SetActive(true);
+
+        Transform UI = GameObject.Find("PlayerUI").transform;
+        Transform Stats = UI.Find("PlayerStats");
+        Stats.Find("UI").gameObject.SetActive(true);
+    }
+
+    [PunRPC]
+    private void RPC_Fallen(bool toggle)
+    {
+        fallen = toggle;
+
+        if (fallen)
+        {
+            if (view.IsMine)
+            {
+                Transform UI = GameObject.Find("PlayerUI").transform;
+                Transform Stats = UI.Find("PlayerStats");
+                Stats.Find("UI").gameObject.SetActive(false);
+            }
+            else
+            {
+                onTopDisplay.Find("HealthBar").gameObject.SetActive(false);
+            }
+        } else
+        {
+            if (view.IsMine)
+            {
+                Transform UI = GameObject.Find("PlayerUI").transform;
+                Transform Stats = UI.Find("PlayerStats");
+                Stats.Find("UI").gameObject.SetActive(true);
+            }
+            else
+            {
+                onTopDisplay.Find("HealthBar").gameObject.SetActive(true);
+
+            }
+        }
+    }
+
     void FixedUpdate()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (health.CurrentHealth <= 0 && !fallen)
+            {
+                fallen = true;
+                view.RPC("RPC_Fallen", RpcTarget.Others, true);
+            }
+        }
+
+        if (fallen)
+        {
+            model.localRotation = Quaternion.Euler(0f, 0f, 90f);
+            rb.linearVelocity = moveDirrection * 0;
+            return;
+        }
+        else
+        {
+            model.localRotation = Quaternion.identity;
+        }
 
         if (view.IsMine)
         {

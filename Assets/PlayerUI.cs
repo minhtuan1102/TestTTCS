@@ -27,6 +27,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] GameObject Iventory_UI = null;
     [SerializeField] GameObject ItemStats_UI = null;
     [SerializeField] GameObject Admin_UI = null;
+    [SerializeField] Transform Fallen_UI = null;
 
     [SerializeField] public List<GameObject> Weapon_Slot = new List<GameObject>();
     [SerializeField] public List<GameObject> Consumer_Slot = new List<GameObject>();
@@ -83,7 +84,9 @@ public class PlayerUI : MonoBehaviour
 
         ItemStats_UI = transform.parent.Find("ItemStats").gameObject;
 
-        Admin_UI = transform.parent.Find("AdminPanel").gameObject;
+        Admin_UI = transform.parent.Find("AdminPanel").Find("UI").gameObject;
+
+        Fallen_UI = transform.parent.Find("FallenScreen");
 
         wp_loadout = Loadout_UI.transform.Find("Weapon").Find("Icon").gameObject;
         LoadInventory();
@@ -178,6 +181,14 @@ public class PlayerUI : MonoBehaviour
             Selected_UI.SetActive(false);
         }
 
+        if (player != null)
+        {
+            if (player.fallen)
+            {
+                Fallen_UI.gameObject.SetActive(true);
+            }
+        }
+
         timer += Time.deltaTime;
         atkCooldown -= Time.deltaTime;
 
@@ -251,7 +262,7 @@ public class PlayerUI : MonoBehaviour
 
     public void UseSelectItem()
     {
-        if (SelectedItem.ItemData != null && SelectedItem.ItemData.itemRef)
+        if (SelectedItem.ItemData != null && SelectedItem.ItemData.itemRef && SelectedItem.action == "Use")
         {
             bool ranOut = false;
             Transform holder = SelectedItem.ItemData.holder;

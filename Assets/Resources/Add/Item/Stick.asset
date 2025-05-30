@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
-  m_Name: First aid box
+  m_Name: Stick
   m_EditorClassIdentifier: 
-  itemName: First aid box
-  itemType: Consumable
-  _itemType: 2
-  icon: {fileID: 6037597954384149974, guid: 3e12ebfb75208984e8eadc6e9c9d39b3, type: 3}
-  itemID: First aid box
-  itemDescription: 
-  model: {fileID: 1281956672415766616, guid: d0d61e8b8d0a6c8468fc71fbf74d2e9a, type: 3}
-  weight: 0
+  itemName: Stick
+  itemType: Weapon
+  _itemType: 0
+  icon: {fileID: -7907951331658488048, guid: 78cb79ef0ad59ba4dbc78209138f188f, type: 3}
+  itemID: Stick
+  itemDescription: Medium damage with wide AOE range
+  model: {fileID: 6994442434215011227, guid: 5ce44ccc8a1923e4a9cfd0dbca434a4a, type: 3}
+  weight: 1
   value: 0
   armor_modelType: 0
   armor_Model: {fileID: 0}
@@ -30,27 +30,26 @@ MonoBehaviour:
   armor: 0
   armor_regen: 0
   defense: 0
-  isConsumable: 1
-  effectDescription: Heal HP
-  consumeEffect:
-  - modify_ID: HP
-    modify_Type: 0
-    modify_Des: + 200 HP
-    modify_IntValue: 200
-    modify_FloatValue: 0
-    modify_BoolValue: 0
-    modify_StringValue: 
-  isWeapon: 0
+  useOnDelete: 0
+  isConsumable: 0
+  effectDescription: 
+  consumeEffect: []
+  isWeapon: 1
   canAttack: 1
-  swing: 40
+  swing: -180
   recoil: 0
-  swingOffset: 0
-  damage: 1
-  cooldown: 1
-  knockBack: 0
+  swingOffset: 15
+  damage: 10
+  cooldown: 0.6
+  knockBack: 3
+  knockBack_Duration: 1
   userKnockBack: 0
-  canMelee: 0
-  hitbox: {fileID: 0}
+  userKnockBack_Duration: 1
+  durability: 100
+  weaponType: 0
+  effects: []
+  canMelee: 1
+  hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
   mele_manaConsume: 0
   canShoot: 0
   fireAmount: 1

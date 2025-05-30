@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
-  m_Name: Cash1 1
+  m_Name: Medkit
   m_EditorClassIdentifier: 
-  itemName: $1 Cash
+  itemName: Medkit
   itemType: Consumable
   _itemType: 2
-  icon: {fileID: 9062607142165174483, guid: 147329a1f78cb4643a19caff431a0b79, type: 3}
-  itemID: Cash1
-  itemDescription: Very fresh apple
-  model: {fileID: 1281956672415766616, guid: d0d61e8b8d0a6c8468fc71fbf74d2e9a, type: 3}
+  icon: {fileID: 6037597954384149974, guid: 3e12ebfb75208984e8eadc6e9c9d39b3, type: 3}
+  itemID: Medkit
+  itemDescription: 
+  model: {fileID: 1281956672415766616, guid: a17e56c5c0785244c95aae3838d32930, type: 3}
   weight: 0
   value: 0
   armor_modelType: 0
@@ -30,14 +30,15 @@ MonoBehaviour:
   armor: 0
   armor_regen: 0
   defense: 0
-  useOnDelete: 1
+  useOnDelete: 0
   isConsumable: 1
-  effectDescription: Heal HP and MP
+  effectDescription: Heal HP
   consumeEffect:
-  - modify_ID: Cash
+  - _show: 0
+    modify_ID: HP
     modify_Type: 0
-    modify_Des: + 1$
-    modify_IntValue: 1
+    modify_Des: + 200 HP
+    modify_IntValue: 200
     modify_FloatValue: 0
     modify_BoolValue: 0
     modify_StringValue: 
@@ -49,7 +50,12 @@ MonoBehaviour:
   damage: 1
   cooldown: 1
   knockBack: 0
+  knockBack_Duration: 1
   userKnockBack: 0
+  userKnockBack_Duration: 1
+  durability: 100
+  weaponType: 0
+  effects: []
   canMelee: 0
   hitbox: {fileID: 0}
   mele_manaConsume: 0
