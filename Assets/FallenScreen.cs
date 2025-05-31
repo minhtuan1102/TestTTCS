@@ -1,6 +1,7 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FallenScreen : MonoBehaviour
 {
@@ -35,25 +36,33 @@ public class FallenScreen : MonoBehaviour
 
     private void Update()
     {
-        if (canSpectate)
+        try
         {
-            if (Spectate != null)
+            if (canSpectate)
             {
-                Vector3 targetCamPos = new Vector3(Spectate.position.x, Spectate.position.y, -10);
-                currentCamera.transform.position = Vector3.Lerp(currentCamera.transform.position, targetCamPos, Time.deltaTime * 3f);
+                if (Spectate != null)
+                {
+                    Vector3 targetCamPos = new Vector3(Spectate.position.x, Spectate.position.y, -10);
+                    currentCamera.transform.position = Vector3.Lerp(currentCamera.transform.position, targetCamPos, Time.deltaTime * 3f);
 
-                if (PhotonNetwork.LocalPlayer.NickName == Spectate.name)
-                {
-                    displayName.GetComponent<TextMeshProUGUI>().SetText("Yourself");
-                } else
-                {
-                    displayName.GetComponent<TextMeshProUGUI>().SetText(Spectate.name);
+                    if (PhotonNetwork.LocalPlayer.NickName == Spectate.name)
+                    {
+                        displayName.GetComponent<TextMeshProUGUI>().SetText("Yourself");
+                    }
+                    else
+                    {
+                        displayName.GetComponent<TextMeshProUGUI>().SetText(Spectate.name);
+                    }
                 }
-            } else
-            {
-                Spectate = Game.g_players.transform.GetChild(0);
-                playerIndex = 0;
+                else
+                {
+                    Spectate = Game.g_players.transform.GetChild(0);
+                    playerIndex = 0;
+                }
             }
+        } catch
+        {
+
         }
     }
 

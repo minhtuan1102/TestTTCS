@@ -28,8 +28,9 @@ MonoBehaviour:
   armorType: 1
   wearSlot: 1
   armor: 50
-  armor_regen: 10
+  armor_regen: 0
   defense: 20
+  useOnDelete: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
@@ -40,6 +41,13 @@ MonoBehaviour:
   swingOffset: 0
   damage: 0
   cooldown: 0
+  knockBack: 0
+  knockBack_Duration: 1
+  userKnockBack: 0
+  userKnockBack_Duration: 1
+  durability: 100
+  weaponType: 0
+  effects: []
   canMelee: 0
   hitbox: {fileID: 0}
   mele_manaConsume: 0
@@ -54,5 +62,6 @@ MonoBehaviour:
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}
+  projectileDat: {fileID: 0}
   projectilePath: 
   options: []

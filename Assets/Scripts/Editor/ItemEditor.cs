@@ -367,6 +367,8 @@ public class ItemEditor : Editor
                         item.fireAmount = EditorGUILayout.IntField("Amount", item.fireAmount);
                         EditorGUILayout.Space();
                         item.projectile = (GameObject)EditorGUILayout.ObjectField("Projectile", item.projectile, typeof(GameObject), false);
+                        EditorGUILayout.Space();
+                        item.projectileDat = (ProjectileItem)EditorGUILayout.ObjectField("Projectile Data", item.projectileDat, typeof(ProjectileItem), false);
                     }
                     EditorGUI.indentLevel--;
                 }

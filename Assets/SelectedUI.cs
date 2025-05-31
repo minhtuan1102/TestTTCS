@@ -12,6 +12,8 @@ public class SelectedUI : MonoBehaviour
     [SerializeField] GameObject UI_Equip;
     [SerializeField] GameObject UI_Button;
 
+    [SerializeField] bool shopUI = false;
+
     void Start()
     {
         
@@ -22,42 +24,81 @@ public class SelectedUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SelectedItem.ItemData != null)
+        if (shopUI)
         {
-            Image icon = UI_Icon.GetComponent<Image>();
-            icon.sprite = SelectedItem.ItemData.itemRef.icon;
-            UI_Icon.SetActive(true);
-
-            TextMeshProUGUI name = UI_Name.GetComponent<TextMeshProUGUI>();
-            name.SetText(SelectedItem.ItemData.itemRef.itemName);
-
-            TextMeshProUGUI des = UI_Des.GetComponent<TextMeshProUGUI>();
-            des.SetText(SelectedItem.ItemData.itemRef.itemDescription);
-
-            if (SelectedItem.ItemData.holder != null) equiped = true;
-            else equiped = false;
-
-            TextMeshProUGUI equip = UI_Equip.GetComponent<TextMeshProUGUI>();
-            if (equiped)
+            if (SelectedShopItem.ItemData != null)
             {
-                UI_Button.SetActive(true);
-                equip.SetText("Unequip");
+                Image icon = UI_Icon.GetComponent<Image>();
+                icon.sprite = SelectedShopItem.ItemData.itemRef.icon;
+                UI_Icon.SetActive(true);
+
+                TextMeshProUGUI name = UI_Name.GetComponent<TextMeshProUGUI>();
+                name.SetText(SelectedShopItem.ItemData.itemRef.itemName);
+
+                TextMeshProUGUI des = UI_Des.GetComponent<TextMeshProUGUI>();
+                des.SetText(SelectedShopItem.ItemData.itemRef.itemDescription);
             }
             else
             {
-                if (SelectedItem.ItemData.itemRef.isConsumable)
+                UI_Icon.SetActive(false);
+
+                TextMeshProUGUI name = UI_Name.GetComponent<TextMeshProUGUI>();
+                name.SetText("N/A");
+
+                TextMeshProUGUI des = UI_Des.GetComponent<TextMeshProUGUI>();
+                des.SetText("");
+            }
+
+            if (PlayerUI.UI != null)
+            {
+                PlayerUI playerUI = PlayerUI.UI.GetComponent<PlayerUI>();
+
+                if (playerUI != null)
                 {
-                    UI_Button.SetActive(true);
-                    equip.SetText("Use");
-                }
-                else
-                {
-                    UI_Button.SetActive(false);
+                    TextMeshProUGUI cash = UI_Equip.GetComponent<TextMeshProUGUI>();
+                    cash.SetText("$" + playerUI.player.cash);
                 }
             }
         } else
         {
-            UI_Icon.SetActive(false);
+            if (SelectedItem.ItemData != null)
+            {
+                Image icon = UI_Icon.GetComponent<Image>();
+                icon.sprite = SelectedItem.ItemData.itemRef.icon;
+                UI_Icon.SetActive(true);
+
+                TextMeshProUGUI name = UI_Name.GetComponent<TextMeshProUGUI>();
+                name.SetText(SelectedItem.ItemData.itemRef.itemName);
+
+                TextMeshProUGUI des = UI_Des.GetComponent<TextMeshProUGUI>();
+                des.SetText(SelectedItem.ItemData.itemRef.itemDescription);
+
+                if (SelectedItem.ItemData.holder != null) equiped = true;
+                else equiped = false;
+
+                TextMeshProUGUI equip = UI_Equip.GetComponent<TextMeshProUGUI>();
+                if (equiped && SelectedItem.action == "Unequip")
+                {
+                    UI_Button.SetActive(true);
+                    equip.SetText("Unequip");
+                }
+                else
+                {
+                    if (SelectedItem.ItemData.itemRef.isConsumable)
+                    {
+                        UI_Button.SetActive(true);
+                        equip.SetText("Use");
+                    }
+                    else
+                    {
+                        UI_Button.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                UI_Icon.SetActive(false);
+            }
         }
     }
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class LobbyNetworkManager :MonoBehaviourPunCallbacks
+public class LobbyNetworkManager: MonoBehaviourPunCallbacks
 {
     [SerializeField] public TMP_InputField playerNameInput;
     [SerializeField] public TMP_InputField roomNameInput;
@@ -64,8 +64,6 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
     {
         if (statusText == null) return;
         Debug.Log("Disconnected");
-        
-
     }
 
     [PunRPC]
@@ -175,6 +173,15 @@ public class LobbyNetworkManager :MonoBehaviourPunCallbacks
             newPlayerEntry.transform.GetComponent<PlayerEntryUI>().SetPlayerInfo(player.Value);
         }
     }
+
+    private void Update()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _startGameBtn.interactable = true;
+        }
+    }
+
     private void ShowWindow(bool isRoomList)
     {
         LobbyPanel.SetActive(isRoomList);

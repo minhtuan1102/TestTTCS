@@ -13,13 +13,21 @@ public static class SelectedItem
     public static string action = "Unequip";
 }
 
+public static class SelectedShopItem
+{
+    public static ItemInstance ItemData;
+    public static int ShopID = 0;
+}
+
 public class ItemInstanceButton : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [Header("UI")]
 
-    [SerializeReference] public Transform UI;
+    [SerializeField] public Transform UI;
+    [SerializeField] public bool ShopButton = false;
+    public int cost = 0;
 
     [Header("Basic Info")]
 
@@ -48,19 +56,27 @@ public class ItemInstanceButton : MonoBehaviour, IBeginDragHandler, IDragHandler
             GameObject itemNameDisplay = transform.Find("Name").gameObject;
             itemNameDisplay.transform.GetComponent<TextMeshProUGUI>().SetText(itemReference.name);
 
-            // Display Amount
-            GameObject amountDisplay = transform.Find("Amount").gameObject;
-            if (item.amount > 1)
+            if (!ShopButton)
             {
-                amountDisplay.transform.GetComponent<TextMeshProUGUI>().SetText("x" + item.amount.ToString());
-                amountDisplay.SetActive(true);
-            }
-            else amountDisplay.SetActive(false);
+                // Display Amount
 
-            // Display Equiped
-            GameObject equipedDisplay = transform.Find("IsUsing").gameObject;
-            if (item.holder != null) equipedDisplay.SetActive(true);
-            else equipedDisplay.SetActive(false);
+                GameObject amountDisplay = transform.Find("Amount").gameObject;
+                if (item.amount > 1)
+                {
+                    amountDisplay.transform.GetComponent<TextMeshProUGUI>().SetText("x" + item.amount.ToString());
+                    amountDisplay.SetActive(true);
+                }
+                else amountDisplay.SetActive(false);
+
+                // Display Equiped
+                GameObject equipedDisplay = transform.Find("IsUsing").gameObject;
+                if (item.holder != null) equipedDisplay.SetActive(true);
+                else equipedDisplay.SetActive(false);
+            } else
+            {
+                GameObject equipedDisplay = transform.Find("Cost").gameObject;
+                equipedDisplay.transform.GetComponent<TextMeshProUGUI>().SetText("$" + cost.ToString());
+            }
 
             // Display Type
             GameObject typeDisplay = transform.Find("Type").gameObject;
@@ -88,46 +104,63 @@ public class ItemInstanceButton : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        GameObject icon = transform.Find("Icon").transform.Find("Item").gameObject;
+        if (!ShopButton)
+        {
+            GameObject icon = transform.Find("Icon").transform.Find("Item").gameObject;
 
-        dragger = Instantiate(icon, UI.transform);
+            dragger = Instantiate(icon, UI.transform);
 
-        DragPayload.ItemData = item;
-        DragPayload.icon = icon.transform.GetComponent<Image>().sprite;
-        DragPayload.dragType = itemReference.itemType;
+            DragPayload.ItemData = item;
+            DragPayload.icon = icon.transform.GetComponent<Image>().sprite;
+            DragPayload.dragType = itemReference.itemType;
 
-        dragger.transform.GetComponent<Image>().raycastTarget = false;
-        dragger.transform.SetAsLastSibling();
+            dragger.transform.GetComponent<Image>().raycastTarget = false;
+            dragger.transform.SetAsLastSibling();
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (dragger)
+        if (!ShopButton)
         {
-            dragger.transform.position = Vector3.Lerp(dragger.transform.position, Input.mousePosition, 10f);
+            if (dragger)
+            {
+                dragger.transform.position = Vector3.Lerp(dragger.transform.position, Input.mousePosition, 10f);
+            }
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (dragger)
+        if (!ShopButton)
         {
-            Destroy(dragger.transform.GetComponent<Image>());
-            Destroy(dragger);
-            dragger = null;
+            if (dragger)
+            {
+                Destroy(dragger.transform.GetComponent<Image>());
+                Destroy(dragger);
+                dragger = null;
+            }
+            UpdateUI();
         }
-        UpdateUI();
     }
 
     public void Select()
     {
-        SelectedItem.ItemData = item;
-        if (item.itemRef.isConsumable)
+        if (ShopButton)
         {
-            SelectedItem.action = "Use";
-        } else
+            SelectedShopItem.ItemData = item;
+        }
+        else
         {
-            SelectedItem.action = "Unequip";
+            SelectedItem.ItemData = item;
+            if (item.itemRef.isConsumable)
+            {
+                SelectedItem.action = "Use";
+            }
+            else
+            {
+                SelectedItem.action = "Unequip";
+            }
         }
     }
 

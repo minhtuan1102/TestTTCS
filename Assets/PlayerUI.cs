@@ -23,11 +23,20 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] GameObject Storage = null;
     [SerializeField] GameObject Button = null;
 
+    [Header("UI Inventory")]
+    [SerializeField] GameObject ShopStorage = null;
+    [SerializeField] GameObject ShopButton = null;
+
+    [Header("Other UI")]
+
     [SerializeField] GameObject Loadout_UI = null;
     [SerializeField] GameObject Iventory_UI = null;
     [SerializeField] GameObject ItemStats_UI = null;
     [SerializeField] GameObject Admin_UI = null;
     [SerializeField] Transform Fallen_UI = null;
+    [SerializeField] public Transform Shop_UI = null;
+
+    [SerializeField] public Transform Shop_Cash = null;
 
     [SerializeField] public List<GameObject> Weapon_Slot = new List<GameObject>();
     [SerializeField] public List<GameObject> Consumer_Slot = new List<GameObject>();
@@ -47,7 +56,7 @@ public class PlayerUI : MonoBehaviour
     private ItemInstance usingWP = null;
 
     HealthSystem health = null;
-    Player player = null;
+    public Player player = null;
 
     // Item Interaction
 
@@ -87,6 +96,8 @@ public class PlayerUI : MonoBehaviour
         Admin_UI = transform.parent.Find("AdminPanel").Find("UI").gameObject;
 
         Fallen_UI = transform.parent.Find("FallenScreen");
+
+        Shop_UI = transform.parent.Find("ShopUI");
 
         wp_loadout = Loadout_UI.transform.Find("Weapon").Find("Icon").gameObject;
         LoadInventory();
@@ -192,6 +203,14 @@ public class PlayerUI : MonoBehaviour
         timer += Time.deltaTime;
         atkCooldown -= Time.deltaTime;
 
+        if (player!= null)
+        {
+            if (player.fallen)
+            {
+                return;
+            }
+        }
+
         if (usingWP != null && usingWP.itemRef)
         {
             if (Input.GetMouseButton(0) && !Iventory_UI.activeSelf && !Admin_UI.activeSelf)
@@ -246,6 +265,56 @@ public class PlayerUI : MonoBehaviour
         }
     }
 
+    public void OpenShop(int shopIndex)
+    {
+        SelectedShopItem.ShopID = shopIndex;
+
+        Shop shop = Game.g_shops.transform.GetChild(shopIndex).GetComponent<Shop>();
+
+        foreach (Transform item in ShopStorage.transform)
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        foreach (Trade trade in shop.data.shop)
+        {
+            Transform item = ShopStorage.transform.Find(trade.item.itemID);
+            if (item != null)
+            {
+                item.gameObject.SetActive(true);
+            } else
+            {
+                item = Instantiate(ShopButton.transform, Vector3.zero, Quaternion.Euler(0f, 0f, 0f), ShopStorage.transform);
+                item.SetAsLastSibling();
+
+                item.name = trade.item.itemID;
+
+                ItemInstanceButton itemButton = item.GetComponent<ItemInstanceButton>();
+                itemButton.cost = trade.cost;
+                itemButton.item = new ItemInstance(trade.item);
+                itemButton.itemReference = trade.item;
+
+                item.gameObject.SetActive(true);
+            }
+        }
+
+        Shop_UI.gameObject.SetActive(true);
+    }
+
+    public void CloseShop()
+    {
+        if (Shop_UI.gameObject.activeSelf)
+        {
+            Shop_UI.gameObject.SetActive(false);
+            SelectedShopItem.ItemData = null;
+        }
+    }
+
+    public void BuyItem(int amount)
+    {
+        Inventory.Purchase(SelectedShopItem.ItemData.itemRef.itemID, amount, SelectedShopItem.ShopID);
+    }
+
     public void ToggleInventory()
     {
         Iventory_UI.SetActive(!Iventory_UI.activeSelf);
@@ -262,18 +331,25 @@ public class PlayerUI : MonoBehaviour
 
     public void UseSelectItem()
     {
-        if (SelectedItem.ItemData != null && SelectedItem.ItemData.itemRef && SelectedItem.action == "Use")
+        if (SelectedItem.ItemData != null && SelectedItem.ItemData.itemRef)
         {
-            bool ranOut = false;
-            Transform holder = SelectedItem.ItemData.holder;
-            if (SelectedItem.ItemData.amount <= 1)
+            if (SelectedItem.action == "Use")
             {
-                ranOut = true;
-            }
-            Inventory.UseItem(SelectedItem.ItemData);
-            if (ranOut)
+                bool ranOut = false;
+                Transform holder = SelectedItem.ItemData.holder;
+                if (SelectedItem.ItemData.amount <= 1)
+                {
+                    ranOut = true;
+                }
+                Inventory.UseItem(SelectedItem.ItemData);
+                if (ranOut)
+                {
+                    if (holder != null) holder.GetComponent<ItemHolder>().Unequip(true);
+                }
+            } else
             {
-               if (holder != null) holder.GetComponent<ItemHolder>().Unequip(true);
+                Transform holder = SelectedItem.ItemData.holder;
+                if (holder != null) holder.GetComponent<ItemHolder>().Unequip(true);
             }
         }
     }

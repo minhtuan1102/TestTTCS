@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b28aa94813b70c429f91c5b2b10a40d, type: 3}
-  m_Name: AK Bullet
+  m_Name: Grenade
   m_EditorClassIdentifier: 
-  speed: 30
-  damage: 1
-  lifeTime: 2
+  damage: 200
+  knockBack: 5
+  areaAttack: 1
+  hitbox: {fileID: 3290753383281791754, guid: 46549fb2cb4bd174e88a5c6e395e3136, type: 3}
+  effects: []

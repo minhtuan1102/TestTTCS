@@ -11,14 +11,16 @@ public class ProjectileData
     public float lifeTime = 2f;
     public float kb = 0f;
     public List<DamageEffect> effect;
+    public ProjectileItem special;
 
-    public ProjectileData(float speed, float damage, float kb, float lifeTime, List<DamageEffect> effect)
+    public ProjectileData(float speed, float damage, float kb, float lifeTime, List<DamageEffect> effect, ProjectileItem special)
     {
         this.speed = speed;
         this.damage = damage;
         this.kb = kb;
         this.lifeTime = lifeTime;
         this.effect = effect;
+        this.special = special;
     }
 
     public ProjectileData(ProjectileData item)
@@ -28,6 +30,7 @@ public class ProjectileData
         this.kb = item.kb;
         this.lifeTime = item.lifeTime;
         this.effect = item.effect;
+        this.special = item.special;
     }
 }
 
@@ -67,10 +70,27 @@ public class Projectile : MonoBehaviour
                 {
                     health.TakeDamage((int)itemData.damage);
                     Knockback(other.GetComponent<Rigidbody2D>(), itemData.kb);
+
                     foreach (DamageEffect effect in itemData.effect)
                     {
                         health.addEffect(effect);
                     }
+
+                    if (itemData.special.areaAttack)
+                    {
+                        GameManager.SummonAttackArea(
+                         rb.position,
+                         Quaternion.Euler(0, 0, 0),
+                         new AreaInstance(
+                             itemData.special.damage,
+                             itemData.special.knockBack,
+                             itemData.special.effects,
+                             itemData.special.hitbox,
+                             Game.g_enemies.transform
+                             )
+                        );
+                    }
+
                     Destroy(gameObject);
                 }
             }
