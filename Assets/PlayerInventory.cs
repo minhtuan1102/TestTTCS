@@ -1,11 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using System.Linq.Expressions;
-using Spine;
-using System;
 using UnityEngine.UI;
-using Unity.Mathematics;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -21,11 +17,14 @@ public class PlayerInventory : MonoBehaviour
 
     private Transform nearestItem = null;
     private Transform nearestFallen = null;
+    private Transform nearestShop = null;
 
     private float revivePower = 0f;
+    private float shopPower = 0f;
+    private int shopOwner = 0;
 
     private float scanTime = 0.2f;
-    private float scanTimer = 0f;
+    private float scanTimer = -2f;
 
     private string currentWeaponModel = "";
     private Transform weaponMuzzle;
@@ -284,7 +283,8 @@ public class PlayerInventory : MonoBehaviour
                                 Items[index].itemRef.damage,
                                 Items[index].itemRef.knockBack,
                                 Items[index].itemRef.bulletLifetime,
-                                holdingItem.itemRef.effects
+                                Items[index].itemRef.effects,
+                                Items[index].itemRef.projectileDat
                             ),
                             Items[index].itemRef.projectile
                         );
@@ -482,6 +482,32 @@ public class PlayerInventory : MonoBehaviour
         return nearest;
     }
 
+    private Transform FindNearShop()
+    {
+        Transform nearest = null;
+        float nearestDis = pickUpRange;
+        float dis;
+        if (Game.items != null)
+        {
+            for (int i=0;i< Game.g_shops.transform.childCount; i++)
+            {
+                Transform item = Game.g_shops.transform.GetChild(i);
+                dis = (item.position - transform.position).sqrMagnitude;
+                if (dis < pickUpRange)
+                {
+                    if (nearest == null || (dis < nearestDis))
+                    {
+                        shopOwner = i;
+                        nearest = item;
+                        nearestDis = dis;
+                    }
+                }
+            }
+        }
+
+        return nearest;
+    }
+
     void GetWeaponModel(string model)
     {
         if (model != currentWeaponModel)
@@ -661,6 +687,18 @@ public class PlayerInventory : MonoBehaviour
                 }
 
                 nearestFallen = FindFallenAlly();
+
+                if (nearestShop != null)
+                {
+                    GameObject canvas = nearestShop.transform.Find("Canvas").Find("Interact").gameObject;
+                    canvas.SetActive(false);
+                }
+
+                nearestShop = FindNearShop();
+                if (nearestShop == null)
+                {
+                    PlayerUI.UI.transform.GetComponent<PlayerUI>().CloseShop();
+                }
             }
 
             if (nearestItem != null)
@@ -711,6 +749,36 @@ public class PlayerInventory : MonoBehaviour
                 }
             }
 
+            if (nearestShop != null)
+            {
+                GameObject canvas = nearestShop.transform.Find("Canvas").Find("Interact").gameObject;
+                canvas.SetActive(true);
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    shopPower += Time.fixedDeltaTime;
+                    if (shopPower >= 1f)
+                    {
+                        
+                        PlayerUI playerUI = PlayerUI.UI.transform.GetComponent<PlayerUI>();
+
+                        if (!playerUI.Shop_UI.gameObject.activeSelf)
+                        {
+                            playerUI.OpenShop(shopOwner);
+                        } 
+
+                        shopPower = 0f;
+                        nearestShop = null;
+                    }
+                }
+                else
+                {
+                    shopPower = 0f;
+                }
+
+                canvas.GetComponent<Image>().fillAmount = Mathf.Clamp01(shopPower / 1f);
+            }
+
             if (Input.GetKeyDown(KeyCode.F))
             {
                 PlayerUI.useMainWP = !(PlayerUI.useMainWP);
@@ -753,6 +821,75 @@ public class PlayerInventory : MonoBehaviour
     }
 
     [PunRPC]
+    public void Master_Purchase(string item, int amount, int shopID)
+    {
+        Transform shopKeeper = Game.g_shops.transform.GetChild(shopID);
+
+        Shop shop = shopKeeper.GetComponent<Shop>();
+
+        foreach (Trade trade in shop.data.shop)
+        {
+            if (trade.item.itemID == item)
+            {
+                if (player.cash >= amount * trade.cost)
+                {
+                    player.cash -= amount * trade.cost;
+
+                    ItemInstance newItem = new ItemInstance(trade.item);
+
+                    if (trade.item.isWeapon)
+                    {
+                        for(int i =0; i<amount; i++)
+                        {
+                            if (trade.item.weaponType == WeaponType.Melee)
+                            {
+                                newItem = new ItemInstance(trade.item, 0, 1);
+                            }
+                            else
+                            {
+                                newItem = new ItemInstance(trade.item, trade.item.clipSize, trade.item.durability);
+                            }
+                            AddItem(newItem);
+                            view.RPC("Client_AddItem", RpcTarget.Others, new ItemInstanceSender(newItem).ToJson());
+                        }
+                    }
+                    else
+                    {
+                        newItem = new ItemInstance(trade.item, 0, amount);
+                        AddItem(newItem);
+                        view.RPC("Client_AddItem", RpcTarget.Others, new ItemInstanceSender(newItem).ToJson());
+                    }
+                }
+                return;
+            }
+        }
+    }
+
+    public void Purchase(string item, int amount, int shopID)
+    {
+        Transform shopKeeper = Game.g_shops.transform.GetChild(shopID);
+
+        Shop shop = shopKeeper.GetComponent<Shop>();
+
+        foreach (Trade trade in shop.data.shop)
+        {
+            if (trade.item.itemID == item)
+            {
+                if (player.cash >= amount*trade.cost)
+                {
+                    if (!PhotonNetwork.IsMasterClient)
+                    {
+                        player.cash -= amount * trade.cost;
+                    }
+
+                    view.RPC("Master_Purchase", RpcTarget.MasterClient, item, amount, shopID);
+                }
+                return;
+            }
+        }
+    }
+
+    [PunRPC]
     private void RPC_Attack(Vector3 pos, float look)
     {
         if (holdingItem != null && holdingItem.itemRef)
@@ -776,7 +913,8 @@ public class PlayerInventory : MonoBehaviour
                                 holdingItem.itemRef.damage,
                                 holdingItem.itemRef.knockBack,
                                 holdingItem.itemRef.bulletLifetime,
-                                holdingItem.itemRef.effects
+                                holdingItem.itemRef.effects,
+                                holdingItem.itemRef.projectileDat
                             ),
                             holdingItem.itemRef.projectile
                         );

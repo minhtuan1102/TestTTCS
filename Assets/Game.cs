@@ -12,6 +12,7 @@ public class Game : MonoBehaviour
     public static GameObject g_items;
     public static GameObject g_players;
     public static GameObject g_projectiles;
+    public static GameObject g_shops;
 
     public static Item[] items;
 
@@ -36,6 +37,7 @@ public class Game : MonoBehaviour
             g_items = GameObject.Find("Items");
             g_players = GameObject.Find("Players");
             g_projectiles = GameObject.Find("Projectiles");
+            g_shops = GameObject.Find("Shops");
 
             ItemObjectSample = Resources.Load<GameObject>("Add/ItemObject");
             AreaAtkSample = Resources.Load<GameObject>("Add/AreaAttack");

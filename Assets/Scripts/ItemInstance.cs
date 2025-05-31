@@ -1,6 +1,14 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+
+[System.Serializable]
+public class Trade
+{
+    [SerializeField] public int cost = 0;
+    [SerializeField] public Item item;
+}
 
 [System.Serializable]
 public class ItemInstanceSender
@@ -103,6 +111,11 @@ public class ItemInstance
         this.reloading = other.reloading;
 
         if (other.attachments != null) this.attachments = new List<string>(other.attachments);
+    }
+
+    public ItemInstance(Item itemRef)
+    {
+        this.itemRef = itemRef;
     }
 
     public ItemInstance(int id, ItemInstance other)

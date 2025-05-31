@@ -14,13 +14,21 @@ public class FollowObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (followInstant)
+        try
         {
-            transform.position = new Vector3(TargetObject.transform.position.x + offset.x, TargetObject.transform.position.y + offset.y, -100 + offset.z);
-        } else
+            if (followInstant)
+            {
+                transform.position = new Vector3(TargetObject.transform.position.x + offset.x, TargetObject.transform.position.y + offset.y, -100 + offset.z);
+            }
+            else
+            {
+                Vector3 targetCamPos = new Vector3(TargetObject.transform.position.x + offset.x, TargetObject.transform.position.y + offset.y, -100 + offset.z);
+                transform.position = Vector3.Lerp(transform.position, targetCamPos, Time.deltaTime * 3f);
+            }
+        }
+        catch
         {
-            Vector3 targetCamPos = new Vector3(TargetObject.transform.position.x + offset.x, TargetObject.transform.position.y + offset.y, -100 + offset.z);
-            transform.position = Vector3.Lerp(transform.position, targetCamPos, Time.deltaTime * 3f);
+
         }
     }
 }

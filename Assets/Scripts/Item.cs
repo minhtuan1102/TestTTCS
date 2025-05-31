@@ -190,6 +190,7 @@ public class Item : ScriptableObject
         public float reload = 0f;
 
         public GameObject projectile;
+        public ProjectileItem projectileDat;
         public string projectilePath = "";
 
         // Other

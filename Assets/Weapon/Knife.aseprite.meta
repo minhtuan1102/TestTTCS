@@ -125,7 +125,7 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: Knife
     originalName: 
-    pivot: {x: 0.4615385, y: 0}
+    pivot: {x: 0.4011788, y: 0.16503063}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
