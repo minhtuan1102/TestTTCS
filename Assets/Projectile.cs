@@ -76,19 +76,25 @@ public class Projectile : MonoBehaviour
                         health.addEffect(effect);
                     }
 
-                    if (itemData.special.areaAttack)
+                    try
                     {
-                        GameManager.SummonAttackArea(
-                         rb.position,
-                         Quaternion.Euler(0, 0, 0),
-                         new AreaInstance(
-                             itemData.special.damage,
-                             itemData.special.knockBack,
-                             itemData.special.effects,
-                             itemData.special.hitbox,
-                             Game.g_enemies.transform
-                             )
-                        );
+                        if (itemData.special.areaAttack)
+                        {
+                            GameManager.SummonAttackArea(
+                             rb.position,
+                             Quaternion.Euler(0, 0, 0),
+                             new AreaInstance(
+                                 itemData.special.damage,
+                                 itemData.special.knockBack,
+                                 itemData.special.effects,
+                                 itemData.special.hitbox,
+                                 Game.g_enemies.transform
+                                 )
+                            );
+                        }
+                    } catch
+                    {
+
                     }
 
                     Destroy(gameObject);

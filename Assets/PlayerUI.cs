@@ -197,6 +197,9 @@ public class PlayerUI : MonoBehaviour
             if (player.fallen)
             {
                 Fallen_UI.gameObject.SetActive(true);
+            } else
+            {
+                Fallen_UI.gameObject.SetActive(false);
             }
         }
 
