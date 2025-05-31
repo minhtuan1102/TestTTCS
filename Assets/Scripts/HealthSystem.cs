@@ -110,7 +110,27 @@ public class HealthSystem : MonoBehaviour
                             switch (mod.modify_ID)
                             {
                                 case "HP":
-                                    TakeDamage((int)(mod.modify_IntValue * amount));
+                                    if (mod.modify_IntValue > 0)
+                                    {
+                                        TakeDamage((int)(mod.modify_IntValue * amount));
+                                    } else
+                                    {
+                                        Heal((int)((0-mod.modify_IntValue) * amount));
+                                    }
+                                    break;
+                                case "MP":
+                                    Player player = transform.GetComponent<Player>();
+                                    if (player != null)
+                                    {
+                                        if (mod.modify_IntValue > 0)
+                                        {
+                                            player.LoseMana(amount * mod.modify_IntValue);
+                                        }
+                                        else
+                                        {
+                                            player.GainMana(amount * (0-mod.modify_IntValue));
+                                        }
+                                    }
                                     break;
                                 default:
                                     break;

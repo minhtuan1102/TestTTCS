@@ -42,11 +42,13 @@ MonoBehaviour:
   damage: 10
   cooldown: 0.25
   knockBack: 0
+  knockBack_Duration: 1
   userKnockBack: 0
+  userKnockBack_Duration: 1
   durability: 100
   weaponType: 0
   effects:
-  - _show: 0
+  - _show: 1
     timer: 0
     tick: 1
     lifeTime: 10
@@ -77,5 +79,6 @@ MonoBehaviour:
   clipSize: 0
   reload: 0
   projectile: {fileID: 0}
+  projectileDat: {fileID: 0}
   projectilePath: 
   options: []

@@ -354,6 +354,13 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
     public void GainMana(float value)
     {
         _currentMana = Mathf.Min(MaxMana, _currentMana + value);
+        view.RPC("UpdateMana", RpcTarget.Others, _currentMana);
+    }
+
+    public void LoseMana(float value)
+    {
+        _currentMana = Mathf.Max(0, _currentMana - value);
+        view.RPC("UpdateMana", RpcTarget.Others, _currentMana);
     }
 
     public void Revive()
