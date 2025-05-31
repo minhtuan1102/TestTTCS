@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using System.Linq;
+using NUnit.Framework.Interfaces;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -311,6 +313,11 @@ public class PlayerInventory : MonoBehaviour
                         }
                     }
 
+                    foreach (DamageEffect effect in Items[index].itemRef.effects.ToList<DamageEffect>())
+                    {
+                        player.health.addEffect(effect);
+                    }
+
                     Items[index].amount -= 1;
                     view.RPC("RPC_UpdateItem", RpcTarget.Others, id, (new ItemInstanceSender(Items[index])).ToJson());
                     if (Items[index].amount <= 0)
@@ -390,6 +397,12 @@ public class PlayerInventory : MonoBehaviour
                                         break;
                                 }
                             }
+
+                            foreach (DamageEffect effect in itemData.itemRef.effects.ToList<DamageEffect>())
+                            {
+                                player.health.addEffect(effect);
+                            }
+
                             PhotonNetwork.Destroy(item.gameObject);
                             healthSystem.UpdateStats();
                             player.UpdateCash(player.cash);

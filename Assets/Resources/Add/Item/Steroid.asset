@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d95becf514a8fab4eba9261a56046be2, type: 3}
-  m_Name: Analgesic
+  m_Name: Steroid
   m_EditorClassIdentifier: 
-  itemName: Analgesic
+  itemName: Steroid
   itemType: Consumable
   _itemType: 2
   icon: {fileID: -9059610609486679346, guid: a425a6bf70778f742ace48b10a1db61a, type: 3}
-  itemID: Analgesic
-  itemDescription: A pill that regen HP
+  itemID: Steroid
+  itemDescription: A pill that regen MP
   model: {fileID: 1281956672415766616, guid: 2ceecf31d2b730047a0a2660c731e3db, type: 3}
   weight: 0
   value: 0
@@ -37,8 +37,8 @@ MonoBehaviour:
   - _show: 0
     modify_ID: HP
     modify_Type: 0
-    modify_Des: + 20 HP
-    modify_IntValue: 20
+    modify_Des: + 5 HP
+    modify_IntValue: 5
     modify_FloatValue: 0
     modify_BoolValue: 0
     modify_StringValue: 
@@ -66,10 +66,10 @@ MonoBehaviour:
     canOveride: 0
     effects:
     - _show: 0
-      modify_ID: HP
+      modify_ID: MP
       modify_Type: 0
       modify_Des: 
-      modify_IntValue: -10
+      modify_IntValue: -15
       modify_FloatValue: 0
       modify_BoolValue: 0
       modify_StringValue: 
