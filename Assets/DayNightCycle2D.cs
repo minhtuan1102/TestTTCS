@@ -120,8 +120,8 @@ public class DayNightCycle2D : MonoBehaviour
                 return entry.item;
         }
 
-    return default;
-}
+        return default;
+    }
 
     void Generate(int _day)
     {
@@ -165,7 +165,9 @@ public class DayNightCycle2D : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            //Generate(0);
+            currentDay = 1;
+            hour = 0;
+            minute = 0;
         }
     }
 
