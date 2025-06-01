@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,6 +109,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -119,7 +132,7 @@ TextureImporter:
         x: 291
         y: 483
         width: 422
-        height: 390
+        height: 400
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,12 +195,12 @@ TextureImporter:
       name: Bruce_3
       rect:
         serializedVersion: 2
-        x: 504
+        x: 553
         y: 94
-        width: 152
-        height: 161
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 99
+        height: 133
+      alignment: 9
+      pivot: {x: 0.33740357, y: 0.9836077}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -226,10 +239,10 @@ TextureImporter:
       name: Bruce_5
       rect:
         serializedVersion: 2
-        x: 392
-        y: 254
-        width: 229
-        height: 217
+        x: 427
+        y: 294
+        width: 193
+        height: 180
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,6 +253,28 @@ TextureImporter:
       bones: []
       spriteID: 4e9f77180653152459efe7938dceb8a6
       internalID: 1995699301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bruce_6
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 73
+        width: 508
+        height: 858
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25c63b553abe6f44e9e02f102047d02a
+      internalID: 1085110893
       vertices: []
       indices: 
       edges: []
@@ -264,6 +299,7 @@ TextureImporter:
       Bruce_3: -1755299958
       Bruce_4: 31098536
       Bruce_5: 1995699301
+      Bruce_6: 1085110893
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

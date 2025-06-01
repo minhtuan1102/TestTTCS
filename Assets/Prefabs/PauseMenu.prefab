@@ -173,7 +173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6, y: 8.2}
+  m_AnchoredPosition: {x: -6, y: 8.200012}
   m_SizeDelta: {x: -283.3737, y: -237.2621}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9133936798960895275
@@ -747,7 +747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3843714462626157601
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1514,5 +1514,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 2886336690102510532}
+  confirmExitPanel: {fileID: 118029361474862425}
   continueButton: {fileID: 4613067375292487602}
   exitButton: {fileID: 6264458111747562941}
+  yesButton: {fileID: 238490997642904959}
+  noButton: {fileID: 5916684569147868768}

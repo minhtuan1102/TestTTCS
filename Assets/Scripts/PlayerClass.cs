@@ -38,6 +38,7 @@ public class PlayerClass : ScriptableObject
     public Sprite Hair;
     public Sprite Body;
     public Sprite Leg;
+    public Sprite Hand;
 
     [Space]
 

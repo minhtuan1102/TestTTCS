@@ -15,8 +15,8 @@ MonoBehaviour:
   id: 0
   class_Name: Survival
   des: 
-  icon: {fileID: 1462799768519014029, guid: ccb1d94b52848e442a81592e141ec39e, type: 3}
-  health: 100
+  icon: {fileID: -7905857065169784764, guid: cb449c9091e1cb64799f6979c93c090b, type: 3}
+  health: 150
   mana: 100
   armor: 0
   speed: 7
@@ -26,6 +26,7 @@ MonoBehaviour:
   Hair: {fileID: 6291076074326483787, guid: 36dbf44e961ef0745a607155094e9de7, type: 3}
   Body: {fileID: -6199720543617963891, guid: 2c96a1fee1d899b48a7fa2bf029a363b, type: 3}
   Leg: {fileID: 1730826577450134818, guid: ca865881edbe3924490d41083bdccc87, type: 3}
+  Hand: {fileID: -8529268355625852236, guid: 36c3b74a4a3fa3145aaa1e97cd553919, type: 3}
   loadout:
   - itemID: 0
     amount: 1
@@ -36,7 +37,7 @@ MonoBehaviour:
     reloading: 0
     attachments: []
   - itemID: 1
-    amount: 5
+    amount: 10
     holder: {fileID: 0}
     storage: {fileID: 0}
     itemRef: {fileID: 11400000, guid: 2393bdcf2cd69744d81ba71a7bc443cc, type: 2}

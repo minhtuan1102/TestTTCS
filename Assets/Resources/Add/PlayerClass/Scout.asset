@@ -15,31 +15,32 @@ MonoBehaviour:
   id: 0
   class_Name: Scout
   des: 
-  icon: {fileID: -4261161032346744600, guid: ae4798baef4e3074fa90dd622e6809d9, type: 3}
+  icon: {fileID: 8029351004527951999, guid: 498450992eb68f544ad3d018f52ee8f9, type: 3}
   health: 50
   mana: 150
   armor: 0
   speed: 10
-  maxSpeed: 15
-  range: 10
-  Head: {fileID: -1071523155210718792, guid: 12d276b6eb16b2a4e85f334e79864319, type: 3}
-  Hair: {fileID: 6291076074326483787, guid: 36dbf44e961ef0745a607155094e9de7, type: 3}
-  Body: {fileID: -6199720543617963891, guid: 2c96a1fee1d899b48a7fa2bf029a363b, type: 3}
-  Leg: {fileID: 1730826577450134818, guid: ca865881edbe3924490d41083bdccc87, type: 3}
+  maxSpeed: 10
+  range: 8
+  Head: {fileID: 8029351004527951999, guid: a48de99b0f2a9214b993604812d0dccc, type: 3}
+  Hair: {fileID: 0}
+  Body: {fileID: -1994130229, guid: a48de99b0f2a9214b993604812d0dccc, type: 3}
+  Leg: {fileID: -671638768, guid: a48de99b0f2a9214b993604812d0dccc, type: 3}
+  Hand: {fileID: -8529268355625852236, guid: 36c3b74a4a3fa3145aaa1e97cd553919, type: 3}
   loadout:
   - itemID: 0
-    amount: 64
+    amount: 1
     holder: {fileID: 0}
     storage: {fileID: 0}
-    itemRef: {fileID: 11400000, guid: 5b116e820fc78ff4dbbcc8605efe029f, type: 2}
-    ammo: 10
-    reloading: 0
+    itemRef: {fileID: 11400000, guid: 5b919e03852635f46bf8bdc24baa70ad, type: 2}
+    ammo: 0
+    reloading: 1
     attachments: []
   - itemID: 1
-    amount: 99
+    amount: 5
     holder: {fileID: 0}
     storage: {fileID: 0}
-    itemRef: {fileID: 11400000, guid: 2393bdcf2cd69744d81ba71a7bc443cc, type: 2}
+    itemRef: {fileID: 11400000, guid: 251f376ce5cccdf4c975e9377b4ff5c5, type: 2}
     ammo: 0
     reloading: 0
     attachments: []

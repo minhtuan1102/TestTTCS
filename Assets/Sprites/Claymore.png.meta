@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Claymore_0: -5358462057660606988
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -20,7 +20,6 @@ public class PauseMenu : MonoBehaviour
         // Gắn sự kiện cho các nút
         continueButton.onClick.AddListener(ContinueGame);
         exitButton.onClick.AddListener(ShowConfirmExitPanel);
-        yesButton.onClick.AddListener(ExitGame);
         noButton.onClick.AddListener(HideConfirmExitPanel);
     }
 
@@ -59,9 +58,4 @@ public class PauseMenu : MonoBehaviour
         pausePanel.SetActive(true);         // Hiển thị lại panel pause
     }
 
-    // Thoát game và quay về scene "StartScene"
-    void ExitGame()
-    {
-        SceneManager.LoadScene("Start");  // Quay lại scene "StartScene"
-    }
 }

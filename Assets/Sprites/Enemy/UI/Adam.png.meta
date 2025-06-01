@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 640
+  spritePixelsToUnits: 1300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -173,13 +173,13 @@ TextureImporter:
       name: Adam_2
       rect:
         serializedVersion: 2
-        x: 413
-        y: 270
-        width: 210
-        height: 164
+        x: 415
+        y: 280
+        width: 205
+        height: 179
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 3, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -195,12 +195,12 @@ TextureImporter:
       name: Adam_3
       rect:
         serializedVersion: 2
-        x: 524
-        y: 104
-        width: 129
-        height: 165
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 547
+        y: 105
+        width: 106
+        height: 130
+      alignment: 9
+      pivot: {x: 0.3437949, y: 0.99743193}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -257,6 +257,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Adam_6
+      rect:
+        serializedVersion: 2
+        x: 619
+        y: 244
+        width: 68
+        height: 125
+      alignment: 9
+      pivot: {x: 0.29858315, y: 0.55800855}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ada5d3ec8356deb479c585e4f5f70611
+      internalID: -540705298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -277,6 +299,7 @@ TextureImporter:
       Adam_3: -671638768
       Adam_4: -1281993655
       Adam_5: 581366330
+      Adam_6: -540705298
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

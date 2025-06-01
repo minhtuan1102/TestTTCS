@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      DemonDog_body_0: 8542088788942558737
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

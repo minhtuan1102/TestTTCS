@@ -184,6 +184,8 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
         model_Head.GetComponent<SpriteRenderer>().sprite = _class.Head;
         model_Hair.GetComponent<SpriteRenderer>().sprite = _class.Hair;
 
+        main_hand.GetComponent<SpriteRenderer>().sprite = _class.Hand;
+
         Tilemap tilemap = GetComponent<Tilemap>();
         if (tilemap != null)
         {

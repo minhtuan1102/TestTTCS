@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class LeaveGame : MonoBehaviourPunCallbacks
 {
+
     public void BackToMenu()
     {
         PhotonNetwork.LeaveRoom();

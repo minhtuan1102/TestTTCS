@@ -12,6 +12,7 @@ public class TutorialController : MonoBehaviour
 
     void Start()
     {
+        notificationLayer.SetActive(true);
         nextButton.onClick.AddListener(ShowMinimapPanel);
         gotItButton.onClick.AddListener(CloseTutorial);
     }

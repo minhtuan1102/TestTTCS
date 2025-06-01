@@ -1149,6 +1149,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   lookAtPos: {x: 0, y: 0, z: 0}
   lookDir: 0
+  main_hand: {fileID: 0}
   Hand_Radius: 0.5
   recoilForce: 2
   recoilRecoverySpeed: 5
@@ -1156,6 +1157,7 @@ MonoBehaviour:
   swingSpeed: 10
   swingOffset: 30
   swingRecoil: -90
+  model: {fileID: 0}
 --- !u!114 &6900542119324737675
 MonoBehaviour:
   m_ObjectHideFlags: 0

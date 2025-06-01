@@ -269,7 +269,7 @@ public class EnemyAI : MonoBehaviour
                         if (CheckIfNear(target.position, enemyMeleeAttack.Range))
                         {
                             waitingThresdhold = 0;
-                            meleeAttacks[i] -= enemyMeleeAttack.Attack_Rate;
+                            meleeAttacks[i] =-enemyMeleeAttack.Attack_Rate;
                             waitingTimer = -data.WaitTime;
 
                             GameManager.SummonAttackArea(
@@ -294,10 +294,10 @@ public class EnemyAI : MonoBehaviour
                         if (CheckIfNear(target.position, enemyRangedAttack.Range))
                         {
                             waitingThresdhold = 0;
-                            rangedAttacks[i] -= enemyRangedAttack.Attack_Rate;
+                            rangedAttacks[i] = -enemyRangedAttack.Attack_Rate;
                             waitingTimer = -data.WaitTime;
 
-                            for (int j = 0; j < enemyRangedAttack.ranged_clipSize; i++)
+                            for (int j = 0; j < enemyRangedAttack.ranged_clipSize; j++)
                             {
                                 float look = enemy.lookDir + UnityEngine.Random.Range(-enemyRangedAttack.ranged_spread, enemyRangedAttack.ranged_spread);
 
