@@ -42,7 +42,7 @@ MonoBehaviour:
   damage: 10
   cooldown: 0.25
   knockBack: 0
-  knockBack_Duration: 1
+  knockBack_Duration: 0
   userKnockBack: 0
   userKnockBack_Duration: 1
   durability: 100
@@ -78,6 +78,7 @@ MonoBehaviour:
   reload_manaConsume: 0
   clipSize: 0
   reload: 0
+  emit: 0
   projectile: {fileID: 0}
   projectileDat: {fileID: 0}
   projectilePath: 

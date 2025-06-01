@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 200
   knockBack: 5
+  knockBackDuration: 0
   areaAttack: 1
   hitbox: {fileID: 3290753383281791754, guid: 46549fb2cb4bd174e88a5c6e395e3136, type: 3}
   effects: []
+  emitEffect: 1
+  animEffect: {fileID: 936932998295524300, guid: 82367b42128cd064ea8f66c4aed78cba, type: 3}

@@ -42,7 +42,12 @@ MonoBehaviour:
   damage: 25
   cooldown: 1
   knockBack: 0
+  knockBack_Duration: 0
   userKnockBack: 0
+  userKnockBack_Duration: 1
+  durability: 100
+  weaponType: 0
+  effects: []
   canMelee: 0
   hitbox: {fileID: 0}
   mele_manaConsume: 0
@@ -56,6 +61,8 @@ MonoBehaviour:
   reload_manaConsume: 0
   clipSize: 0
   reload: 0
+  emit: 0
   projectile: {fileID: 7422263984037488310, guid: 4864d61feeb715a42a8d396f8089c772, type: 3}
+  projectileDat: {fileID: 0}
   projectilePath: 
   options: []

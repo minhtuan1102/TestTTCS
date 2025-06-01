@@ -1,9 +1,11 @@
 ﻿using NUnit.Framework.Internal;
 using Photon.Pun;
 using System;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 using Random = UnityEngine.Random;
 
 public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
@@ -27,7 +29,7 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
     private SpriteRenderer skin;
     public float lookDir;
 
-    private GameObject main_hand;
+    public GameObject main_hand;
     public float Hand_Radius = 0.5f;
     private float rotationSpeed = 10f;
 
@@ -46,13 +48,15 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
     [HideInInspector] private float targetSwing = 0f; // The target swing angle (can be set dynamically)
     [HideInInspector] private float inverse = 1f;
 
-    [HideInInspector] private Transform model;
+    [HideInInspector] public Transform model;
 
     private bool isMoving = false;
     private float legProgresion = 0f;
 
     private Transform leg_R;
     private Transform leg_L;
+    private Transform leg_R2;
+    private Transform leg_L2;
     private Transform body;
 
     private float leg_R_swing = 0f;
@@ -89,6 +93,15 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
 
         leg_L = model.Find("LegL").transform;
         leg_R = model.Find("LegR").transform;
+
+        try
+        {
+            leg_L2 = model.Find("LegL2").transform;
+            leg_R2 = model.Find("LegR2").transform;
+        } catch
+        {
+
+        }
 
         rb.gravityScale = 0;
         rb.freezeRotation = true;
@@ -129,6 +142,26 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
     {
         HealthSystem healthSystem = transform.GetComponent<HealthSystem>();
         healthSystem.SetArmor((int)amount);
+    }
+
+    public T GetRandomWeightedItem<T>(List<WeightedItem<T>> list)
+    {
+        int totalWeight = 0;
+
+        foreach (var entry in list)
+            totalWeight += entry.weight;
+
+        int randomValue = UnityEngine.Random.Range(0, totalWeight);
+        int currentWeight = 0;
+
+        foreach (var entry in list)
+        {
+            currentWeight += entry.weight;
+            if (randomValue < currentWeight)
+                return entry.item;
+        }
+
+        return default;
     }
 
     void Update()
@@ -184,11 +217,19 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
                 new Vector3(0, 0, leg_L_swing)
                 );
             leg_L.localRotation = legLRotation;
+            if (leg_R2 != null)
+            {
+                leg_R2.localRotation = legLRotation;
+            }
 
             Quaternion legRRotation = Quaternion.Euler(
                 new Vector3(0, 0, leg_R_swing)
                 );
             leg_R.localRotation = legRRotation;
+            if (leg_L2 != null)
+            {
+                leg_L2.localRotation = legLRotation;
+            }
 
             model.localPosition = new Vector3(0, body_swing, 0);
 
@@ -244,11 +285,21 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
 
                 if (data.Loot.Count > 0)
                 {
-                    int randomLoot = Random.Range(0, data.Loot.Count);
-                    foreach (ItemInstance item in data.Loot[randomLoot].Items)
+                    LootPackage randomLoot = GetRandomWeightedItem<LootPackage>(data.Loot);
+
+                    foreach (ItemInstance item in randomLoot.Items)
                     {
                         GameManager.SpawnItem(item, transform.position, transform.rotation);
                     }
+                }
+
+                if (data.canExplode)
+                {
+                    GameManager.SummonAttackArea(
+                        transform.position,
+                        UnityEngine.Quaternion.Euler(0, 0, lookDir),
+                        new AreaInstance(data.explode_Damage, data.explode_KnockBack, data.explode_KnockBackDuration, data.explode_Effect, data.explode_Hitbox, Game.g_players.transform)
+                        );
                 }
 
                 PhotonNetwork.Destroy(gameObject);

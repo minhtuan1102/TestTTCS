@@ -30,6 +30,7 @@ public class PlayerInventory : MonoBehaviour
 
     private string currentWeaponModel = "";
     private Transform weaponMuzzle;
+    private Transform particleEmitter;
 
     private HealthSystem healthSystem;
     private Player player;
@@ -41,6 +42,8 @@ public class PlayerInventory : MonoBehaviour
 
     private float timer = 0f;
     private float atkCooldown = 0f;
+
+    private float reloadCheckTimer = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -284,9 +287,11 @@ public class PlayerInventory : MonoBehaviour
                                 Items[index].itemRef.bulletSpeed,
                                 Items[index].itemRef.damage,
                                 Items[index].itemRef.knockBack,
+                                Items[index].itemRef.knockBack_Duration,
                                 Items[index].itemRef.bulletLifetime,
                                 Items[index].itemRef.effects,
-                                Items[index].itemRef.projectileDat
+                                Items[index].itemRef.projectileDat,
+                                Game.g_enemies.transform
                             ),
                             Items[index].itemRef.projectile
                         );
@@ -541,6 +546,7 @@ public class PlayerInventory : MonoBehaviour
                 wp_model.GetComponent<SpriteRenderer>().sortingOrder = player.HandItem.parent.GetComponent<SpriteRenderer>().sortingOrder - 1;
 
                 weaponMuzzle = wp_model.transform.Find("Muzzle");
+                particleEmitter = wp_model.transform.Find("Particle");
             }
         }
     }
@@ -680,6 +686,23 @@ public class PlayerInventory : MonoBehaviour
         if (view.IsMine)
         {
             scanTimer += Time.fixedDeltaTime;
+            reloadCheckTimer += Time.fixedDeltaTime;
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                PlayerUI.useMainWP = !(PlayerUI.useMainWP);
+                PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateWP();
+            }
+
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                PlayerUI.UI.transform.GetComponent<PlayerUI>().ToggleInventory();
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Reload();
+            }
 
             if (scanTimer > 0f)
             {
@@ -772,13 +795,13 @@ public class PlayerInventory : MonoBehaviour
                     shopPower += Time.fixedDeltaTime;
                     if (shopPower >= 1f)
                     {
-                        
+
                         PlayerUI playerUI = PlayerUI.UI.transform.GetComponent<PlayerUI>();
 
                         if (!playerUI.Shop_UI.gameObject.activeSelf)
                         {
                             playerUI.OpenShop(shopOwner);
-                        } 
+                        }
 
                         shopPower = 0f;
                         nearestShop = null;
@@ -791,17 +814,6 @@ public class PlayerInventory : MonoBehaviour
 
                 canvas.GetComponent<Image>().fillAmount = Mathf.Clamp01(shopPower / 1f);
             }
-
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                PlayerUI.useMainWP = !(PlayerUI.useMainWP);
-                PlayerUI.UI.transform.GetComponent<PlayerUI>().UpdateWP();
-            }
-
-            if (Input.GetKeyDown(KeyCode.B))
-            {
-                PlayerUI.UI.transform.GetComponent<PlayerUI>().ToggleInventory();
-            }
         }
 
         timer += Time.deltaTime;
@@ -812,6 +824,14 @@ public class PlayerInventory : MonoBehaviour
             player.swingOffset = holdingItem.itemRef.swingOffset;
             GetWeaponModel(holdingItem.itemRef.itemID);
             player.HandItem.gameObject.SetActive(true);
+            if (holdingItem.itemRef.canShoot && holdingItem.reloading && reloadCheckTimer>=0)
+            {
+                if (view.IsMine)
+                {
+                    CheckReload();
+                }
+                reloadCheckTimer -= 0.5f;
+            }
         }
         else
         {
@@ -916,6 +936,12 @@ public class PlayerInventory : MonoBehaviour
 
                     Vector3 CurrentPos = pos;
 
+                    if (holdingItem.ammo > 0)
+                    {
+                        AudioSource audioSource = weaponMuzzle.GetComponent<AudioSource>();
+                        if (audioSource != null) audioSource.Play();
+                    }
+
                     for (int i = 0; i < holdingItem.itemRef.fireAmount; i++)
                     {
                         GameManager.SummonProjectile(transform.gameObject,
@@ -925,12 +951,20 @@ public class PlayerInventory : MonoBehaviour
                                 holdingItem.itemRef.bulletSpeed,
                                 holdingItem.itemRef.damage,
                                 holdingItem.itemRef.knockBack,
+                                holdingItem.itemRef.knockBack_Duration,
                                 holdingItem.itemRef.bulletLifetime,
                                 holdingItem.itemRef.effects,
-                                holdingItem.itemRef.projectileDat
+                                holdingItem.itemRef.projectileDat,
+                                Game.g_enemies.transform
                             ),
                             holdingItem.itemRef.projectile
                         );
+                    }
+
+                    if (particleEmitter != null)
+                    {
+                        ParticleSystem particle = particleEmitter.GetComponent<ParticleSystem>();
+                        particle.Emit(holdingItem.itemRef.emit);
                     }
 
                     holdingItem.amount -= 1;
@@ -962,6 +996,7 @@ public class PlayerInventory : MonoBehaviour
                          new AreaInstance(
                              holdingItem.itemRef.damage,
                              holdingItem.itemRef.knockBack,
+                             holdingItem.itemRef.knockBack_Duration,
                              holdingItem.itemRef.effects,
                              holdingItem.itemRef.hitbox, 
                              Game.g_enemies.transform
@@ -972,13 +1007,6 @@ public class PlayerInventory : MonoBehaviour
                 atkCooldown += holdingItem.itemRef.cooldown;
             }
 
-            if (holdingItem.amount == 0)
-            {
-                int index = GetItemIndexFromID(holdingItem.itemID);
-                view.RPC("RPC_UpdateItem", RpcTarget.Others, holdingItem.itemID, (new ItemInstanceSender(Items[index])).ToJson());
-                Items.RemoveAt(index);
-            }
-
             if (atkCooldown <= 0f && holdingItem.reloading)
             {
                 if (player.ConsumeMana(holdingItem.itemRef.reload_manaConsume))
@@ -986,6 +1014,13 @@ public class PlayerInventory : MonoBehaviour
                     holdingItem.reloading = false;
                     holdingItem.ammo = holdingItem.itemRef.clipSize;
                 }
+            }
+
+            if (holdingItem.amount == 0)
+            {
+                int index = GetItemIndexFromID(holdingItem.itemID);
+                view.RPC("RPC_UpdateItem", RpcTarget.Others, holdingItem.itemID, (new ItemInstanceSender(Items[index])).ToJson());
+                Items.RemoveAt(index);
             }
         }
     }
@@ -1000,9 +1035,70 @@ public class PlayerInventory : MonoBehaviour
             if (atkCooldown <= 0f && (holdingItem.itemRef.canShoot || holdingItem.itemRef.canMelee) && holdingItem.amount>0)
             {
                 Vector3 CurrentPos = transform.position;
-                if (weaponMuzzle != null) CurrentPos = weaponMuzzle.transform.position;
+                if (weaponMuzzle != null)
+                {
+                    CurrentPos = weaponMuzzle.transform.position;
+                }
 
                 view.RPC("RPC_Attack", RpcTarget.All, CurrentPos, angle);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void RPC_Reload(bool toggle)
+    {
+        if (holdingItem != null && holdingItem.itemRef)
+        {
+            if (holdingItem.itemRef.canShoot && holdingItem.amount>0 && !holdingItem.reloading)
+            {
+                holdingItem.ammo = 0;
+                atkCooldown = holdingItem.itemRef.reload;
+                holdingItem.reloading = true;
+            }
+        }
+    }
+
+    [PunRPC]
+    private void RPC_CheckReload(bool toggle)
+    {
+        if (holdingItem != null && holdingItem.itemRef)
+        {
+            if (atkCooldown <= 0f && holdingItem.reloading)
+            {
+                if (player.ConsumeMana(holdingItem.itemRef.reload_manaConsume))
+                {
+                    holdingItem.reloading = false;
+                    holdingItem.ammo = holdingItem.itemRef.clipSize;
+                }
+            }
+        }
+    }
+
+    public void CheckReload()
+    {
+        if (holdingItem != null && holdingItem.itemRef)
+        {
+            if (atkCooldown <= 0f && holdingItem.reloading)
+            {
+                if (player.CurrentMana >= holdingItem.itemRef.reload_manaConsume)
+                {
+                    if (holdingItem.itemRef.canShoot && holdingItem.amount > 0 && holdingItem.ammo < holdingItem.itemRef.clipSize)
+                    {
+                        view.RPC("RPC_CheckReload", RpcTarget.All, true);
+                    }
+                }
+            }
+        }
+    }
+
+    public void Reload()
+    {
+        if (holdingItem != null && holdingItem.itemRef)
+        {
+            if (holdingItem.itemRef.canShoot && holdingItem.amount>0 && holdingItem.ammo<holdingItem.itemRef.clipSize)
+            {
+                view.RPC("RPC_Reload", RpcTarget.All, true);
             }
         }
     }

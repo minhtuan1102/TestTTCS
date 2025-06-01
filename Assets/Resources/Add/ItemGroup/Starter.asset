@@ -22,17 +22,17 @@ MonoBehaviour:
       ammo: 0
       reloading: 0
       attachments: []
-    weight: 1
+    weight: 10
   - item:
       itemID: 0
       amount: 1
       holder: {fileID: 0}
       storage: {fileID: 0}
-      itemRef: {fileID: 11400000, guid: 351345178fc22af42b01b59618fb8808, type: 2}
+      itemRef: {fileID: 11400000, guid: 9c6679bb3d8c5af428be8b6e96bf590e, type: 2}
       ammo: 0
       reloading: 0
       attachments: []
-    weight: 1
+    weight: 10
   - item:
       itemID: 0
       amount: 30
@@ -43,3 +43,53 @@ MonoBehaviour:
       reloading: 1
       attachments: []
     weight: 1
+  - item:
+      itemID: 0
+      amount: 5
+      holder: {fileID: 0}
+      storage: {fileID: 0}
+      itemRef: {fileID: 11400000, guid: 04f66f5a63128f942b18c8b7b6b2ef1e, type: 2}
+      ammo: 0
+      reloading: 1
+      attachments: []
+    weight: 1
+  - item:
+      itemID: 0
+      amount: 1
+      holder: {fileID: 0}
+      storage: {fileID: 0}
+      itemRef: {fileID: 11400000, guid: 251f376ce5cccdf4c975e9377b4ff5c5, type: 2}
+      ammo: 0
+      reloading: 1
+      attachments: []
+    weight: 5
+  - item:
+      itemID: 0
+      amount: 10
+      holder: {fileID: 0}
+      storage: {fileID: 0}
+      itemRef: {fileID: 11400000, guid: 04f66f5a63128f942b18c8b7b6b2ef1e, type: 2}
+      ammo: 0
+      reloading: 1
+      attachments: []
+    weight: 5
+  - item:
+      itemID: 0
+      amount: 1
+      holder: {fileID: 0}
+      storage: {fileID: 0}
+      itemRef: {fileID: 11400000, guid: 24a029dcce6f707488f25ba57bd873f8, type: 2}
+      ammo: 0
+      reloading: 1
+      attachments: []
+    weight: 5
+  - item:
+      itemID: 0
+      amount: 1
+      holder: {fileID: 0}
+      storage: {fileID: 0}
+      itemRef: {fileID: 11400000, guid: 24a029dcce6f707488f25ba57bd873f8, type: 2}
+      ammo: 0
+      reloading: 1
+      attachments: []
+    weight: 5

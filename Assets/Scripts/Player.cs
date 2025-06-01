@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using TMPro;
 using Unity.Mathematics;
+using System.Linq;
 
 public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 {
@@ -17,6 +18,8 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
     public int cash = 0;
     public bool fallen = false;
     public float CurrentMana => _currentMana;
+
+    [SerializeField] private AudioSource _audioSource;
 
     // Vision Stats
 
@@ -116,6 +119,8 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
     public Transform model_Body;
     public Transform model_Pant_L;
     public Transform model_Pant_R;
+
+    public float stunTimer = 0f;
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
@@ -226,31 +231,41 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
         health.calculateArmor(inventory.Armor, inventory.holdingItem);
     }
 
+    private void Awake()
+    {
+        _audioSource = transform.GetComponent<AudioSource>();
+    }
+
     void Update()
     {
+        stunTimer += Time.fixedDeltaTime;
+
         if (view.IsMine && !fallen)
         {
-            // Get Input (WASD or Arrow Keys)
-            movement.x = Input.GetAxis("Horizontal");
-            movement.y = Input.GetAxis("Vertical");
-
             // If the player presses Q and is not already dashing, start the dash
             dashCooldownTimer += Time.fixedDeltaTime;
 
-            if (Input.GetKeyDown(KeyCode.Q) && !isDashing && dashCooldownTimer > 0f)
+            if (stunTimer > 0f)
             {
-                if (ConsumeMana(dashManaConsume))
-                {
-                    // Set the dash direction to the movement direction
-                    if (rb.linearVelocity.magnitude > 0)
-                    {
-                        moveDirrection = rb.linearVelocity.normalized;
-                    }
+                // Get Input (WASD or Arrow Keys)
+                movement.x = Input.GetAxis("Horizontal");
+                movement.y = Input.GetAxis("Vertical");
 
-                    // Start dashing
-                    isDashing = true;
-                    dashCooldownTimer = -dashCooldown;
-                    dashTime = 0;
+                if (Input.GetKeyDown(KeyCode.Q) && !isDashing && dashCooldownTimer > 0f)
+                {
+                    if (ConsumeMana(dashManaConsume))
+                    {
+                        // Set the dash direction to the movement direction
+                        if (rb.linearVelocity.magnitude > 0)
+                        {
+                            moveDirrection = rb.linearVelocity.normalized;
+                        }
+
+                        // Start dashing
+                        isDashing = true;
+                        dashCooldownTimer = -dashCooldown;
+                        dashTime = 0;
+                    }
                 }
             }
 
@@ -319,6 +334,35 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
         cash = amount;
     }
 
+    [PunRPC]
+    private void RPC_Stunned(float time)
+    {
+        stunTimer = time;
+    }
+
+    public void Stunned(float time)
+    {
+        view.RPC("RPC_Stunned", RpcTarget.All, time);
+    }
+
+    [PunRPC]
+    private void RPC_Knockback(float kb, Vector3 dir, float stun)
+    {
+        if (view.IsMine)
+        {
+            if (rb == null) return;
+            Stunned(stun);
+            Vector2 direction = dir.normalized;
+            rb.linearVelocity = Vector2.zero;
+            rb.AddForce(direction * kb, ForceMode2D.Impulse);
+        }
+    }
+
+    public void Knockback(float kb, Vector3 dir, float stun)
+    {
+        view.RPC("RPC_Knockback", RpcTarget.All, kb, dir, stun);
+    }
+
     public void UpdateCash(int amount)
     {
         cash = amount;
@@ -368,14 +412,7 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
         health.SetHealth((int)health.MaxHealth/2);
         fallen = false;
 
-        view.RPC("RPC_Fallen", RpcTarget.All, fallen);
-
-        model.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        onTopDisplay.Find("HealthBar").gameObject.SetActive(true);
-
-        Transform UI = GameObject.Find("PlayerUI").transform;
-        Transform Stats = UI.Find("PlayerStats");
-        Stats.Find("UI").gameObject.SetActive(true);
+        view.RPC("RPC_Fallen", RpcTarget.All, false);
     }
 
     [PunRPC]
@@ -390,6 +427,7 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
                 Transform UI = GameObject.Find("PlayerUI").transform;
                 Transform Stats = UI.Find("PlayerStats");
                 Stats.Find("UI").gameObject.SetActive(false);
+                onTopDisplay.Find("HealthBar").gameObject.SetActive(false);
             }
             else
             {
@@ -402,6 +440,7 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
                 Transform UI = GameObject.Find("PlayerUI").transform;
                 Transform Stats = UI.Find("PlayerStats");
                 Stats.Find("UI").gameObject.SetActive(true);
+                onTopDisplay.Find("HealthBar").gameObject.SetActive(false);
             }
             else
             {
@@ -458,11 +497,27 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
             {
                 // Apply acceleration-based force for smoother movement
                 rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, movement * maxSpeed, Time.fixedDeltaTime * acceleration);
+                if (!_audioSource.isPlaying)
+                {
+                    _audioSource.Play();
+                } 
             }
             else
             {
                 // Apply deceleration to slow down smoothly
                 rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.fixedDeltaTime * deceleration);
+                if (_audioSource.isPlaying)
+                {
+                    _audioSource.Stop();
+                }
+            }
+
+            if (fallen)
+            {
+                if (_audioSource.isPlaying)
+                {
+                    _audioSource.Stop();
+                }
             }
 
             Boolean lastMovingState = isMoving;

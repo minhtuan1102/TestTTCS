@@ -188,6 +188,7 @@ public class Item : ScriptableObject
 
         public int clipSize = 0;
         public float reload = 0f;
+        public int emit = 0;
 
         public GameObject projectile;
         public ProjectileItem projectileDat;

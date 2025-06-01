@@ -45,7 +45,7 @@ public class ItemInstanceButton : MonoBehaviour, IBeginDragHandler, IDragHandler
         {
             // Display Ammo
             GameObject ammoDisplay = transform.Find("Ammo").gameObject;
-            if (itemReference.canShoot && itemReference.isConsumable)
+            if (itemReference.canShoot && !itemReference.isConsumable)
             {
                 ammoDisplay.transform.GetComponent<TextMeshProUGUI>().SetText("Ammo:" + item.ammo + "/" + itemReference.clipSize);
                 ammoDisplay.SetActive(true);

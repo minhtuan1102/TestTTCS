@@ -1,9 +1,32 @@
 ﻿using NUnit.Framework.Interfaces;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+
+[System.Serializable]
+public class AreaInstance
+{
+    // Basic Stats
+    public float damage;
+    public float kb;
+    public float stun;
+    public GameObject collider;
+    public Transform group;
+    public List<DamageEffect> effects;
+
+    public AreaInstance(float damage, float kb, float stun, List<DamageEffect> effects, GameObject collider, Transform group)
+    {
+        this.damage = damage;
+        this.kb = kb;
+        this.stun = stun;
+        this.group = group;
+        this.collider = collider;
+        this.effects = effects;
+    }
+}
 
 public class AreaAttack : MonoBehaviour
 {
@@ -52,7 +75,7 @@ public class AreaAttack : MonoBehaviour
                 EnemyAI enemyAI = results[i].GetComponent<EnemyAI>();
                 if (enemyAI != null)
                 {
-                    enemyAI.Stunned(1f);
+                    enemyAI.Stunned(data.stun);
                 }
 
                 Knockback(results[i].GetComponent<Rigidbody2D>(), data.kb);

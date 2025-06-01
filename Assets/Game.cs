@@ -14,6 +14,8 @@ public class Game : MonoBehaviour
     public static GameObject g_projectiles;
     public static GameObject g_shops;
 
+    public static GameObject[] effects;
+
     public static Item[] items;
 
     public static EnemyData[] enemies;
@@ -46,10 +48,17 @@ public class Game : MonoBehaviour
             Game.enemies = Resources.LoadAll<EnemyData>("Add/Enemy");
             Game.player_Class = Resources.LoadAll<PlayerClass>("Add/PlayerClass");
 
+            Game.effects = Resources.LoadAll<GameObject>("Add/Effect");
+
             foreach (var obj in Game.enemies)
             {
                 obj.ID = obj.name;
                 obj.path = "Add/EnemyModel/" + obj.EnemyModel.name;
+            }
+
+            foreach (var obj in Game.effects)
+            {
+                Debug.Log(obj.name);
             }
         }
         else
