@@ -4,18 +4,24 @@ using UnityEngine.SceneManagement;  // Đừng quên import SceneManager
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject pausePanel;  // Panel hiển thị khi nhấn ESC
-    public Button continueButton;  // Nút tiếp tục game
-    public Button exitButton;      // Nút thoát game
+    public GameObject pausePanel;        
+    public GameObject confirmExitPanel;  
+    public Button continueButton;        
+    public Button exitButton;           
+    public Button yesButton;            
+    public Button noButton;             
 
     void Start()
     {
-        // Ẩn panel khi game bắt đầu
+        // Ẩn các panel khi game bắt đầu
         pausePanel.SetActive(false);
+        confirmExitPanel.SetActive(false);
 
         // Gắn sự kiện cho các nút
         continueButton.onClick.AddListener(ContinueGame);
-        exitButton.onClick.AddListener(ExitGame);
+        exitButton.onClick.AddListener(ShowConfirmExitPanel);
+        yesButton.onClick.AddListener(ExitGame);
+        noButton.onClick.AddListener(HideConfirmExitPanel);
     }
 
     void Update()
@@ -35,16 +41,27 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    // Tiếp tục game
     void ContinueGame()
     {
-        pausePanel.SetActive(false);  // Ẩn panel
+        pausePanel.SetActive(false); 
+    }
+
+    // Hiển thị panel xác nhận thoát game
+    void ShowConfirmExitPanel()
+    {
+        confirmExitPanel.SetActive(true);       
+    }
+
+    // Ẩn panel xác nhận thoát game
+    void HideConfirmExitPanel()
+    {
+        confirmExitPanel.SetActive(false);  // Ẩn panel xác nhận thoát
+        pausePanel.SetActive(true);         // Hiển thị lại panel pause
     }
 
     // Thoát game và quay về scene "StartScene"
     void ExitGame()
     {
-        // Quay lại scene "StartScene"
-        SceneManager.LoadScene("Start"); 
+        SceneManager.LoadScene("Start");  // Quay lại scene "StartScene"
     }
 }
