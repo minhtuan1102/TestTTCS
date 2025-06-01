@@ -16,10 +16,17 @@ MonoBehaviour:
   Point: 100
   Health: 200
   Speed: 1.5
-  Damage: 20
-  Range: 2
-  Attack_Rate: 5
-  Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+  meleeAttacks:
+  - delay: 0
+    waitTime: 2
+    Damage: 25
+    Range: 2
+    Attack_Rate: 3
+    Attack_KB: 0
+    Attack_KBDuration: 0
+    Attack_Effect: []
+    Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+  rangedAttacks: []
   WaitTime: 1
   EnemyModel: {fileID: 7300319063617135439, guid: cd4bc017cf1fa7d4cac397c4752b539d, type: 3}
   Detection_Range: 20
@@ -27,12 +34,46 @@ MonoBehaviour:
   Chasing_Time_Threshold: 1
   path: Add/EnemyModel/Enemy3
   Loot:
-  - Items:
-    - itemID: 1
-      amount: 0
-      holder: {fileID: 0}
-      storage: {fileID: 0}
-      itemRef: {fileID: 11400000, guid: 5b116e820fc78ff4dbbcc8605efe029f, type: 2}
-      ammo: 3
-      reloading: 0
-      attachments: []
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 80e785d0ba4b887429eaa88ebe79fd25, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 1
+  - item:
+      Items:
+      - itemID: 0
+        amount: 5
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 3862a6be148332948ac0df68458a50b2, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 15
+  - item:
+      Items:
+      - itemID: 0
+        amount: 3
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 3862a6be148332948ac0df68458a50b2, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 30
+  canExplode: 0
+  explode_Damage: 0
+  explode_KnockBack: 0
+  explode_KnockBackDuration: 0
+  explode_Hitbox: {fileID: 0}
+  explode_Effect: []
+  cloacked: 0
+  unCloakRange: 1
+  holdEnemy: 0
+  holdRange: 1

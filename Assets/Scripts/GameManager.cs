@@ -76,8 +76,7 @@ public class GameManager : MonoBehaviour
         GameObject bullet = Instantiate(model, pos, dir, Game.g_projectiles.transform);
         Projectile bullet_Projectile = bullet.GetComponent<Projectile>();
         bullet_Projectile.itemData = data;
-
-        bullet.SetActive(true);
+        bullet_Projectile.enabled = true;
     }
 
     // Command
@@ -100,6 +99,24 @@ public class GameManager : MonoBehaviour
         object[] data = new object[] { id };
         Debug.Log(dat.path);
         GameObject e_model = PhotonNetwork.InstantiateRoomObject(dat.path, pos, Quaternion.identity, 0, data);
+    }
+
+    [PunRPC]
+    public void RPC_SummonEffect(string id, Vector3 pos)
+    {
+        foreach (GameObject effect in Game.effects)
+        {
+            if (effect.name == id)
+            {
+                Instantiate(effect, pos, Quaternion.identity, Game.g_projectiles.transform);
+            }
+        }
+    }
+
+    public void SummonEffect(string id, Vector3 pos)
+    {
+        Debug.Log(id);
+        photonView.RPC("RPC_SummonEffect", RpcTarget.All, id, pos);
     }
 
     public void TrySpawnEnemy(EnemyData dat, Vector3 pos)

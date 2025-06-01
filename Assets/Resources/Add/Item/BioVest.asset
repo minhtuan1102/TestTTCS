@@ -17,12 +17,12 @@ MonoBehaviour:
   _itemType: 1
   icon: {fileID: 7763714682512589182, guid: cd5fdece658490d47aaca21621b585b5, type: 3}
   itemID: BioVest
-  itemDescription: Add protection.
+  itemDescription: A vest that can regen armor
   model: {fileID: 7085547375228859915, guid: c7b3995de2464f34ea134605be3fc180, type: 3}
   weight: 2
   value: 0
   armor_modelType: 1
-  armor_Model: {fileID: 7085547375228859915, guid: 98bfb44e2ebee36489178406c76eca83, type: 3}
+  armor_Model: {fileID: 7085547375228859915, guid: c7b3995de2464f34ea134605be3fc180, type: 3}
   armor_Sprite: {fileID: 309628545801974608, guid: 0f22fa58f154454459fe901f39632553, type: 3}
   hide_Hair: 1
   armorType: 1
@@ -61,6 +61,7 @@ MonoBehaviour:
   reload_manaConsume: 0
   clipSize: 0
   reload: 0
+  emit: 0
   projectile: {fileID: 0}
   projectileDat: {fileID: 0}
   projectilePath: 

@@ -17,7 +17,7 @@ MonoBehaviour:
   _itemType: 2
   icon: {fileID: 9062607142165174483, guid: 147329a1f78cb4643a19caff431a0b79, type: 3}
   itemID: Cash10
-  itemDescription: Very fresh apple
+  itemDescription: A $10 Bill
   model: {fileID: 1281956672415766616, guid: 3eeaf730d01523f4bbbe9b3102232656, type: 3}
   weight: 0
   value: 0
@@ -69,6 +69,8 @@ MonoBehaviour:
   reload_manaConsume: 0
   clipSize: 0
   reload: 0
+  emit: 0
   projectile: {fileID: 0}
+  projectileDat: {fileID: 0}
   projectilePath: 
   options: []

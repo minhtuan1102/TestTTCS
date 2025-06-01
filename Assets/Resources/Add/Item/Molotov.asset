@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: -8596323334576517715, guid: 730c8c1ced3fb864088bd623d9b1aae6, type: 3}
   itemID: Molotov
   itemDescription: Fire AOE
-  model: {fileID: 7422263984037488310, guid: 40ee6194da62e7643979fcd71cf513f6, type: 3}
+  model: {fileID: 1281956672415766616, guid: c12a8d62b7337334f8763a3ad038f5f3, type: 3}
   weight: 0
   value: 0
   armor_modelType: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
   swing: 40
   recoil: 0
   swingOffset: 0
-  damage: 50
+  damage: 30
   cooldown: 1
   knockBack: 0
   knockBack_Duration: 1
@@ -61,6 +61,7 @@ MonoBehaviour:
   reload_manaConsume: 0
   clipSize: 0
   reload: 0
+  emit: 0
   projectile: {fileID: 7422263984037488310, guid: 40ee6194da62e7643979fcd71cf513f6, type: 3}
   projectileDat: {fileID: 11400000, guid: 5edee3617606ee944bcfc567d9845c43, type: 2}
   projectilePath: 

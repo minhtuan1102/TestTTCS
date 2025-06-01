@@ -17,24 +17,33 @@ MonoBehaviour:
   _itemType: 2
   icon: {fileID: 1161488873043119445, guid: df2c05795e8a12947872b01e2919b0e9, type: 3}
   itemID: Apple
-  itemDescription: Very fresh apple
+  itemDescription: Very fresh apple. Heal HP and MP.
   model: {fileID: 1281956672415766616, guid: d0d61e8b8d0a6c8468fc71fbf74d2e9a, type: 3}
   weight: 0
   value: 0
+  armor_modelType: 0
+  armor_Model: {fileID: 0}
+  armor_Sprite: {fileID: 0}
+  hide_Hair: 0
+  armorType: 0
   wearSlot: 0
   armor: 0
   armor_regen: 0
+  defense: 0
+  useOnDelete: 0
   isConsumable: 1
   effectDescription: Heal HP and MP
   consumeEffect:
-  - modify_ID: HP
+  - _show: 0
+    modify_ID: HP
     modify_Type: 0
     modify_Des: + 10 HP
     modify_IntValue: 10
     modify_FloatValue: 0
     modify_BoolValue: 0
     modify_StringValue: 
-  - modify_ID: MP
+  - _show: 0
+    modify_ID: MP
     modify_Type: 0
     modify_Des: + 10 MP
     modify_IntValue: 10
@@ -48,6 +57,13 @@ MonoBehaviour:
   swingOffset: 0
   damage: 1
   cooldown: 1
+  knockBack: 0
+  knockBack_Duration: 1
+  userKnockBack: 0
+  userKnockBack_Duration: 1
+  durability: 100
+  weaponType: 0
+  effects: []
   canMelee: 0
   hitbox: {fileID: 0}
   mele_manaConsume: 0
@@ -61,6 +77,8 @@ MonoBehaviour:
   reload_manaConsume: 0
   clipSize: 0
   reload: 0
+  emit: 0
   projectile: {fileID: 0}
+  projectileDat: {fileID: 0}
   projectilePath: 
   options: []

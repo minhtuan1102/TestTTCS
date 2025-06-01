@@ -7,8 +7,18 @@ public class ProjectileItem : ScriptableObject
 {
     public float damage = 0f;
     public float knockBack = 0f;
-
+    public float knockBackDuration = 0f;
     public bool areaAttack = false;
     public GameObject hitbox;
     public List<DamageEffect> effects = new List<DamageEffect>();
+
+    [Space]
+
+    public bool emitEffect = false;
+    public GameObject animEffect;
+
+    [Space]
+
+    public bool trap = false;
+
 }

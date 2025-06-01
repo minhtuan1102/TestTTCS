@@ -21,9 +21,16 @@ MonoBehaviour:
   model: {fileID: 6994442434215011227, guid: 64eb925160bd0ae458585fa97940ce16, type: 3}
   weight: 1
   value: 0
+  armor_modelType: 0
+  armor_Model: {fileID: 0}
+  armor_Sprite: {fileID: 0}
+  hide_Hair: 0
+  armorType: 0
   wearSlot: 0
   armor: 0
   armor_regen: 0
+  defense: 0
+  useOnDelete: 0
   isConsumable: 0
   effectDescription: 
   consumeEffect: []
@@ -32,8 +39,15 @@ MonoBehaviour:
   swing: -180
   recoil: 0
   swingOffset: 15
-  damage: 35
+  damage: 40
   cooldown: 0.75
+  knockBack: 0
+  knockBack_Duration: 0
+  userKnockBack: 0
+  userKnockBack_Duration: 1
+  durability: 100
+  weaponType: 0
+  effects: []
   canMelee: 1
   hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
   mele_manaConsume: 0
@@ -47,6 +61,8 @@ MonoBehaviour:
   reload_manaConsume: 0
   clipSize: 0
   reload: 0
+  emit: 0
   projectile: {fileID: 0}
+  projectileDat: {fileID: 0}
   projectilePath: 
   options: []

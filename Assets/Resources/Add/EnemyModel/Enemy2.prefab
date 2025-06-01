@@ -1099,8 +1099,8 @@ GameObject:
   - component: {fileID: 5998453488353323894}
   - component: {fileID: 7765040922315963014}
   - component: {fileID: 5591387431694869499}
-  - component: {fileID: 6900542119324737675}
   - component: {fileID: 4224621244631252087}
+  - component: {fileID: 6900542119324737675}
   - component: {fileID: 6260778417137552931}
   - component: {fileID: 2198611056965184888}
   - component: {fileID: 6806373667096783832}
@@ -1198,8 +1198,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 1
+  m_AngularDamping: 1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1252,22 +1252,6 @@ NavMeshAgent:
   m_BaseOffset: 0.3
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
---- !u!114 &6900542119324737675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7300319063617135439}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2887bd7de6e2f3b4c80a595d9f003a93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 128
-  MoveDirection: {x: 0, y: 0, z: 0}
 --- !u!114 &4224621244631252087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1294,6 +1278,24 @@ MonoBehaviour:
   swingSpeed: 10
   swingOffset: 30
   swingRecoil: -90
+--- !u!114 &6900542119324737675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7300319063617135439}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2887bd7de6e2f3b4c80a595d9f003a93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  MoveDirection: {x: 0, y: 0, z: 0}
+  meleeAttacks: []
+  rangedAttacks: []
 --- !u!114 &6260778417137552931
 MonoBehaviour:
   m_ObjectHideFlags: 0

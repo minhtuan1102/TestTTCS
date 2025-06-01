@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
@@ -28,13 +29,19 @@ public class EnemyAI : MonoBehaviour
     private float chaseTimer = 0f;
     private float detectTimer = 0f;
     private float attackTimer = 0f;
+    private float ranged_AttackTimer = 0f;
     private float waitingTimer = 0f;
+
+    private float waitingThresdhold = 0f;
 
     public UnityEngine.Vector3 MoveDirection;
     public float Speed { get; private set; }
 
     private int currentCorner = 0;
     private PhotonView photonView;
+
+    public List<float> meleeAttacks = new List<float>();
+    public List<float> rangedAttacks = new List<float>();
 
     private float stunTime = 0f;
 
@@ -55,10 +62,26 @@ public class EnemyAI : MonoBehaviour
         enemy = GetComponent<Enemy>();
         data = enemy.data;
 
+        if (data.meleeAttacks.Count>0)
+        {
+            for (int i = 0; i < data.meleeAttacks.Count; i++)
+            {
+                meleeAttacks.Add(data.meleeAttacks[i].delay);
+            }
+        }
+
+        if (data.rangedAttacks.Count>0)
+        {
+            for (int i = 0; i < data.rangedAttacks.Count; i++)
+            {
+                rangedAttacks.Add(data.rangedAttacks[i].delay);
+            }
+        }
+
         agent.speed = data.Speed;
     }
 
-    private Transform FindPlayer()
+    private Transform FindPlayer(bool hunting)
     {
         Transform detectedPlayer = null;
         float minDistance = Mathf.Infinity;
@@ -69,7 +92,7 @@ public class EnemyAI : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer, distanceToPlayer, obstacleMask);
 
-            if (hit.collider == null)
+            if (hit.collider == null || hunting)
             {
                 if (minDistance > distanceToPlayer)
                 {
@@ -92,8 +115,47 @@ public class EnemyAI : MonoBehaviour
 
     public void Stunned(float duration)
     {
-        stunTime = duration;
-        agent.enabled = false;
+        if (duration > 0f)
+        {
+            stunTime = duration;
+            agent.enabled = false;
+        }
+    }
+
+    [PunRPC]
+    private void RPC_RangedAttack(int i, float dir, UnityEngine.Vector3 pos)
+    {
+        EnemyRangedAttack enemyRangedAttack = data.rangedAttacks[i];
+        GameManager.SummonProjectile(transform.gameObject,
+            pos,
+            UnityEngine.Quaternion.Euler(0, 0, dir),
+            new ProjectileData(
+                enemyRangedAttack.ranged_bulletSpeed,
+                enemyRangedAttack.Damage,
+                enemyRangedAttack.Attack_KB,
+                enemyRangedAttack.Attack_KBDuration,
+                enemyRangedAttack.ranged_bulletLifetime,
+                enemyRangedAttack.Attack_Effect,
+                enemyRangedAttack.ranged_projectileDat,
+                Game.g_players.transform
+            ),
+            enemyRangedAttack.ranged_projectile
+        );
+    }
+
+    [PunRPC]
+    private void RPC_ToggleHidden(bool toggle)
+    {
+        if (toggle)
+        {
+            enemy.model.gameObject.SetActive(true);
+            enemy.main_hand.SetActive(true);
+        }
+        else
+        {
+            enemy.model.gameObject.SetActive(false);
+            enemy.main_hand.SetActive(false);
+        }
     }
 
     void Update()
@@ -102,8 +164,21 @@ public class EnemyAI : MonoBehaviour
             return;
 
         // Cập nhật tất cả timer
+        waitingThresdhold += Time.fixedDeltaTime;
         detectTimer += Time.fixedDeltaTime;
         attackTimer += Time.fixedDeltaTime;
+
+        for (int i=0; i<meleeAttacks.Count; i++)
+        {
+            meleeAttacks[i] += Time.fixedDeltaTime;
+        }
+
+        for (int i = 0; i < rangedAttacks.Count; i++)
+        {
+            rangedAttacks[i] += Time.fixedDeltaTime;
+        }
+
+        ranged_AttackTimer += Time.fixedDeltaTime;
         chaseTimer += Time.fixedDeltaTime;
         waitingTimer += Time.fixedDeltaTime;
 
@@ -135,10 +210,18 @@ public class EnemyAI : MonoBehaviour
         }
 
         // Logic phát hiện player
+
+        bool hunting = false;
+
+        if (waitingThresdhold >= DayNightCycle2D.DayDuration)
+        {
+            hunting = true;
+        }
+
         if (detectTimer >= 0f && waitingTimer >= 0f)
         {
-            Transform detected = FindPlayer();
-            if (detected != null && CheckIfNear(detected.position, data.Detection_Range))
+            Transform detected = FindPlayer(hunting);
+            if (detected != null && (CheckIfNear(detected.position, data.Detection_Range) || hunting))
             {
                 target = detected;
                 targetPos = detected.position;
@@ -152,43 +235,112 @@ public class EnemyAI : MonoBehaviour
                 }
             }
             detectTimer = -data.Detection_Rate;
+
+            if (target != null)
+            {
+                if (data.cloacked)
+                {
+                    photonView.RPC("RPC_ToggleHidden", RpcTarget.All, CheckIfNear(target.position, data.unCloakRange));
+                }
+
+                if (data.holdEnemy)
+                {
+                    if (CheckIfNear(target.position, data.holdRange))
+                    {
+                        Player player = target.GetComponent<Player>();
+                        if (player)
+                        {
+                            player.Stunned(data.Detection_Rate + 0.5f);
+                        }
+                    }
+                }
+            }
         }
 
-        // Logic tấn công nếu đủ điều kiện
-        if (attackTimer >= 0 && target != null) // Thêm điều kiện cooldown cho tấn công
+        if (target != null)
         {
-            if (CheckIfNear(target.position, data.Range))
+            if (meleeAttacks.Count > 0)
             {
-                attackTimer = -data.Attack_Rate; // Đặt lại thời gian tấn công (reset cooldown)
-                waitingTimer = -data.WaitTime; // Delay sau khi đánh
-
-                GameManager.SummonAttackArea(
-                        transform.position,
-                        UnityEngine.Quaternion.Euler(0, 0, enemy.lookDir),
-                        new AreaInstance(data.Damage, data.Attack_KB, data.Attack_Effect, data.Attack_Hitbox, Game.g_players.transform)
-                        );
-
-                /*
-                EnemySwing swing_Attack = transform.Find("Attack").GetComponent<EnemySwing>();
-                if (swing_Attack != null)
+                for (int i = 0; i < meleeAttacks.Count; i++)
                 {
-                    swing_Attack.TriggerAttack(data.Damage);
+                    EnemyMeleeAttack enemyMeleeAttack = data.meleeAttacks[i];
+                    if (meleeAttacks[i] >= 0)
+                    {
+                        if (CheckIfNear(target.position, enemyMeleeAttack.Range))
+                        {
+                            waitingThresdhold = 0;
+                            meleeAttacks[i] -= enemyMeleeAttack.Attack_Rate;
+                            waitingTimer = -data.WaitTime;
+
+                            GameManager.SummonAttackArea(
+                                transform.position,
+                                UnityEngine.Quaternion.Euler(0, 0, enemy.lookDir),
+                                new AreaInstance(enemyMeleeAttack.Damage, enemyMeleeAttack.Attack_KB, enemyMeleeAttack.Attack_KBDuration, enemyMeleeAttack.Attack_Effect, enemyMeleeAttack.Attack_Hitbox, Game.g_players.transform)
+                                );
+
+                            agent.enabled = false;
+                        }
+                    }
                 }
-                agent.SetDestination(transform.position);
-                */
+            }
+
+            if (rangedAttacks.Count>0)
+            {
+                for (int i = 0; i < rangedAttacks.Count; i++)
+                {
+                    EnemyRangedAttack enemyRangedAttack = data.rangedAttacks[i];
+                    if (rangedAttacks[i] >= 0)
+                    {
+                        if (CheckIfNear(target.position, enemyRangedAttack.Range))
+                        {
+                            waitingThresdhold = 0;
+                            rangedAttacks[i] -= enemyRangedAttack.Attack_Rate;
+                            waitingTimer = -data.WaitTime;
+
+                            for (int j = 0; j < enemyRangedAttack.ranged_clipSize; i++)
+                            {
+                                float look = enemy.lookDir + UnityEngine.Random.Range(-enemyRangedAttack.ranged_spread, enemyRangedAttack.ranged_spread);
+
+                                GameManager.SummonProjectile(transform.gameObject,
+                                    transform.position,
+                                    UnityEngine.Quaternion.Euler(0, 0, look),
+                                    new ProjectileData(
+                                        enemyRangedAttack.ranged_bulletSpeed,
+                                        enemyRangedAttack.Damage,
+                                        enemyRangedAttack.Attack_KB,
+                                        enemyRangedAttack.Attack_KBDuration,
+                                        enemyRangedAttack.ranged_bulletLifetime,
+                                        enemyRangedAttack.Attack_Effect,
+                                        enemyRangedAttack.ranged_projectileDat,
+                                        Game.g_players.transform
+                                    ),
+                                    enemyRangedAttack.ranged_projectile
+                                );
+
+                                photonView.RPC("RPC_RangedAttack", RpcTarget.Others, i, look);
+                            }
+
+                            agent.enabled = false;
+                        }
+                    }
+                }
             }
         }
 
         // Di chuyển đến target nếu không chờ
         if (waitingTimer >= 0f && target != null)
         {
+            if (!agent.enabled) agent.enabled = true;
             agent.SetDestination(targetPos);
         }
 
 
-        enemy.lookAtPos = targetPos;
+        if (agent.enabled)
+        {
+            enemy.lookAtPos = targetPos;
 
-        UnityEngine.Vector2 direction = (agent.steeringTarget - (UnityEngine.Vector3)rb.position);
-        rb.linearVelocity = direction.normalized * data.Speed;
+            UnityEngine.Vector2 direction = (agent.steeringTarget - (UnityEngine.Vector3)rb.position);
+            rb.linearVelocity = direction.normalized * data.Speed;
+        }
     }
 }

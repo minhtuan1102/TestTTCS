@@ -61,6 +61,13 @@ MonoBehaviour:
   - RPC_Fallen
   - Master_RevivePlayer
   - Master_Purchase
+  - RPC_SummonEffect
+  - RPC_CheckReload
+  - RPC_Reload
+  - RPC_Stunned
+  - RPC_Knockback
+  - RPC_RangedAttack
+  - RPC_ToggleHidden
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

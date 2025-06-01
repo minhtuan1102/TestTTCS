@@ -74,6 +74,9 @@ public class DayNightCycle2D : MonoBehaviour
 
     [UnityEngine.Range(0f, 24f)] public float timeOfDay = 6f;
     [UnityEngine.Range(0f, 24f)] public float _timeOfDay = 6f;
+
+    public static float DayDuration;
+
     public float dayDuration = 60f; // 1 ngày kéo dài 60 giây
 
     [Space]
@@ -174,6 +177,7 @@ public class DayNightCycle2D : MonoBehaviour
     void Update()
     {
         timeOfDay += (24f / dayDuration) * Time.deltaTime;
+        DayDuration = dayDuration;
         Generate(currentDay);
 
         if (timeOfDay >= 24f)

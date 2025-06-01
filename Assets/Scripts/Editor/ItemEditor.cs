@@ -365,6 +365,7 @@ public class ItemEditor : Editor
                         EditorGUILayout.Space();
                         item.clipSize = EditorGUILayout.IntField("Clip Size", item.clipSize);
                         item.fireAmount = EditorGUILayout.IntField("Amount", item.fireAmount);
+                        item.emit = EditorGUILayout.IntField("Emit", item.emit);
                         EditorGUILayout.Space();
                         item.projectile = (GameObject)EditorGUILayout.ObjectField("Projectile", item.projectile, typeof(GameObject), false);
                         EditorGUILayout.Space();
