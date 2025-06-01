@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: a48de99b0f2a9214b993604812d0dccc
+guid: b1ec30266e25d244f8a46947a66c0486
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8029351004527951999
-    second: Adam_0
+      213: 5701461742685538247
+    second: 8c8b1608-1773-40d8-ae15-a49295e4685b_0
+  - first:
+      213: -4379033279193406683
+    second: 8c8b1608-1773-40d8-ae15-a49295e4685b_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 640
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -109,150 +112,49 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Adam_0
+      name: 8c8b1608-1773-40d8-ae15-a49295e4685b_0
       rect:
         serializedVersion: 2
-        x: 302
-        y: 457
-        width: 433
-        height: 388
-      alignment: 9
-      pivot: {x: 0.5253669, y: 0.46800515}
-      border: {x: 221, y: 0, z: 0, w: 0}
+        x: 194
+        y: 480
+        width: 143
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f7080d1823cfd6f60800000000000000
-      internalID: 8029351004527951999
+      spriteID: 7c740415f39af1f40800000000000000
+      internalID: 5701461742685538247
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Adam_1
+      name: 8c8b1608-1773-40d8-ae15-a49295e4685b_1
       rect:
         serializedVersion: 2
-        x: 882
-        y: 254
-        width: 65
-        height: 130
-      alignment: 9
-      pivot: {x: 4.787959, y: 0.646848}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: aee6efbb69c298842be9f3d3a7bb5080
-      internalID: -434210524
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Adam_2
-      rect:
-        serializedVersion: 2
-        x: 413
-        y: 270
-        width: 210
-        height: 164
+        x: 408
+        y: 528
+        width: 289
+        height: 137
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 3b0c276533069b846b64b5b31bf4cc05
-      internalID: -1994130229
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Adam_3
-      rect:
-        serializedVersion: 2
-        x: 524
-        y: 104
-        width: 129
-        height: 165
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2a7f0d3c5092f6d4991bc188239abe5a
-      internalID: -671638768
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Adam_4
-      rect:
-        serializedVersion: 2
-        x: 409
-        y: 101
-        width: 100
-        height: 168
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3dbe5e5021f09be4c98e6b630125d3e1
-      internalID: -1281993655
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Adam_5
-      rect:
-        serializedVersion: 2
-        x: 868
-        y: 101
-        width: 1
-        height: 2
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8c818ab6a40b2dc46b3c87416e90cf79
-      internalID: 581366330
+      spriteID: 52320160f6c8a33c0800000000000000
+      internalID: -4379033279193406683
       vertices: []
       indices: 
       edges: []
@@ -261,7 +163,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e563b20629d13a43a874a0ba907de70
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -270,13 +172,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Adam_0: 8029351004527951999
-      Adam_1: -434210524
-      Adam_2: -1994130229
-      Adam_3: -671638768
-      Adam_4: -1281993655
-      Adam_5: 581366330
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
