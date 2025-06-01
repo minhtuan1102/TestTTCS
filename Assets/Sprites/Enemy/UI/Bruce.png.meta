@@ -117,11 +117,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 291
-        y: 93
-        width: 413
-        height: 780
+        y: 483
+        width: 422
+        height: 390
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,11 +134,121 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Bruce_1
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 27
+        width: 72
+        height: 224
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b39f0abec13f804ea2c0db5907c823d
+      internalID: -1330081835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bruce_2
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 245
+        width: 113
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c7d4338f7d25d64d86da54e1603ebe1
+      internalID: -1725958713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bruce_3
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 94
+        width: 152
+        height: 161
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e12e3a94c6edda479374972778cb0d5
+      internalID: -1755299958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bruce_4
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 97
+        width: 126
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1e41560d06c48b47a39a80e18f9d539
+      internalID: 31098536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bruce_5
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 254
+        width: 229
+        height: 217
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e9f77180653152459efe7938dceb8a6
+      internalID: 1995699301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5d864764a9b8b0c4e837229f8f50bc8f
     internalID: 0
     vertices: []
     indices: 
@@ -149,6 +259,11 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Bruce_0: 7545008823776383318
+      Bruce_1: -1330081835
+      Bruce_2: -1725958713
+      Bruce_3: -1755299958
+      Bruce_4: 31098536
+      Bruce_5: 1995699301
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

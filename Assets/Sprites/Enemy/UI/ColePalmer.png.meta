@@ -117,11 +117,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 288
-        y: 101
-        width: 417
-        height: 777
+        y: 490
+        width: 424
+        height: 388
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -134,11 +134,77 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: ColePalmer_1
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 231
+        width: 262
+        height: 236
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90810ab3eb1e7e64396691363d171411
+      internalID: 394091263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ColePalmer_2
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 99
+        width: 116
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 086fbc1accd22604481d3f50922984a2
+      internalID: -14060207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ColePalmer_3
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 100
+        width: 157
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b65681eb0b5674a4eb074f45dde1f19e
+      internalID: 1800539988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 750d5a1417d4a8b49b0bf3de19dd882f
     internalID: 0
     vertices: []
     indices: 
@@ -149,6 +215,9 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       ColePalmer_0: 3607794423376073356
+      ColePalmer_1: 394091263
+      ColePalmer_2: -14060207
+      ColePalmer_3: 1800539988
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

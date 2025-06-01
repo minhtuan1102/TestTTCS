@@ -130,9 +130,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 302
-        y: 104
-        width: 430
-        height: 741
+        y: 457
+        width: 433
+        height: 388
       alignment: 9
       pivot: {x: 0.5253669, y: 0.46800515}
       border: {x: 221, y: 0, z: 0, w: 0}
@@ -143,6 +143,116 @@ TextureImporter:
       bones: []
       spriteID: f7080d1823cfd6f60800000000000000
       internalID: 8029351004527951999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adam_1
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 254
+        width: 65
+        height: 130
+      alignment: 9
+      pivot: {x: 4.787959, y: 0.646848}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aee6efbb69c298842be9f3d3a7bb5080
+      internalID: -434210524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adam_2
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 270
+        width: 210
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b0c276533069b846b64b5b31bf4cc05
+      internalID: -1994130229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adam_3
+      rect:
+        serializedVersion: 2
+        x: 524
+        y: 104
+        width: 129
+        height: 165
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a7f0d3c5092f6d4991bc188239abe5a
+      internalID: -671638768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adam_4
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 101
+        width: 100
+        height: 168
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dbe5e5021f09be4c98e6b630125d3e1
+      internalID: -1281993655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Adam_5
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 101
+        width: 1
+        height: 2
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c818ab6a40b2dc46b3c87416e90cf79
+      internalID: 581366330
       vertices: []
       indices: 
       edges: []
@@ -162,6 +272,11 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Adam_0: 8029351004527951999
+      Adam_1: -434210524
+      Adam_2: -1994130229
+      Adam_3: -671638768
+      Adam_4: -1281993655
+      Adam_5: 581366330
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
