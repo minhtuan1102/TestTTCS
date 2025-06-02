@@ -148,6 +148,8 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
         health.SetHealth((int)_class.health);
         health.SetBaseDefense((int)_class.defense);
         health.SetBaseArmor(_class.armor);
+
+        fallen = false;
     }
 
     void Start()
