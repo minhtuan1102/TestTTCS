@@ -226,6 +226,7 @@ MonoBehaviour:
     lifeTime: 0
     kb: 0
     stun: 0
+    group: {fileID: 0}
     effect: []
     special: {fileID: 0}
 --- !u!61 &4130212068194336338
@@ -300,7 +301,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!82 &-8415045085073537181
 AudioSource:
   m_ObjectHideFlags: 0

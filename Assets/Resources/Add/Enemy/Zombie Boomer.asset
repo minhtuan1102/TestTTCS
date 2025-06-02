@@ -16,14 +16,15 @@ MonoBehaviour:
   Point: 100
   Health: 150
   Speed: 5
+  isBoss: 0
   meleeAttacks: []
   rangedAttacks: []
   WaitTime: 1
-  EnemyModel: {fileID: 7300319063617135439, guid: cd4bc017cf1fa7d4cac397c4752b539d, type: 3}
+  EnemyModel: {fileID: 7300319063617135439, guid: 14f40ef802748254c94af5c1841d98b5, type: 3}
   Detection_Range: 30
   Detection_Rate: 0.2
   Chasing_Time_Threshold: 2
-  path: Add/EnemyModel/Enemy3
+  path: Add/EnemyModel/Bomber
   Loot:
   - item:
       Items:

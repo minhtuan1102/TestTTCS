@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1f069031c7aed4390c8a02ed9de8d8, type: 3}
   m_Name: Zombie Mutant
   m_EditorClassIdentifier: 
-  ID: Zombie Slow
+  ID: Zombie Mutant
   Point: 100
   Health: 800
   Speed: 1.5
+  isBoss: 0
   meleeAttacks:
   - delay: 0
     waitTime: 2
@@ -28,11 +29,11 @@ MonoBehaviour:
     Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
   rangedAttacks: []
   WaitTime: 1
-  EnemyModel: {fileID: 7300319063617135439, guid: cd4bc017cf1fa7d4cac397c4752b539d, type: 3}
+  EnemyModel: {fileID: 7300319063617135439, guid: 77382c44a35b1264d9ef3e3e2f7d5211, type: 3}
   Detection_Range: 20
   Detection_Rate: 0.2
   Chasing_Time_Threshold: 1
-  path: Add/EnemyModel/Enemy3
+  path: Add/EnemyModel/Mutant
   Loot:
   - item:
       Items:

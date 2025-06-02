@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4617012069661308798}
   - component: {fileID: 495655606048387445}
+  - component: {fileID: 6893308706970880772}
   m_Layer: 3
   m_Name: Head
   m_TagString: Untagged
@@ -391,6 +392,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6893308706970880772
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3078348288626535263}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 61901986405f16944a6db5592e1d7f89, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3278851314858436288
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,6 +1043,7 @@ MonoBehaviour:
   _maxArmor: 100
   _currentArmor: 25
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _healColor: {r: 0, g: 1, b: 0, a: 1}
   _defense: 0
   baseArmor: 50
   baseDefense: 0
