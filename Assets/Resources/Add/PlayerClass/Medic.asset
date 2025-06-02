@@ -18,7 +18,8 @@ MonoBehaviour:
   icon: {fileID: 1386112391, guid: d1ab0a27372f77545ba949cfade4bf7b, type: 3}
   health: 75
   mana: 125
-  armor: 0
+  defense: -5
+  armor: 50
   speed: 8
   maxSpeed: 8
   range: 8

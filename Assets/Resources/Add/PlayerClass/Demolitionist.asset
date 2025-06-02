@@ -16,12 +16,13 @@ MonoBehaviour:
   class_Name: Scout
   des: 
   icon: {fileID: -269128851, guid: f7e0deb2415d20142a9e725f737a33a7, type: 3}
-  health: 100
+  health: 125
   mana: 75
-  armor: 0
+  defense: 5
+  armor: 50
   speed: 5
   maxSpeed: 5
-  range: 7
+  range: 6
   Head: {fileID: 3607794423376073356, guid: f7e0deb2415d20142a9e725f737a33a7, type: 3}
   Hair: {fileID: 0}
   Body: {fileID: 394091263, guid: f7e0deb2415d20142a9e725f737a33a7, type: 3}
