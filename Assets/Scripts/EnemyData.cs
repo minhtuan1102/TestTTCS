@@ -55,6 +55,8 @@ public class EnemyData : ScriptableObject
     [SerializeField] public float Health = 80;
     [SerializeField] public float Speed = 5f;
 
+    public bool isBoss = false;
+
     [SerializeField] public List<EnemyMeleeAttack> meleeAttacks;
     [Space]
     [SerializeField] public List<EnemyRangedAttack> rangedAttacks;

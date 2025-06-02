@@ -68,6 +68,8 @@ MonoBehaviour:
   - RPC_Knockback
   - RPC_RangedAttack
   - RPC_ToggleHidden
+  - Master_Upgrade
+  - RPC_ShowDamage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

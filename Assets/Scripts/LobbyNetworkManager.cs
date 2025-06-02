@@ -216,6 +216,8 @@ public class LobbyNetworkManager: MonoBehaviourPunCallbacks
 
     public void OnStartGamePressed()
     {
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
         PhotonNetwork.LoadLevel("Game");
     }
 

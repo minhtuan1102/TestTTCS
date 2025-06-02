@@ -146,6 +146,8 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 
         health.SetMaxHealth((int)_class.health);
         health.SetHealth((int)_class.health);
+        health.SetBaseDefense((int)_class.defense);
+        health.SetBaseArmor(_class.armor);
     }
 
     void Start()
@@ -424,17 +426,10 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 
         if (fallen)
         {
-            if (view.IsMine)
-            {
-                Transform UI = GameObject.Find("PlayerUI").transform;
-                Transform Stats = UI.Find("PlayerStats");
-                Stats.Find("UI").gameObject.SetActive(false);
-                onTopDisplay.Find("HealthBar").gameObject.SetActive(false);
-            }
-            else
-            {
-                onTopDisplay.Find("HealthBar").gameObject.SetActive(false);
-            }
+            Transform UI = GameObject.Find("PlayerUI").transform;
+            Transform Stats = UI.Find("PlayerStats");
+            Stats.Find("UI").gameObject.SetActive(false);
+            onTopDisplay.Find("HealthBar").gameObject.SetActive(false);
         } else
         {
             if (view.IsMine)
@@ -447,7 +442,6 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
             else
             {
                 onTopDisplay.Find("HealthBar").gameObject.SetActive(true);
-
             }
         }
     }
@@ -495,34 +489,35 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
                 }
             }
 
-            if (movement.magnitude > 0)
-            {
-                // Apply acceleration-based force for smoother movement
-                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, movement * maxSpeed, Time.fixedDeltaTime * acceleration);
-                if (!_audioSource.isPlaying)
-                {
-                    _audioSource.Play();
-                } 
-            }
-            else
-            {
-                // Apply deceleration to slow down smoothly
-                rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.fixedDeltaTime * deceleration);
-                if (_audioSource.isPlaying)
-                {
-                    _audioSource.Stop();
-                }
-            }
-
             if (fallen)
             {
                 if (_audioSource.isPlaying)
                 {
                     _audioSource.Stop();
                 }
+            } else
+            {
+                if (movement.magnitude > 0)
+                {
+                    // Apply acceleration-based force for smoother movement
+                    rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, movement * maxSpeed, Time.fixedDeltaTime * acceleration);
+                    if (!_audioSource.isPlaying)
+                    {
+                        _audioSource.Play();
+                    }
+                }
+                else
+                {
+                    // Apply deceleration to slow down smoothly
+                    rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, Vector2.zero, Time.fixedDeltaTime * deceleration);
+                    if (_audioSource.isPlaying)
+                    {
+                        _audioSource.Stop();
+                    }
+                }
             }
 
-            Boolean lastMovingState = isMoving;
+                Boolean lastMovingState = isMoving;
             isMoving = (rb.linearVelocity.magnitude > 0.2f);
             float forward = 1f;
             if (rb.linearVelocity.x < 0)

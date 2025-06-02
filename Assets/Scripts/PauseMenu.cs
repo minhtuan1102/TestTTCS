@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;  // Đừng quên import SceneManager
+using UnityEngine.SceneManagement;
+using Photon.Pun;  // Đừng quên import SceneManager
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : MonoBehaviourPunCallbacks
 {
     public GameObject pausePanel;        
     public GameObject confirmExitPanel;  
@@ -58,4 +59,13 @@ public class PauseMenu : MonoBehaviour
         pausePanel.SetActive(true);         // Hiển thị lại panel pause
     }
 
+    public void BackToMenu()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("Start");
+    }
 }

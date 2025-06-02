@@ -31,6 +31,8 @@ public class HealthSystem : MonoBehaviour
     public float MaxArmor => _maxArmor;
 
     public float _defense = 0f;
+    public float baseArmor = 50f;
+    public float baseDefense = 0f;
 
     private PhotonView view;
 
@@ -167,6 +169,8 @@ public class HealthSystem : MonoBehaviour
         if (_currentHealth <= 0) return;
         view.RPC("RPC_FlashEffect", RpcTarget.All);
 
+        GameManager.Instance.ShowDamage(transform.position, (int)damageDeal);
+
         _currentHealth = Mathf.Max(0, _currentHealth - damageDeal);
         UpdateStats();
 
@@ -193,9 +197,9 @@ public class HealthSystem : MonoBehaviour
 
     public void calculateArmor(List<ItemInstance> items, ItemInstance holdingItem)
     {
-        float maxArmor = 50f;
+        float maxArmor = baseArmor;
         float regenArmor = 0f;
-        float defense = 0f;
+        float defense = baseDefense;
 
         if (holdingItem != null && holdingItem.itemRef)
         {
@@ -243,6 +247,16 @@ public class HealthSystem : MonoBehaviour
     {
         _currentArmor = Mathf.Min(_maxArmor, _currentArmor + amount);
         UpdateStats();
+    }
+
+    public void SetBaseDefense(int amount)
+    {
+        baseDefense = amount;
+    }
+
+    public void SetBaseArmor(float amount)
+    {
+        baseArmor = amount;
     }
 
     public void SetHealth(int amount)

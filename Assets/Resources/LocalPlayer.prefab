@@ -1051,6 +1051,8 @@ MonoBehaviour:
   _currentArmor: 0
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
   _defense: 0
+  baseArmor: 50
+  baseDefense: 0
 --- !u!114 &2118433274465155552
 MonoBehaviour:
   m_ObjectHideFlags: 0

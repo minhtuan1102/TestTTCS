@@ -1,4 +1,7 @@
 using Photon.Pun;
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -8,12 +11,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject gameOverUI;
+    public GameObject damageIndicator;
 
     private PhotonView photonView;
 
     public static int item_Index = 0;
 
-    private void Awake()
+    void Awake()
     {
         // Khởi tạo Singleton tạm thời, không dùng DontDestroyOnLoad để tránh lỗi UI
         if (Instance == null)
@@ -56,6 +60,18 @@ public class GameManager : MonoBehaviour
     }
 
     // Game Engine
+    [PunRPC]
+    private void RPC_ShowDamage(Vector3 pos, int damage)
+    {
+        GameObject showDamage = Instantiate(damageIndicator, pos + new Vector3(UnityEngine.Random.Range(-1f,1f), UnityEngine.Random.Range(-1f, 1f), 0f), Quaternion.identity, Game.g_projectiles.transform);
+        DamageIndicator damageData = showDamage.GetComponent<DamageIndicator>();
+        damageData.damage = damage;
+    }
+
+    public void ShowDamage(Vector3 pos, int damage)
+    {
+        photonView.RPC("RPC_ShowDamage", RpcTarget.All, pos, damage);
+    }
 
     public static void SummonAttackArea(Vector3 pos, Quaternion dir, AreaInstance data)
     {
@@ -68,8 +84,6 @@ public class GameManager : MonoBehaviour
         areaAttack.Initiate();
         areaAttack.Attack();
     }
-
-    // Player Interaction
 
     public static void SummonProjectile(GameObject player, Vector3 pos, Quaternion dir, ProjectileData data, GameObject model)
     {
