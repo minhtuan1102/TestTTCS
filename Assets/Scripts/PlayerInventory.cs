@@ -367,6 +367,11 @@ public class PlayerInventory : MonoBehaviour
     }
 
     // Add Item
+    [PunRPC]
+    private void WIN()
+    {
+        PlayerUI.UI.transform.GetComponent<PlayerUI>().WIN_Game();
+    }
 
     [PunRPC]
     private void Master_AddItem(string id)
@@ -415,6 +420,24 @@ public class PlayerInventory : MonoBehaviour
                             player.UpdateCash(player.cash);
                         } else
                         {
+
+                            if (itemData.itemRef.itemID == "TheCure")
+                            {
+                                view.RPC("WIN", RpcTarget.All);
+                                DayNightCycle2D.timeScale = 0f;
+                                foreach (Transform enemy in Game.g_enemies.transform)
+                                {
+                                    try
+                                    {
+                                        HealthSystem healthSystem = enemy.GetComponent<HealthSystem>();
+                                        healthSystem.TakeDamage(999999999);
+                                    } catch
+                                    {
+
+                                    }
+                                }
+                            }
+
                             AddItem(itemData);
                             PhotonNetwork.Destroy(item.gameObject);
                             view.RPC("Client_AddItem", RpcTarget.Others, new ItemInstanceSender(itemData).ToJson());

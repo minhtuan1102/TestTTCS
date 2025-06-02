@@ -65,6 +65,8 @@ public class DayNightCycle2D : MonoBehaviour
     public Gradient lightColorOverTime;
     public AnimationCurve intensityOverTime;
 
+    public static float timeScale = 1f;
+
     static public int currentDay = 1;
     static public int hour = 0;
     static public int minute = 0;
@@ -176,7 +178,7 @@ public class DayNightCycle2D : MonoBehaviour
 
     void Update()
     {
-        timeOfDay += (24f / dayDuration) * Time.deltaTime;
+        timeOfDay += (24f / dayDuration) * Time.deltaTime * timeScale;
         DayDuration = dayDuration;
         Generate(currentDay);
 

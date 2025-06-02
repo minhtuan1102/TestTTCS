@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: 8782888047612958264, guid: e283b6eb131fef043801dd118c38b079, type: 3}
   itemID: MetalBat
   itemDescription: Medium+ damage with wide AOE range and stun
-  model: {fileID: 6994442434215011227, guid: 5ce44ccc8a1923e4a9cfd0dbca434a4a, type: 3}
+  model: {fileID: 6994442434215011227, guid: 976528f7f3b74fa44aa487cd527b2483, type: 3}
   weight: 1
   value: 0
   armor_modelType: 0

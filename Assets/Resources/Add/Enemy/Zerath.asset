@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1f069031c7aed4390c8a02ed9de8d8, type: 3}
   m_Name: Zerath
   m_EditorClassIdentifier: 
-  ID: Zombie Spitter
+  ID: Zerath
   Point: 100
   Health: 10000
   Speed: 2
+  isBoss: 1
   meleeAttacks:
   - delay: 5
     waitTime: 1
@@ -62,10 +63,10 @@ MonoBehaviour:
         modify_BoolValue: 0
         modify_StringValue: 
     Attack_Hitbox: {fileID: 0}
-    ranged_spread: 2
+    ranged_spread: 10
     ranged_bulletSpeed: 15
     ranged_bulletLifetime: 5
-    ranged_clipSize: 1
+    ranged_clipSize: 5
     ranged_projectileDat: {fileID: 11400000, guid: 87545670275b8ec41bb75297050f9054, type: 2}
     ranged_projectile: {fileID: 7422263984037488310, guid: 273c9ba0b126d2f47b2e241fa65b742a, type: 3}
   WaitTime: 1
@@ -78,36 +79,22 @@ MonoBehaviour:
   - item:
       Items:
       - itemID: 0
+        amount: 100
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 61cb78406ac4d51448479f979867c7cc, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+      - itemID: 0
         amount: 1
         holder: {fileID: 0}
         storage: {fileID: 0}
-        itemRef: {fileID: 11400000, guid: 80e785d0ba4b887429eaa88ebe79fd25, type: 2}
+        itemRef: {fileID: 11400000, guid: 76961c08c7fd2824f81d469a1664fb9d, type: 2}
         ammo: 0
         reloading: 0
         attachments: []
     weight: 1
-  - item:
-      Items:
-      - itemID: 0
-        amount: 5
-        holder: {fileID: 0}
-        storage: {fileID: 0}
-        itemRef: {fileID: 11400000, guid: 3862a6be148332948ac0df68458a50b2, type: 2}
-        ammo: 0
-        reloading: 0
-        attachments: []
-    weight: 10
-  - item:
-      Items:
-      - itemID: 0
-        amount: 2
-        holder: {fileID: 0}
-        storage: {fileID: 0}
-        itemRef: {fileID: 11400000, guid: 3862a6be148332948ac0df68458a50b2, type: 2}
-        ammo: 0
-        reloading: 0
-        attachments: []
-    weight: 40
   canExplode: 0
   explode_Damage: 0
   explode_KnockBack: 0

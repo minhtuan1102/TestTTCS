@@ -71,6 +71,9 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
     private Collider2D enemy_collider;
     private PhotonView view;
 
+    public Transform onTopDisplay;
+    private UnityEngine.UI.Slider healthBar;
+
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         data = Game.GetEnemyData((string)PhotonView.Get(this).InstantiationData[0]);
@@ -102,6 +105,9 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
         {
 
         }
+
+        onTopDisplay = transform.Find("Canvas");
+        healthBar = onTopDisplay.Find("HealthBar").GetComponent<UnityEngine.UI.Slider>();
 
         rb.gravityScale = 0;
         rb.freezeRotation = true;
@@ -276,6 +282,12 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
             main_hand.transform.rotation = Quaternion.Lerp(main_hand.transform.rotation, Quaternion.Euler(new Vector3(0, 0, angle + (currentSwing + swingOffset) * inverse)), rotationSpeed * Time.deltaTime);
             main_hand.transform.position = new Vector2(model.position.x, model.position.y) + new Vector2(mousePosition.x - rb.position.x, mousePosition.y - rb.position.y).normalized * (1 + recoilOffset) * Hand_Radius;
 
+        }
+
+        if (data.isBoss)
+        {
+            onTopDisplay.Find("HealthBar").gameObject.SetActive(true);
+            healthBar.value = (float)health.CurrentHealth / (float)health.MaxHealth;
         }
 
         if (PhotonNetwork.IsMasterClient)

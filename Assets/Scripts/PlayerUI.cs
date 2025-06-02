@@ -34,6 +34,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] GameObject ItemStats_UI = null;
     [SerializeField] GameObject Admin_UI = null;
     [SerializeField] Transform Fallen_UI = null;
+    [SerializeField] Transform Win_UI = null;
     [SerializeField] Transform Admin_Button = null;
     [SerializeField] public Transform Shop_UI = null;
 
@@ -317,6 +318,11 @@ public class PlayerUI : MonoBehaviour
             Shop_UI.gameObject.SetActive(false);
             SelectedShopItem.ItemData = null;
         }
+    }
+
+    public void WIN_Game()
+    {
+        Win_UI.gameObject.SetActive(true);
     }
 
     public void BuyItem(int amount)

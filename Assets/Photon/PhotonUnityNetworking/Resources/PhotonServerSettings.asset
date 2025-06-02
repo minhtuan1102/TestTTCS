@@ -70,6 +70,7 @@ MonoBehaviour:
   - RPC_ToggleHidden
   - Master_Upgrade
   - RPC_ShowDamage
+  - WIN
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
