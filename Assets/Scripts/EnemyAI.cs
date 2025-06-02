@@ -1,13 +1,8 @@
 ﻿using Photon.Pun;
-using System;
 using System.Collections.Generic;
 using System.Numerics;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
-using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(NavMeshAgent))]
 
 public class EnemyAI : MonoBehaviour
@@ -317,7 +312,7 @@ public class EnemyAI : MonoBehaviour
                                     enemyRangedAttack.ranged_projectile
                                 );
 
-                                photonView.RPC("RPC_RangedAttack", RpcTarget.Others, i, look);
+                                photonView.RPC("RPC_RangedAttack", RpcTarget.Others, i, look, transform.position);
                             }
 
                             agent.enabled = false;
