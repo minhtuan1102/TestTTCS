@@ -16,6 +16,7 @@ MonoBehaviour:
   Point: 100
   Health: 150
   Speed: 2.5
+  isBoss: 0
   meleeAttacks:
   - delay: 0
     waitTime: 1
@@ -28,7 +29,7 @@ MonoBehaviour:
     Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
   rangedAttacks: []
   WaitTime: 1
-  EnemyModel: {fileID: 7300319063617135439, guid: 595a830a1ce035446846d471aef83638, type: 3}
+  EnemyModel: {fileID: 7300319063617135439, guid: 3ccc095fca0d9bd449aa83167f3ba462, type: 3}
   Detection_Range: 20
   Detection_Rate: 0.2
   Chasing_Time_Threshold: 1

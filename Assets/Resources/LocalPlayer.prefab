@@ -1050,6 +1050,7 @@ MonoBehaviour:
   _maxArmor: 100
   _currentArmor: 0
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _healColor: {r: 0, g: 1, b: 0, a: 1}
   _defense: 0
   baseArmor: 50
   baseDefense: 0

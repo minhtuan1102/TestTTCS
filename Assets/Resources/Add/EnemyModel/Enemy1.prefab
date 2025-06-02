@@ -1193,6 +1193,7 @@ MonoBehaviour:
   swingOffset: 30
   swingRecoil: -90
   model: {fileID: 0}
+  onTopDisplay: {fileID: 0}
 --- !u!114 &6900542119324737675
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -938,7 +938,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0017082691, y: -0.008176804}
+  m_Offset: {x: -0.006226659, y: 0.010855675}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -948,7 +948,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5232861, y: 0.44713593}
+  m_Size: {x: 0.6226914, y: 0.61820793}
   m_EdgeRadius: 0
 --- !u!114 &7765040922315963014
 MonoBehaviour:
@@ -967,6 +967,7 @@ MonoBehaviour:
   _maxArmor: 100
   _currentArmor: 25
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _healColor: {r: 0, g: 1, b: 0, a: 1}
   _defense: 0
   baseArmor: 50
   baseDefense: 0
@@ -1020,6 +1021,7 @@ MonoBehaviour:
   swingOffset: 30
   swingRecoil: -90
   model: {fileID: 0}
+  onTopDisplay: {fileID: 0}
 --- !u!114 &6900542119324737675
 MonoBehaviour:
   m_ObjectHideFlags: 0

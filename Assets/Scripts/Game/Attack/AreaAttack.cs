@@ -1,0 +1,92 @@
+﻿using NUnit.Framework.Interfaces;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
+
+[System.Serializable]
+public class AreaInstance
+{
+    // Basic Stats
+    public float damage;
+    public float kb;
+    public float stun;
+    public GameObject collider;
+    public Transform group;
+    public List<DamageEffect> effects;
+
+    public AreaInstance(float damage, float kb, float stun, List<DamageEffect> effects, GameObject collider, Transform group)
+    {
+        this.damage = damage;
+        this.kb = kb;
+        this.stun = stun;
+        this.group = group;
+        this.collider = collider;
+        this.effects = effects;
+    }
+}
+
+public class AreaAttack : MonoBehaviour
+{
+    public AreaInstance data;
+    GameObject hitbox;
+
+    private Collider2D attackCollider;
+
+    private LayerMask enemyLayer;
+
+    public void Initiate()
+    {
+        hitbox = Instantiate(data.collider, transform);
+
+        attackCollider = hitbox.GetComponent<PolygonCollider2D>();
+
+        enemyLayer = (1 << data.group.gameObject.layer);
+    }
+
+    public void Knockback(Rigidbody2D rb, float kb)
+    {
+        if (rb == null) return;
+        Vector2 direction = (rb.position - new Vector2(transform.position.x, transform.position.y)).normalized;
+        rb.linearVelocity = Vector2.zero;
+
+        rb.AddForce(direction * kb, ForceMode2D.Impulse);
+    }
+
+    public void Attack()
+    {
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(enemyLayer);
+        filter.useTriggers = true;
+
+        Collider2D[] results = new Collider2D[10];
+        int hitCount = attackCollider.Overlap(filter, results);
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            if (results[i].transform.IsChildOf(data.group))
+            {
+                HealthSystem health = results[i].GetComponent<HealthSystem>();
+
+                health.TakeDamage((int)data.damage);
+
+                EnemyAI enemyAI = results[i].GetComponent<EnemyAI>();
+                if (enemyAI != null)
+                {
+                    enemyAI.Stunned(data.stun);
+                }
+
+                Knockback(results[i].GetComponent<Rigidbody2D>(), data.kb);
+
+                foreach (DamageEffect effect in data.effects.ToList<DamageEffect>())
+                {
+                    health.addEffect(effect);
+                }
+            }
+        }
+
+        Destroy(gameObject);
+    }
+}

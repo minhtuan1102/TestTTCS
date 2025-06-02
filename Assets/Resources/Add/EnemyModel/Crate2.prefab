@@ -631,7 +631,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.010681487}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4117329725227616227}
@@ -680,7 +680,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -4203923038370159666, guid: 3ec9a92c5b2180f43a3266aff9c9b91f, type: 3}
+  m_Sprite: {fileID: 8342194708903903172, guid: c25431d842209e04999a4e158974f7e6, type: 3}
   m_Color: {r: 0.83590364, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -938,7 +938,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0017082691, y: -0.008176804}
+  m_Offset: {x: 0.035250187, y: 0.015052795}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -948,7 +948,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5232861, y: 0.44713593}
+  m_Size: {x: 0.8928709, y: 0.8315048}
   m_EdgeRadius: 0
 --- !u!114 &7765040922315963014
 MonoBehaviour:
@@ -967,7 +967,10 @@ MonoBehaviour:
   _maxArmor: 100
   _currentArmor: 25
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _healColor: {r: 0, g: 1, b: 0, a: 1}
   _defense: 0
+  baseArmor: 50
+  baseDefense: 0
 --- !u!195 &5591387431694869499
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1009,6 +1012,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   lookAtPos: {x: 0, y: 0, z: 0}
   lookDir: 0
+  main_hand: {fileID: 0}
   Hand_Radius: 0.5
   recoilForce: 2
   recoilRecoverySpeed: 5
@@ -1016,6 +1020,8 @@ MonoBehaviour:
   swingSpeed: 10
   swingOffset: 30
   swingRecoil: -90
+  model: {fileID: 0}
+  onTopDisplay: {fileID: 0}
 --- !u!114 &6900542119324737675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,6 +1038,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   MoveDirection: {x: 0, y: 0, z: 0}
+  meleeAttacks: []
+  rangedAttacks: []
 --- !u!114 &6260778417137552931
 MonoBehaviour:
   m_ObjectHideFlags: 0
