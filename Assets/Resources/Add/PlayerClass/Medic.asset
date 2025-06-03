@@ -20,6 +20,7 @@ MonoBehaviour:
   mana: 125
   defense: -5
   armor: 50
+  regenArmor: 0
   speed: 8
   maxSpeed: 8
   range: 8
@@ -51,5 +52,13 @@ MonoBehaviour:
     storage: {fileID: 0}
     itemRef: {fileID: 11400000, guid: 7f479bc914e48994aad7dd2be029f318, type: 2}
     ammo: 0
+    reloading: 0
+    attachments: []
+  - itemID: 3
+    amount: 100
+    holder: {fileID: 0}
+    storage: {fileID: 0}
+    itemRef: {fileID: 11400000, guid: 0f578a78715754e4896a79efa5709a6f, type: 2}
+    ammo: 8
     reloading: 0
     attachments: []
