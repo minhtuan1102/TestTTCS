@@ -264,7 +264,7 @@ public class HealthSystem : MonoBehaviour
     }
 
     [PunRPC]
-    private void RPC_UpdateMaxHP(float newHealth)
+    public void RPC_UpdateMaxHP(float newHealth)
     {
         _maxHealth = newHealth;
     }

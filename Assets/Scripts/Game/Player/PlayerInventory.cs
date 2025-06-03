@@ -900,7 +900,7 @@ public class PlayerInventory : MonoBehaviour
                             {
                                 if (blackSmith.data.addHP)
                                 {
-
+                                    view.RPC("Master_Upgrade", RpcTarget.MasterClient, blackSmithOwner);
                                 } else
                                 {
                                     if (holdingItem != null && holdingItem.itemRef)
