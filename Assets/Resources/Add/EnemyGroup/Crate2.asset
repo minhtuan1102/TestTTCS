@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d05459988bfa6274f842260558285edc, type: 3}
-  m_Name: Easy
+  m_Name: Crate2
   m_EditorClassIdentifier: 
   groups:
-  - item: {fileID: 11400000, guid: e90e3962a0126594d8980aac2b26b59a, type: 2}
-    weight: 10
-  - item: {fileID: 11400000, guid: b0d815d3076aa144ea65862b2ed12dfd, type: 2}
+  - item: {fileID: 11400000, guid: 307cf3985118bc2469eddac5a81e2753, type: 2}
     weight: 5
-  - item: {fileID: 11400000, guid: ee3edd7d4afcf1744bbaa4e9a2406cc1, type: 2}
-    weight: 3
+  - item: {fileID: 11400000, guid: 45cce0fd224db71448527351cd90e825, type: 2}
+    weight: 5
+  - item: {fileID: 11400000, guid: 9d534a3039dff184b90809d005e73339, type: 2}
+    weight: 5
+  - item: {fileID: 11400000, guid: 312fb2ff5a57f5f4eb732ecae7358a5e, type: 2}
+    weight: 1

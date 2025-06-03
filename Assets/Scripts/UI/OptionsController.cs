@@ -6,7 +6,9 @@ public class OptionsController : MonoBehaviour
 {
     [Header("Audio")]
     public AudioMixer audioMixer;
+    public AudioMixer VFXaudioMixer;
     public Slider volumeSlider;
+    public Slider VFXvolumeSlider;
     public Toggle muteToggle;
 
     [Header("Graphics")]
@@ -20,11 +22,13 @@ public class OptionsController : MonoBehaviour
     {
         // Setup mặc định
         volumeSlider.value = 0.8f;
+        VFXvolumeSlider.value = 0.8f;
         muteToggle.isOn = false;
         fullscreenToggle.isOn = Screen.fullScreen;
 
         // Gắn sự kiện
         volumeSlider.onValueChanged.AddListener(SetVolume);
+        VFXvolumeSlider.onValueChanged.AddListener(VFXSetVolume);
         muteToggle.onValueChanged.AddListener(SetMute);
         fullscreenToggle.onValueChanged.AddListener(SetFullscreen);
         backButton.onClick.AddListener(CloseOptions);
@@ -33,7 +37,12 @@ public class OptionsController : MonoBehaviour
     // AUDIO
     public void SetVolume(float volume)
     {
-        audioMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
+        audioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
+    }
+
+    public void VFXSetVolume(float volume)
+    {
+        VFXaudioMixer.SetFloat("Master", Mathf.Log10(volume) * 20);
     }
 
     public void SetMute(bool mute)

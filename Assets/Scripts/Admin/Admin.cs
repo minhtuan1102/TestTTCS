@@ -28,12 +28,6 @@ public class Admin : MonoBehaviour
 
     void OnEnable()
     {
-        if (!Application.isEditor)
-        {
-            transform.gameObject.SetActive(false);
-            return;
-        }
-
         view = GetComponent<PhotonView>();
         if (!loaded && view.IsMine && PhotonNetwork.IsMasterClient)
         {

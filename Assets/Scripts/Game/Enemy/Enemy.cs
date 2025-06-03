@@ -77,6 +77,11 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
         data = Game.GetEnemyData((string)PhotonView.Get(this).InstantiationData[0]);
+
+        if (data.isBoss)
+        {
+            GameManager.bossCount++;
+        }
     }
 
     void Awake()
@@ -315,6 +320,13 @@ public class Enemy : MonoBehaviour, IPunInstantiateMagicCallback
                         UnityEngine.Quaternion.Euler(0, 0, lookDir),
                         new AreaInstance(data.explode_Damage, data.explode_KnockBack, data.explode_KnockBackDuration, data.explode_Effect, data.explode_Hitbox, Game.g_players.transform)
                         );
+                    
+
+                }
+
+                if (data.isBoss)
+                {
+                    GameManager.bossCount--;
                 }
 
                 PhotonNetwork.Destroy(gameObject);

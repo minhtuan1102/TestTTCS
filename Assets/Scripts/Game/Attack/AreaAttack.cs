@@ -37,8 +37,9 @@ public class AreaAttack : MonoBehaviour
 
     private LayerMask enemyLayer;
 
-    public void Initiate()
+    public void Initiate(AreaInstance areaInstance)
     {
+        data = areaInstance;
         hitbox = Instantiate(data.collider, transform);
 
         attackCollider = hitbox.GetComponent<PolygonCollider2D>();

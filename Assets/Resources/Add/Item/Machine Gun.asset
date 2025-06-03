@@ -30,6 +30,8 @@ MonoBehaviour:
   armor: 0
   armor_regen: 0
   defense: 0
+  range: 0
+  speed: -2
   useOnDelete: 0
   isConsumable: 0
   effectDescription: 
@@ -40,7 +42,7 @@ MonoBehaviour:
   recoil: -0.3
   swingOffset: 15
   damage: 15
-  cooldown: 0.1
+  cooldown: 0.05
   knockBack: 0
   knockBack_Duration: 0
   userKnockBack: 0
@@ -54,15 +56,15 @@ MonoBehaviour:
   canShoot: 1
   fireAmount: 1
   maxAmmo: 1
-  spread: 1
-  bulletSpeed: 25
+  spread: 5
+  bulletSpeed: 30
   bulletLifetime: 5
   shooting_manaConsume: 0
   reload_manaConsume: 50
-  clipSize: 50
-  reload: 5
+  clipSize: 100
+  reload: 6
   emit: 6
   projectile: {fileID: 7422263984037488310, guid: 0834809b8e8142f4f88bd62ad1d9c3ed, type: 3}
-  projectileDat: {fileID: 11400000, guid: 87545670275b8ec41bb75297050f9054, type: 2}
+  projectileDat: {fileID: 11400000, guid: 2530c16c3cf8e5b4abb0487138cd16ec, type: 2}
   projectilePath: 
   options: []

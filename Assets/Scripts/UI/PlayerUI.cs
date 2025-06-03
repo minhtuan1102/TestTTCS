@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -36,6 +37,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] Transform Fallen_UI = null;
     [SerializeField] Transform Win_UI = null;
     [SerializeField] Transform Admin_Button = null;
+    [SerializeField] Transform Pause_UI = null;
     [SerializeField] public Transform Shop_UI = null;
 
     [SerializeField] public Transform Shop_Cash = null;
@@ -223,7 +225,7 @@ public class PlayerUI : MonoBehaviour
 
         if (usingWP != null && usingWP.itemRef)
         {
-            if (Input.GetMouseButton(0) && !Iventory_UI.activeSelf && !Admin_UI.activeSelf)
+            if (Input.GetMouseButton(0) && !Iventory_UI.activeSelf && !Admin_UI.activeSelf && !Shop_UI.gameObject.activeSelf && !Pause_UI.gameObject.activeSelf)
             {
                 if (atkCooldown <= 0f)
                 {
@@ -246,6 +248,14 @@ public class PlayerUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             UseItem(Consumer_Slot[2].GetComponent<ItemHolder>());
+        }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                Admin_UI.transform.parent.gameObject.SetActive(true);
+            }
         }
     }
     // Inventory

@@ -15,18 +15,22 @@ MonoBehaviour:
   ID: Zombie Mutant
   Point: 100
   Health: 800
-  Speed: 1.5
+  Speed: 2
+  Armor: 0
+  Defense: 0
   isBoss: 0
+  stun_Resistance: 0.5
+  huntsDelay: 1.5
   meleeAttacks:
   - delay: 0
     waitTime: 2
     Damage: 65
-    Range: 2
+    Range: 3
     Attack_Rate: 3
     Attack_KB: 0
     Attack_KBDuration: 0
     Attack_Effect: []
-    Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+    Attack_Hitbox: {fileID: 1609670737341773925, guid: 2f1bbd97b56453340a66ae128746f296, type: 3}
   rangedAttacks: []
   WaitTime: 1
   EnemyModel: {fileID: 7300319063617135439, guid: 77382c44a35b1264d9ef3e3e2f7d5211, type: 3}
@@ -68,6 +72,39 @@ MonoBehaviour:
         reloading: 0
         attachments: []
     weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 3
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 3862a6be148332948ac0df68458a50b2, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: f250614767089da4cad95b7db55402eb, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 3
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 5d275e358cb529f40b9d37c438915768, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 2
   canExplode: 0
   explode_Damage: 0
   explode_KnockBack: 0

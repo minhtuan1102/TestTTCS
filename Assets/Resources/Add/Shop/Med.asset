@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Med
   m_EditorClassIdentifier: 
   shop:
-  - cost: 35
+  - cost: 30
     item: {fileID: 11400000, guid: a5cb8a1b8764ac34eb2449512709418c, type: 2}
-  - cost: 40
+  - cost: 35
     item: {fileID: 11400000, guid: 7f479bc914e48994aad7dd2be029f318, type: 2}
-  - cost: 150
+  - cost: 125
     item: {fileID: 11400000, guid: b16e92bacc47bfa4084c86c79ed19316, type: 2}

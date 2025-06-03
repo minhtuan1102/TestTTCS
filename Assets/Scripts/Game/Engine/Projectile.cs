@@ -47,8 +47,13 @@ public class Projectile : MonoBehaviour
     private Rigidbody2D rb;
     private Vector3 lookVT;
 
-
+    private HashSet<Collider2D> piercedTargets = new HashSet<Collider2D>();
     [SerializeField] public ProjectileData itemData;
+
+    public void Initialize(ProjectileData data)
+    {
+        itemData = data;
+    }
 
     void Start()
     {
@@ -56,6 +61,17 @@ public class Projectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.linearVelocity = transform.right * itemData.speed; // bắn theo hướng mặt phải
         Destroy(gameObject, itemData.lifeTime);
+
+        if (itemData.special.overrideTarget)
+        {
+            if (itemData.special.target == Target.Player)
+            {
+                itemData.group = Game.g_players.transform;
+            } else
+            {
+                itemData.group = Game.g_enemies.transform;
+            }
+        }
     }
 
     public void Knockback(Rigidbody2D rb, float kb)
@@ -64,6 +80,37 @@ public class Projectile : MonoBehaviour
         Vector2 direction = lookVT.normalized;
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(direction * kb, ForceMode2D.Impulse);
+    }
+
+    private void OnDestroy()
+    {
+        AreaAttack();
+    }
+
+    private void AreaAttack()
+    {
+        try
+        {
+            if (itemData.special.areaAttack)
+            {
+                GameManager.SummonAttackArea(
+                 transform.position,
+                 Quaternion.Euler(0, 0, 0),
+                 new AreaInstance(
+                     itemData.special.damage,
+                     itemData.special.knockBack,
+                     itemData.special.knockBackDuration,
+                     itemData.special.effects,
+                     itemData.special.hitbox,
+                     Game.g_enemies.transform
+                     )
+                );
+            }
+        }
+        catch
+        {
+
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -79,11 +126,15 @@ public class Projectile : MonoBehaviour
                 {
                     health.TakeDamage((int)itemData.damage);
 
-                    EnemyAI enemyAI = other.GetComponent<EnemyAI>();
-                    if (enemyAI != null)
+                    try
                     {
-                        enemyAI.Stunned(1f);
+                        EnemyAI enemyAI = other.GetComponent<EnemyAI>();
+                        if (enemyAI != null)
+                        {
+                            enemyAI.Stunned(1f);
+                        }
                     }
+                    catch { }
 
                     Knockback(other.GetComponent<Rigidbody2D>(), itemData.kb);
 
@@ -96,31 +147,25 @@ public class Projectile : MonoBehaviour
                     {
                         GameManager.Instance.SummonEffect(itemData.special.animEffect.name, rb.position);
                     }
-
-                    try
+    
+                    if (itemData.special.applyAll)
                     {
-                        if (itemData.special.areaAttack)
-                        {
-                            GameManager.SummonAttackArea(
-                             rb.position,
-                             Quaternion.Euler(0, 0, 0),
-                             new AreaInstance(
-                                 itemData.special.damage,
-                                 itemData.special.knockBack,
-                                 itemData.special.knockBackDuration,
-                                 itemData.special.effects,
-                                 itemData.special.hitbox,
-                                 itemData.group
-                                 )
-                            );
-                        }
-                    } catch
-                    {
-
+                        AreaAttack();
                     }
 
-                    Destroy(gameObject);
-                    return;
+                    if (!itemData.special.canPierc)
+                    {
+                        Destroy(gameObject);
+                        return;
+                    }
+
+                    piercedTargets.Add(other);
+
+                    if (piercedTargets.Count >= itemData.special.piercAmount)
+                    {
+                        Destroy(gameObject);
+                        return;
+                    }
                 }
             }
         }
@@ -128,28 +173,6 @@ public class Projectile : MonoBehaviour
         // Chạm tường xoá đạn
         if (other.CompareTag("Barrier"))
         {
-            try
-            {
-                if (itemData.special.areaAttack)
-                {
-                    GameManager.SummonAttackArea(
-                     rb.position,
-                     Quaternion.Euler(0, 0, 0),
-                     new AreaInstance(
-                         itemData.special.damage,
-                         itemData.special.knockBack,
-                         itemData.special.knockBackDuration,
-                         itemData.special.effects,
-                         itemData.special.hitbox,
-                         Game.g_enemies.transform
-                         )
-                    );
-                }
-            }
-            catch
-            {
-
-            }
 
             if (itemData.special.emitEffect)
             {

@@ -35,8 +35,14 @@ public class EnemyAI : MonoBehaviour
     private int currentCorner = 0;
     private PhotonView photonView;
 
+    private float chasingTimer = 0f;
     public List<float> meleeAttacks = new List<float>();
     public List<float> rangedAttacks = new List<float>();
+
+    [Space]
+
+    public List<AudioSource> AudioSources = new List<AudioSource>();
+    public List<Animator> Animators = new List<Animator>(); 
 
     private float stunTime = 0f;
 
@@ -87,12 +93,21 @@ public class EnemyAI : MonoBehaviour
 
             RaycastHit2D hit = Physics2D.Raycast(transform.position, dirToPlayer, distanceToPlayer, obstacleMask);
 
-            if (hit.collider == null || hunting)
+            HealthSystem health = player.GetComponent<HealthSystem>();
+
+            if (health != null)
             {
-                if (minDistance > distanceToPlayer)
+                if (health.CurrentHealth > 0 || chasingTimer > 0)
                 {
-                    minDistance = distanceToPlayer;
-                    detectedPlayer = player;
+                    if (hit.collider == null || hunting)
+                    {
+                        if (minDistance > distanceToPlayer)
+                        {
+                            chaseTimer = -20f;
+                            minDistance = distanceToPlayer;
+                            detectedPlayer = player;
+                        }
+                    }
                 }
             }
         }
@@ -112,7 +127,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (duration > 0f)
         {
-            stunTime = duration;
+            stunTime = duration*(1-data.stun_Resistance);
             agent.enabled = false;
         }
     }
@@ -162,6 +177,7 @@ public class EnemyAI : MonoBehaviour
         waitingThresdhold += Time.fixedDeltaTime;
         detectTimer += Time.fixedDeltaTime;
         attackTimer += Time.fixedDeltaTime;
+        chasingTimer += Time.fixedDeltaTime;
 
         for (int i=0; i<meleeAttacks.Count; i++)
         {
@@ -208,7 +224,7 @@ public class EnemyAI : MonoBehaviour
 
         bool hunting = false;
 
-        if (waitingThresdhold >= DayNightCycle2D.DayDuration)
+        if (waitingThresdhold >= DayNightCycle2D.DayDuration * data.huntsDelay)
         {
             hunting = true;
         }

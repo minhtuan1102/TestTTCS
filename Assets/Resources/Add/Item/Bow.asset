@@ -30,6 +30,8 @@ MonoBehaviour:
   armor: 0
   armor_regen: 0
   defense: 0
+  range: 2
+  speed: 0
   useOnDelete: 0
   isConsumable: 0
   effectDescription: 

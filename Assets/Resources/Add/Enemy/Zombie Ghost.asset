@@ -17,6 +17,8 @@ MonoBehaviour:
   Health: 150
   Speed: 2.5
   isBoss: 0
+  stun_Resistance: 0
+  huntsDelay: 0.5
   meleeAttacks:
   - delay: 0
     waitTime: 1
@@ -45,7 +47,7 @@ MonoBehaviour:
         ammo: 0
         reloading: 0
         attachments: []
-    weight: 1
+    weight: 3
   - item:
       Items:
       - itemID: 0
@@ -60,14 +62,36 @@ MonoBehaviour:
   - item:
       Items:
       - itemID: 0
-        amount: 2
+        amount: 3
         holder: {fileID: 0}
         storage: {fileID: 0}
         itemRef: {fileID: 11400000, guid: 3862a6be148332948ac0df68458a50b2, type: 2}
         ammo: 0
         reloading: 0
         attachments: []
-    weight: 40
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 7f479bc914e48994aad7dd2be029f318, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 2
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: a5cb8a1b8764ac34eb2449512709418c, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 2
   canExplode: 0
   explode_Damage: 0
   explode_KnockBack: 0

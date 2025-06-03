@@ -22,6 +22,7 @@ public class PlayerClass : ScriptableObject
     public float mana = 100f;
     public int defense = 0;
     public float armor = 0f;
+    public float regenArmor = 0f;
 
     [Space]
 

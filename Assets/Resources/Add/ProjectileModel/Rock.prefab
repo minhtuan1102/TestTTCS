@@ -168,7 +168,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.20406055, g: 1, b: 0, a: 1}
+      key0: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
       key1: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0}
       key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -311,7 +311,7 @@ AudioSource:
   m_GameObject: {fileID: 7422263984037488310}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 5b6cd46d80e431d4fbfe04e7d8b1a39a, type: 2}
   m_audioClip: {fileID: 8300000, guid: 4364c9456b3705f49bc0dd500d717ccd, type: 3}
   m_Resource: {fileID: 8300000, guid: 4364c9456b3705f49bc0dd500d717ccd, type: 3}
   m_PlayOnAwake: 1

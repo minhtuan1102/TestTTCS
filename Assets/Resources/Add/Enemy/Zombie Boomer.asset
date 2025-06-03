@@ -16,7 +16,11 @@ MonoBehaviour:
   Point: 100
   Health: 150
   Speed: 5
+  Armor: 0
+  Defense: 0
   isBoss: 0
+  stun_Resistance: 0.4
+  huntsDelay: 2
   meleeAttacks: []
   rangedAttacks: []
   WaitTime: 1
@@ -36,7 +40,7 @@ MonoBehaviour:
         ammo: 0
         reloading: 0
         attachments: []
-    weight: 1
+    weight: 3
   - item:
       Items:
       - itemID: 0
@@ -59,10 +63,55 @@ MonoBehaviour:
         reloading: 0
         attachments: []
     weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 0d45ae81f6a05ed4bbc0d69637ad2191, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 5
+  - item:
+      Items:
+      - itemID: 0
+        amount: 2
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 83a1f3904415ebb45a06ee7246e04bcf, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 3
+  - item:
+      Items:
+      - itemID: 0
+        amount: 2
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: a1081ebed4eebfe4bb4912edba22b720, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 3
+  - item:
+      Items:
+      - itemID: 0
+        amount: 2
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: cc7ce38be56ba4b418b1b55d92687092, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 3
   canExplode: 1
   explode_Damage: 75
   explode_KnockBack: 5
   explode_KnockBackDuration: 0
+  explode_Emit: {fileID: 936932998295524300, guid: 82367b42128cd064ea8f66c4aed78cba, type: 3}
   explode_Hitbox: {fileID: 3290753383281791754, guid: 7c26356ca9b97484595ae50784231546, type: 3}
   explode_Effect: []
   cloacked: 0

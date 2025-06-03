@@ -15,8 +15,12 @@ MonoBehaviour:
   ID: Zerath
   Point: 100
   Health: 10000
-  Speed: 2
+  Speed: 2.5
+  Armor: 0
+  Defense: 0
   isBoss: 1
+  stun_Resistance: 1
+  huntsDelay: 0
   meleeAttacks:
   - delay: 5
     waitTime: 1
@@ -26,7 +30,7 @@ MonoBehaviour:
     Attack_KB: 1
     Attack_KBDuration: 1
     Attack_Effect: []
-    Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+    Attack_Hitbox: {fileID: 1609670737341773925, guid: 2f1bbd97b56453340a66ae128746f296, type: 3}
   - delay: 15
     waitTime: 2
     Damage: 400
@@ -35,7 +39,7 @@ MonoBehaviour:
     Attack_KB: 1
     Attack_KBDuration: 1
     Attack_Effect: []
-    Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+    Attack_Hitbox: {fileID: 3290753383281791754, guid: 7c26356ca9b97484595ae50784231546, type: 3}
   rangedAttacks:
   - delay: 5
     waitTime: 0
@@ -57,8 +61,8 @@ MonoBehaviour:
       - _show: 0
         modify_ID: HP
         modify_Type: 0
-        modify_Des: 25
-        modify_IntValue: 0
+        modify_Des: 
+        modify_IntValue: 25
         modify_FloatValue: 0
         modify_BoolValue: 0
         modify_StringValue: 
@@ -70,11 +74,11 @@ MonoBehaviour:
     ranged_projectileDat: {fileID: 11400000, guid: 87545670275b8ec41bb75297050f9054, type: 2}
     ranged_projectile: {fileID: 7422263984037488310, guid: 273c9ba0b126d2f47b2e241fa65b742a, type: 3}
   WaitTime: 1
-  EnemyModel: {fileID: 7300319063617135439, guid: a1bf96dac2865554b8062472fd0f1782, type: 3}
+  EnemyModel: {fileID: 7300319063617135439, guid: 59aed766a094187408eefdc39dcf8b54, type: 3}
   Detection_Range: 20
   Detection_Rate: 0.2
   Chasing_Time_Threshold: 1
-  path: Add/EnemyModel/Spliter
+  path: Add/EnemyModel/Boss
   Loot:
   - item:
       Items:

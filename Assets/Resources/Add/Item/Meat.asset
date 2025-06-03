@@ -30,20 +30,31 @@ MonoBehaviour:
   armor: 0
   armor_regen: 0
   defense: 0
+  useOnDelete: 0
   isConsumable: 1
   effectDescription: Heal HP and MP
   consumeEffect:
-  - modify_ID: HP
+  - _show: 0
+    modify_ID: HP
     modify_Type: 0
     modify_Des: + 20 HP
     modify_IntValue: 20
     modify_FloatValue: 0
     modify_BoolValue: 0
     modify_StringValue: 
-  - modify_ID: AP
+  - _show: 0
+    modify_ID: AP
     modify_Type: 0
     modify_Des: + 20 AP
     modify_IntValue: 20
+    modify_FloatValue: 0
+    modify_BoolValue: 0
+    modify_StringValue: 
+  - _show: 0
+    modify_ID: MP
+    modify_Type: 0
+    modify_Des: + 10 MP
+    modify_IntValue: 10
     modify_FloatValue: 0
     modify_BoolValue: 0
     modify_StringValue: 
@@ -55,7 +66,12 @@ MonoBehaviour:
   damage: 1
   cooldown: 1
   knockBack: 0
+  knockBack_Duration: 1
   userKnockBack: 0
+  userKnockBack_Duration: 1
+  durability: 100
+  weaponType: 0
+  effects: []
   canMelee: 0
   hitbox: {fileID: 0}
   mele_manaConsume: 0
@@ -69,6 +85,8 @@ MonoBehaviour:
   reload_manaConsume: 0
   clipSize: 0
   reload: 0
+  emit: 0
   projectile: {fileID: 0}
+  projectileDat: {fileID: 0}
   projectilePath: 
   options: []

@@ -965,12 +965,14 @@ MonoBehaviour:
   _maxHealth: 100
   _destroyOnDeath: 1
   _maxArmor: 100
-  _currentArmor: 25
+  _currentArmor: 0
   _damageColor: {r: 1, g: 0, b: 0, a: 1}
   _healColor: {r: 0, g: 1, b: 0, a: 1}
   _defense: 0
   baseArmor: 50
   baseDefense: 0
+  baseRegenArmor: 0
+  hurt: {fileID: 0}
 --- !u!195 &5591387431694869499
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1040,6 +1042,8 @@ MonoBehaviour:
   MoveDirection: {x: 0, y: 0, z: 0}
   meleeAttacks: []
   rangedAttacks: []
+  AudioSources: []
+  Animators: []
 --- !u!114 &6260778417137552931
 MonoBehaviour:
   m_ObjectHideFlags: 0

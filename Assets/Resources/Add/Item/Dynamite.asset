@@ -18,7 +18,7 @@ MonoBehaviour:
   icon: {fileID: -4003982261762975687, guid: 9c5a183d517afcc4687225b83ecb5cbd, type: 3}
   itemID: Dynamite
   itemDescription: An Arrow Head
-  model: {fileID: 7422263984037488310, guid: 936b453e07184704ab42d5cc8638251f, type: 3}
+  model: {fileID: 1281956672415766616, guid: 3f314f26a8b4a2c4aa8e22860a48c4a4, type: 3}
   weight: 0
   value: 0
   armor_modelType: 0
@@ -30,6 +30,8 @@ MonoBehaviour:
   armor: 0
   armor_regen: 0
   defense: 0
+  range: 0
+  speed: 0
   useOnDelete: 0
   isConsumable: 1
   effectDescription: Heal HP and MP

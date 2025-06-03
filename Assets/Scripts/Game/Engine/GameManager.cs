@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     private PhotonView photonView;
 
     public static int item_Index = 0;
+
+    public static int bossCount = 0;
 
     void Awake()
     {
@@ -91,11 +94,8 @@ public class GameManager : MonoBehaviour
     {
         GameObject area = Instantiate(Game.AreaAtkSample, pos, dir, Game.g_projectiles.transform);
         AreaAttack areaAttack = area.GetComponent<AreaAttack>();
-        areaAttack.data = data;
-
+        areaAttack.Initiate(data);
         area.SetActive(true);
-
-        areaAttack.Initiate();
         areaAttack.Attack();
     }
 
@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
     {
         GameObject bullet = Instantiate(model, pos, dir, Game.g_projectiles.transform);
         Projectile bullet_Projectile = bullet.GetComponent<Projectile>();
-        bullet_Projectile.itemData = data;
+        bullet_Projectile.Initialize(data);
         bullet_Projectile.enabled = true;
     }
 

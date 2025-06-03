@@ -132,8 +132,8 @@ public class DayNightCycle2D : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            int day = _day;
-            if (day >= daySpawn.Count) day = daySpawn.Count - 1;
+            int maxDay = daySpawn.Count - 1;
+            int day = ((_day - 1) % maxDay + maxDay) % maxDay + 1;
 
             //Debug.Log(day);
             foreach (Gen genAction in daySpawn[day].Data)
@@ -148,7 +148,10 @@ public class DayNightCycle2D : MonoBehaviour
                         {
                             int randomPlace = UnityEngine.Random.Range(0, zoneGroups[genAction.zoneGroup].EnemyZone.Count);
                             EnemyData randomEnemy = GetRandomWeightedItem<EnemyData>(enemyPackage.Item.groups);
-                            GameManager.SpawnEnemy(randomEnemy.ID, GetRandomPositionInBarrier(zoneGroups[genAction.zoneGroup].EnemyZone[randomPlace].GetComponent<BoxCollider2D>(), new Vector2(0.1f, 0.1f)));
+                            if ((randomEnemy.isBoss && GameManager.bossCount < 1 ) || !randomEnemy.isBoss)
+                            {
+                                GameManager.SpawnEnemy(randomEnemy.ID, GetRandomPositionInBarrier(zoneGroups[genAction.zoneGroup].EnemyZone[randomPlace].GetComponent<BoxCollider2D>(), new Vector2(0.1f, 0.1f)));
+                            }
                         }
                     }
 

@@ -1,6 +1,3 @@
-using JetBrains.Annotations;
-using NUnit.Framework;
-using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +13,8 @@ public class EnemyMeleeAttack
 {
     public float delay = 0f;
     public float waitTime = 0f;
+    public int soundIndex = -1;
+    public int animIndex = -1;
     [SerializeField] public float Damage = 10f;
     [SerializeField] public float Range = 5f;
     [SerializeField] public float Attack_Rate = 1f;
@@ -30,6 +29,8 @@ public class EnemyRangedAttack
 {
     public float delay = 0f;
     public float waitTime = 0f;
+    public int soundIndex = -1;
+    public int animIndex = -1;
     [SerializeField] public float Damage = 10f;
     [SerializeField] public float Range = 5f;
     [SerializeField] public float Attack_Rate = 1f;
@@ -55,7 +56,12 @@ public class EnemyData : ScriptableObject
     [SerializeField] public float Health = 80;
     [SerializeField] public float Speed = 5f;
 
+    [SerializeField] public int Armor = 0;
+    [SerializeField] public int Defense = 0;
+
     public bool isBoss = false;
+    public float stun_Resistance = 0f;
+    public float huntsDelay = 2f;
 
     [SerializeField] public List<EnemyMeleeAttack> meleeAttacks;
     [Space]
@@ -79,6 +85,7 @@ public class EnemyData : ScriptableObject
     public float explode_Damage = 0f;
     public float explode_KnockBack = 0f;
     public float explode_KnockBackDuration = 0f;
+    public GameObject explode_Emit;
     public GameObject explode_Hitbox;
     public List<DamageEffect> explode_Effect = new List<DamageEffect>();
 

@@ -138,6 +138,9 @@ public class Item : ScriptableObject
     public float armor_regen = 0f;
     public float defense = 0f;
 
+    public float range = 0f;
+    public float speed = 0f;
+
     // Consuming Stats
 
     // Pickup Stats

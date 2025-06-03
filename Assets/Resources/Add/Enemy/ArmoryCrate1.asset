@@ -16,13 +16,11 @@ MonoBehaviour:
   Point: 100
   Health: 100
   Speed: 3
-  Damage: 10
-  Range: 2
-  Attack_Rate: 5
-  Attack_KB: 0
-  Attack_KBDuration: 0
-  Attack_Effect: []
-  Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
+  isBoss: 0
+  stun_Resistance: 0
+  huntsDelay: 2
+  meleeAttacks: []
+  rangedAttacks: []
   WaitTime: 1
   EnemyModel: {fileID: 7300319063617135439, guid: bf0b8b9b408df9546a6b07f7fc8ba48c, type: 3}
   Detection_Range: 20
@@ -40,10 +38,80 @@ MonoBehaviour:
         ammo: 0
         reloading: 1
         attachments: []
-    weight: 1
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 30
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 220af40b60b19f540b710789b74bc152, type: 2}
+        ammo: 0
+        reloading: 1
+        attachments: []
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 351345178fc22af42b01b59618fb8808, type: 2}
+        ammo: 0
+        reloading: 1
+        attachments: []
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: a1656f578e98ffa419fc1931e880b4c1, type: 2}
+        ammo: 0
+        reloading: 1
+        attachments: []
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 3
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 74d85178d8d748c46abdb7d0cbccd3c5, type: 2}
+        ammo: 0
+        reloading: 1
+        attachments: []
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 2
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 83a1f3904415ebb45a06ee7246e04bcf, type: 2}
+        ammo: 0
+        reloading: 1
+        attachments: []
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 76699299a3a8ad0439dd670e1ef50bf0, type: 2}
+        ammo: 0
+        reloading: 1
+        attachments: []
+    weight: 30
   canExplode: 0
   explode_Damage: 0
   explode_KnockBack: 0
   explode_KnockBackDuration: 0
   explode_Hitbox: {fileID: 0}
   explode_Effect: []
+  cloacked: 0
+  unCloakRange: 1
+  holdEnemy: 0
+  holdRange: 1

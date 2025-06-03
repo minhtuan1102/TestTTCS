@@ -37,6 +37,7 @@ public class HealthSystem : MonoBehaviour
     public float _defense = 0f;
     public float baseArmor = 50f;
     public float baseDefense = 0f;
+    public float baseRegenArmor = 0f;
 
     private PhotonView view;
 
@@ -48,6 +49,8 @@ public class HealthSystem : MonoBehaviour
 
     private float armorCD = 0f;
     private float _armorGain = 0f;
+
+    public AudioSource hurt;
 
     private List<DamageEffect> effects = new List<DamageEffect>();
 
@@ -171,11 +174,19 @@ public class HealthSystem : MonoBehaviour
         }
 
         if (_currentHealth <= 0) return;
-        view.RPC("RPC_FlashEffect", RpcTarget.All);
+        
 
-        GameManager.Instance.ShowDamage(transform.position, (int)damageDeal);
+        if (damage >0)
+        {
+            view.RPC("RPC_FlashEffect", RpcTarget.All);
+            GameManager.Instance.ShowDamage(transform.position, (int)damageDeal);
+        } else
+        {
+            view.RPC("RPC_FlashEffectHeal", RpcTarget.All);
+            GameManager.Instance.ShowHeal(transform.position, (int)-damageDeal);
+        }
 
-        _currentHealth = Mathf.Max(0, _currentHealth - damageDeal);
+        _currentHealth = Mathf.Clamp(_currentHealth - damageDeal, 0, MaxHealth);
         UpdateStats();
 
     }
@@ -183,26 +194,29 @@ public class HealthSystem : MonoBehaviour
     public void addEffect(DamageEffect effect)
     {
         //Debug.Log("Adding Effect");
-        int amount = effects.Count;
-        if (amount>0)
+        if (CurrentArmor == 0)
         {
-            for (int i = 0; i < amount; i++)
+            int amount = effects.Count;
+            if (amount > 0)
             {
-                if (effects[i].lifeTime <= 0f && i < amount)
+                for (int i = 0; i < amount; i++)
                 {
-                    DamageEffect damageEffect = new DamageEffect(effect);
-                    effects[i] = damageEffect;
-                    return;
+                    if (effects[i].lifeTime <= 0f && i < amount)
+                    {
+                        DamageEffect damageEffect = new DamageEffect(effect);
+                        effects[i] = damageEffect;
+                        return;
+                    }
                 }
             }
+            effects.Add(new DamageEffect(effect));
         }
-        effects.Add(new DamageEffect(effect));
     }
 
     public void calculateArmor(List<ItemInstance> items, ItemInstance holdingItem)
     {
         float maxArmor = baseArmor;
-        float regenArmor = 0f;
+        float regenArmor = baseRegenArmor;
         float defense = baseDefense;
 
         if (holdingItem != null && holdingItem.itemRef)
@@ -233,6 +247,7 @@ public class HealthSystem : MonoBehaviour
     {
         _currentHealth = Mathf.Min(_maxHealth, _currentHealth + amount);
         view.RPC("RPC_FlashEffectHeal", RpcTarget.All);
+        GameManager.Instance.ShowHeal(transform.position, (int)amount);
         UpdateStats();
     }
 
@@ -258,6 +273,12 @@ public class HealthSystem : MonoBehaviour
     {
         baseDefense = amount;
     }
+
+    public void SetBaseRegenArmor(int amount)
+    {
+        baseRegenArmor = amount;
+    }
+
 
     public void SetBaseArmor(float amount)
     {
@@ -286,6 +307,10 @@ public class HealthSystem : MonoBehaviour
     [PunRPC]
     public void RPC_FlashEffect()
     {
+        if (hurt != null)
+        {
+            hurt.Play();
+        }
         timer = 0f;
         isDamaged = true;
         hitColor = _damageColor;

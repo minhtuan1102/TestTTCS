@@ -16,6 +16,9 @@ MonoBehaviour:
   Point: 100
   Health: 100
   Speed: 5
+  isBoss: 0
+  stun_Resistance: 0
+  huntsDelay: 1
   meleeAttacks:
   - delay: 0
     waitTime: 0.5

@@ -16,6 +16,11 @@ MonoBehaviour:
   Point: 100
   Health: 150
   Speed: 2.5
+  Armor: 0
+  Defense: 0
+  isBoss: 0
+  stun_Resistance: 0
+  huntsDelay: 1.5
   meleeAttacks:
   - delay: 0
     waitTime: 1
@@ -28,11 +33,11 @@ MonoBehaviour:
     Attack_Hitbox: {fileID: 1609670737341773925, guid: 172eaaca6aa6cbb4db63c7ae4998de6c, type: 3}
   rangedAttacks: []
   WaitTime: 1
-  EnemyModel: {fileID: 7300319063617135439, guid: 595a830a1ce035446846d471aef83638, type: 3}
+  EnemyModel: {fileID: 7300319063617135439, guid: 76296464aa9b05f45916971834d625f7, type: 3}
   Detection_Range: 20
   Detection_Rate: 0.2
   Chasing_Time_Threshold: 1
-  path: Add/EnemyModel/Enemy1
+  path: Add/EnemyModel/Leash
   Loot:
   - item:
       Items:
@@ -44,7 +49,7 @@ MonoBehaviour:
         ammo: 0
         reloading: 0
         attachments: []
-    weight: 1
+    weight: 3
   - item:
       Items:
       - itemID: 0
@@ -59,14 +64,25 @@ MonoBehaviour:
   - item:
       Items:
       - itemID: 0
-        amount: 2
+        amount: 3
         holder: {fileID: 0}
         storage: {fileID: 0}
         itemRef: {fileID: 11400000, guid: 3862a6be148332948ac0df68458a50b2, type: 2}
         ammo: 0
         reloading: 0
         attachments: []
-    weight: 40
+    weight: 30
+  - item:
+      Items:
+      - itemID: 0
+        amount: 1
+        holder: {fileID: 0}
+        storage: {fileID: 0}
+        itemRef: {fileID: 11400000, guid: 8e38a89a3bb371a418b5c4b726bf42e3, type: 2}
+        ammo: 0
+        reloading: 0
+        attachments: []
+    weight: 1
   canExplode: 0
   explode_Damage: 0
   explode_KnockBack: 0

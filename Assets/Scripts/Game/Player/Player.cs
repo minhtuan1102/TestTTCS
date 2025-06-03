@@ -464,6 +464,19 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
             }
         }
 
+        if (inventory.holdingItem != null && inventory.holdingItem.itemRef !=null)
+        {
+            range = _class.range + inventory.holdingItem.itemRef.range;
+            moveSpeed = _class.speed + inventory.holdingItem.itemRef.speed;
+            maxSpeed = _class.maxSpeed + inventory.holdingItem.itemRef.speed;
+
+        } else
+        {
+            range = _class.range;
+            moveSpeed = _class.speed;
+            maxSpeed = _class.maxSpeed;
+        }
+
         if (fallen)
         {
             model.localRotation = Quaternion.Euler(0f, 0f, 90f);
@@ -477,6 +490,11 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 
         if (view.IsMine)
         {
+            if (stunTimer<0)
+            {
+                rb.linearVelocity = Vector2.zero;
+            }
+
             if (isDashing)
             {
                 // Move the player in the dash direction
@@ -492,7 +510,6 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
                 {
                     Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
                     isDashing = false;
-                    rb.linearVelocity = Vector2.zero; // Stop player movement after dash
                 }
             }
 
@@ -524,7 +541,7 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
                 }
             }
 
-                Boolean lastMovingState = isMoving;
+            Boolean lastMovingState = isMoving;
             isMoving = (rb.linearVelocity.magnitude > 0.2f);
             float forward = 1f;
             if (rb.linearVelocity.x < 0)

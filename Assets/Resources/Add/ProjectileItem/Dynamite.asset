@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 350
   knockBack: 10
+  knockBackDuration: 0
+  applyAll: 0
   areaAttack: 1
   hitbox: {fileID: 3290753383281791754, guid: 7c26356ca9b97484595ae50784231546, type: 3}
   effects:
@@ -34,3 +36,10 @@ MonoBehaviour:
       modify_FloatValue: 0
       modify_BoolValue: 0
       modify_StringValue: 
+  emitEffect: 1
+  animEffect: {fileID: 936932998295524300, guid: 82367b42128cd064ea8f66c4aed78cba, type: 3}
+  trap: 0
+  canPierc: 0
+  piercAmount: 0
+  overrideTarget: 0
+  target: 0

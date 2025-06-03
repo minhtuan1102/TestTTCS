@@ -105,6 +105,11 @@ public class ItemEditor : Editor
 
                 item.defense = EditorGUILayout.FloatField("Defense", item.defense);
 
+                EditorGUILayout.Space();
+
+                item.range = EditorGUILayout.FloatField("Range", item.range);
+                item.speed = EditorGUILayout.FloatField("Speed", item.speed);
+
                 EditorGUI.indentLevel--;
             }
         }
