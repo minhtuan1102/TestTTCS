@@ -73,6 +73,7 @@ MonoBehaviour:
   - WIN
   - RPC_Heal
   - RPC_FlashEffectHeal
+  - RPC_UpdateMaxHP
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

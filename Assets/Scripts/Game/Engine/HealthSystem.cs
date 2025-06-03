@@ -263,6 +263,18 @@ public class HealthSystem : MonoBehaviour
         view.RPC("RPC_UpdateStats", RpcTarget.Others, CurrentHealth, _currentArmor);
     }
 
+    [PunRPC]
+    private void RPC_UpdateMaxHP(float newHealth)
+    {
+        _maxHealth = newHealth;
+    }
+
+    public void AddMaxHP(float amount)
+    {
+        _maxHealth += amount;
+        view.RPC("RPC_UpdateMaxHP", RpcTarget.Others, _maxHealth);
+    }
+
     public void AddArmor(int amount)
     {
         _currentArmor = Mathf.Min(_maxArmor, _currentArmor + amount);

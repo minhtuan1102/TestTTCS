@@ -10,4 +10,7 @@ public class BlackSmithData : ScriptableObject
 
     public bool canRepair = false;
     public float repartAmount = 0f;
+
+    public bool addHP = false;
+    public int health = 0;
 }

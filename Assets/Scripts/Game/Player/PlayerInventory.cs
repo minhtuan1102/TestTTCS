@@ -898,7 +898,7 @@ public class PlayerInventory : MonoBehaviour
                         {
                             if (player.cash >= blackSmith.data.cost)
                             {
-                                if (holdingItem != null && holdingItem.itemRef)
+                                if ((holdingItem != null && (holdingItem.itemRef)) || blackSmith.data.addHP)
                                 {
                                     if (holdingItem.itemRef.canAttack)
                                     {
@@ -969,6 +969,14 @@ public class PlayerInventory : MonoBehaviour
         {
             if (player.cash >= blackSmith.data.cost)
             {
+                if (blackSmith.data.addHP)
+                {
+                    player.cash -= blackSmith.data.cost;
+
+                    healthSystem.AddMaxHP((float)blackSmith.data.health);
+                    return;
+                }
+
                 if (holdingItem != null && holdingItem.itemRef)
                 {
                     if (holdingItem.itemRef.canAttack)
