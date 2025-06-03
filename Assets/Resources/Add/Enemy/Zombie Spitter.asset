@@ -16,6 +16,8 @@ MonoBehaviour:
   Point: 100
   Health: 300
   Speed: 2
+  Armor: 0
+  Defense: 0
   isBoss: 0
   stun_Resistance: 0
   huntsDelay: 2
@@ -23,6 +25,8 @@ MonoBehaviour:
   rangedAttacks:
   - delay: 0
     waitTime: 1
+    soundIndex: -1
+    animIndex: -1
     Damage: 25
     Range: 10
     Attack_Rate: 2
@@ -98,10 +102,11 @@ MonoBehaviour:
         reloading: 0
         attachments: []
     weight: 2
-  canExplode: 1
+  canExplode: 0
   explode_Damage: 0
   explode_KnockBack: 0
   explode_KnockBackDuration: 0
+  explode_Emit: {fileID: 0}
   explode_Hitbox: {fileID: 0}
   explode_Effect: []
   cloacked: 0
