@@ -255,7 +255,10 @@ public class PlayerInventory : MonoBehaviour
             if (Items[index].itemRef.isConsumable)
             {
                 int DropAmount = (int)Mathf.Min(amount, Items[index].amount);
-                Items[index].amount -= DropAmount;
+                if (!PhotonNetwork.IsMasterClient)
+                {
+                    Items[index].amount -= DropAmount;
+                }
                 view.RPC("Master_DropItem", RpcTarget.MasterClient, Items[index].itemID, DropAmount);
             }
             else
