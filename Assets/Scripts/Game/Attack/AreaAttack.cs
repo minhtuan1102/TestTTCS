@@ -73,10 +73,17 @@ public class AreaAttack : MonoBehaviour
 
                 health.TakeDamage((int)data.damage);
 
-                EnemyAI enemyAI = results[i].GetComponent<EnemyAI>();
-                if (enemyAI != null)
+                try
                 {
-                    enemyAI.Stunned(data.stun);
+                    EnemyAI enemyAI = results[i].GetComponent<EnemyAI>();
+                    if (enemyAI != null)
+                    {
+                        enemyAI.Stunned(data.stun);
+                    }
+                }
+                catch
+                {
+
                 }
 
                 Knockback(results[i].GetComponent<Rigidbody2D>(), data.kb);
