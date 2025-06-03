@@ -1097,15 +1097,18 @@ public class PlayerInventory : MonoBehaviour
 
                     float damageDealt = holdingItem.itemRef.damage;
 
-                    foreach (string modify in holdingItem.attachments)
+                    if (holdingItem.attachments != null && holdingItem.attachments.Count>0)
                     {
-                        switch (modify)
+                        foreach (string modify in holdingItem.attachments)
                         {
-                            case "Damage":
-                                damageDealt += holdingItem.itemRef.damage * 0.25f;
-                                break;
-                            default:
-                                break;
+                            switch (modify)
+                            {
+                                case "Damage":
+                                    damageDealt += holdingItem.itemRef.damage * 0.25f;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
 
@@ -1160,15 +1163,18 @@ public class PlayerInventory : MonoBehaviour
 
                     float damageDealt = holdingItem.itemRef.damage;
 
-                    foreach(string modify in holdingItem.attachments)
+                    if (holdingItem.attachments != null && holdingItem.attachments.Count > 0)
                     {
-                        switch (modify)
+                        foreach (string modify in holdingItem.attachments)
                         {
-                            case "Damage":
-                                damageDealt += holdingItem.itemRef.damage * 0.25f;
-                                break;
-                            default:
-                                break;
+                            switch (modify)
+                            {
+                                case "Damage":
+                                    damageDealt += holdingItem.itemRef.damage * 0.25f;
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
 
