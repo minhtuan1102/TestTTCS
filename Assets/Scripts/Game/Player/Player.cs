@@ -460,7 +460,7 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
             if (health.CurrentHealth <= 0 && !fallen)
             {
                 fallen = true;
-                view.RPC("RPC_Fallen", RpcTarget.Others, true);
+                view.RPC("RPC_Fallen", RpcTarget.All, true);
             }
         }
 
