@@ -898,11 +898,17 @@ public class PlayerInventory : MonoBehaviour
                         {
                             if (player.cash >= blackSmith.data.cost)
                             {
-                                if ((holdingItem != null && (holdingItem.itemRef)) || blackSmith.data.addHP)
+                                if (blackSmith.data.addHP)
                                 {
-                                    if (holdingItem.itemRef.canAttack)
+
+                                } else
+                                {
+                                    if (holdingItem != null && holdingItem.itemRef)
                                     {
-                                        view.RPC("Master_Upgrade", RpcTarget.MasterClient, blackSmithOwner);
+                                        if (holdingItem.itemRef.canAttack)
+                                        {
+                                            view.RPC("Master_Upgrade", RpcTarget.MasterClient, blackSmithOwner);
+                                        }
                                     }
                                 }
                             }
