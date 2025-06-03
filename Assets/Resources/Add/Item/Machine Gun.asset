@@ -38,9 +38,9 @@ MonoBehaviour:
   consumeEffect: []
   isWeapon: 1
   canAttack: 1
-  swing: -15
+  swing: 0
   recoil: -0.3
-  swingOffset: 15
+  swingOffset: 0
   damage: 15
   cooldown: 0.05
   knockBack: 0
