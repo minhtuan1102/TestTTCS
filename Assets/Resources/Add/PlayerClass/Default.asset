@@ -20,6 +20,7 @@ MonoBehaviour:
   mana: 100
   defense: 0
   armor: 50
+  regenArmor: 0
   speed: 7
   maxSpeed: 7
   range: 7
