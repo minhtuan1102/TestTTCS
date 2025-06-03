@@ -156,9 +156,10 @@ public class HealthSystem : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        float damageDeal = Mathf.Max(1, (float)damage - _defense);
+        float damageDeal = damage;
+        if (damageDeal > 0) damageDeal = Mathf.Max(1, (float)damage - _defense);
         armorCD = -10f;
-        if (_currentArmor > 0)
+        if (_currentArmor > 0 && damage>0)
         {
             if (_currentArmor > damageDeal)
             {
@@ -174,8 +175,7 @@ public class HealthSystem : MonoBehaviour
         }
 
         if (_currentHealth <= 0) return;
-        
-
+       
         if (damage >0)
         {
             view.RPC("RPC_FlashEffect", RpcTarget.All);

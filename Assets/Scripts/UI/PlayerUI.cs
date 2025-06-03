@@ -252,9 +252,9 @@ public class PlayerUI : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            if (Input.GetKeyDown(KeyCode.Keypad9))
             {
-                Admin_UI.transform.parent.gameObject.SetActive(true);
+                Admin_UI.gameObject.SetActive(true);
             }
         }
     }

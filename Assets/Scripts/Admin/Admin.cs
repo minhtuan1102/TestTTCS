@@ -18,14 +18,6 @@ public class Admin : MonoBehaviour
 
     private PhotonView view;
 
-    private void Awake()
-    {
-        if (!Application.isEditor)
-        {
-            transform.gameObject.SetActive(false);
-        }
-    }
-
     void OnEnable()
     {
         view = GetComponent<PhotonView>();
