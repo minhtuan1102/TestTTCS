@@ -433,9 +433,12 @@ public class Player : MonoBehaviour, IPunInstantiateMagicCallback
 
         if (fallen)
         {
-            Transform UI = GameObject.Find("PlayerUI").transform;
-            Transform Stats = UI.Find("PlayerStats");
-            Stats.Find("UI").gameObject.SetActive(false);
+            if (view.IsMine)
+            {
+                Transform UI = GameObject.Find("PlayerUI").transform;
+                Transform Stats = UI.Find("PlayerStats");
+                Stats.Find("UI").gameObject.SetActive(false);
+            }
             onTopDisplay.Find("HealthBar").gameObject.SetActive(false);
         } else
         {

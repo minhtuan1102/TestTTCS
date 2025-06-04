@@ -697,7 +697,7 @@ public class PlayerInventory : MonoBehaviour
     }
 
     [PunRPC]
-    void Master_RevivePlayer(string player)
+    private void Master_RevivePlayer(string player)
     {
         Transform revivePlayer = null;
 
@@ -723,12 +723,12 @@ public class PlayerInventory : MonoBehaviour
                     {
                         medkit.amount--;
                         revivePlayer.GetComponent<Player>().Revive();
-                    }
 
-                    view.RPC("RPC_UpdateItem", RpcTarget.Others, medkit.itemID, (new ItemInstanceSender(Items[index])).ToJson());
-                    if (Items[index].amount <= 0)
-                    {
-                        Items.RemoveAt(index);
+                        view.RPC("RPC_UpdateItem", RpcTarget.Others, medkit.itemID, (new ItemInstanceSender(Items[index])).ToJson());
+                        if (Items[index].amount <= 0)
+                        {
+                            Items.RemoveAt(index);
+                        }
                     }
                 }
             }
@@ -834,10 +834,6 @@ public class PlayerInventory : MonoBehaviour
                             int itemIndex = CheckForMedkit();
                             if (itemIndex >= 0)
                             {
-                                if (!PhotonNetwork.IsMasterClient)
-                                {
-                                    Items[itemIndex].amount -= 1;
-                                }
                                 view.RPC("Master_RevivePlayer", RpcTarget.MasterClient, nearestFallen.name);
                             }
                             revivePower = 0f;

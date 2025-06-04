@@ -97,13 +97,12 @@ public class EnemyAI : MonoBehaviour
 
             if (health != null)
             {
-                if (health.CurrentHealth > 0 || chasingTimer > 0)
+                if (health.CurrentHealth > 0 || chasingTimer < 20f)
                 {
                     if (hit.collider == null || hunting)
                     {
                         if (minDistance > distanceToPlayer)
                         {
-                            chaseTimer = -20f;
                             minDistance = distanceToPlayer;
                             detectedPlayer = player;
                         }
@@ -272,6 +271,18 @@ public class EnemyAI : MonoBehaviour
 
         if (target != null)
         {
+            HealthSystem healthSystem = target.GetComponent<HealthSystem>();
+            if (healthSystem)
+            {
+                if (healthSystem.CurrentHealth > 0 && CheckIfNear(target.position, data.Detection_Range))
+                {
+                    chasingTimer = Mathf.Clamp(chasingTimer - Time.fixedDeltaTime, 0, 20f);
+                } else
+                {
+                    chasingTimer += Time.fixedDeltaTime;
+                }
+            }
+
             if (meleeAttacks.Count > 0)
             {
                 for (int i = 0; i < meleeAttacks.Count; i++)
