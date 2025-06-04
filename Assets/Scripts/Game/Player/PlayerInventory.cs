@@ -834,7 +834,10 @@ public class PlayerInventory : MonoBehaviour
                             int itemIndex = CheckForMedkit();
                             if (itemIndex >= 0)
                             {
-                                Items[itemIndex].amount -= 1;
+                                if (!PhotonNetwork.IsMasterClient)
+                                {
+                                    Items[itemIndex].amount -= 1;
+                                }
                                 view.RPC("Master_RevivePlayer", RpcTarget.MasterClient, nearestFallen.name);
                             }
                             revivePower = 0f;
